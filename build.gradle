@@ -1,0 +1,15 @@
+plugins {
+    id 'base'
+}
+
+allprojects {
+    group = 'com.langgraphtrials'
+    version = '0.1.0'
+}
+
+tasks.register('run', Exec) {
+    group = 'application'
+    description = 'Run both frontend and agents modules together.'
+    workingDir = rootProject.projectDir
+    commandLine '/bin/zsh', '-lc', './gradlew :agents:run & ./gradlew :frontend:run & wait'
+}

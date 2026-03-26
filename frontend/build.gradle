@@ -1,0 +1,39 @@
+plugins {
+    id 'base'
+}
+
+def macNodePath = ['/opt/homebrew/bin', '/usr/local/bin', System.getenv('PATH')]
+    .findAll { it != null && !it.isBlank() }
+    .join(File.pathSeparator)
+def nodeExecutable = System.getenv('NODE_EXECUTABLE') ?: '/usr/local/bin/node'
+def npmCliScript = System.getenv('NPM_CLI_SCRIPT') ?: '/usr/local/lib/node_modules/npm/bin/npm-cli.js'
+
+tasks.register('installDependencies', Exec) {
+    group = 'frontend'
+    description = 'Install frontend npm dependencies.'
+    workingDir = project.projectDir
+    commandLine nodeExecutable, npmCliScript, 'install'
+    environment 'PATH', macNodePath
+}
+
+tasks.register('run', Exec) {
+    group = 'frontend'
+    description = 'Run the React frontend in development mode.'
+    workingDir = project.projectDir
+    commandLine nodeExecutable, npmCliScript, 'run', 'dev'
+    environment 'PATH', macNodePath
+    dependsOn 'installDependencies'
+}
+
+tasks.register('npmBuild', Exec) {
+    group = 'frontend'
+    description = 'Build the React frontend for production.'
+    workingDir = project.projectDir
+    commandLine nodeExecutable, npmCliScript, 'run', 'build'
+    environment 'PATH', macNodePath
+    dependsOn 'installDependencies'
+}
+
+tasks.named('build') {
+    dependsOn 'npmBuild'
+}

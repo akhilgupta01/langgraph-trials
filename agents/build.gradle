@@ -1,0 +1,22 @@
+plugins {
+    id 'base'
+}
+
+def venvPythonPath = rootProject.file('.venv/bin/python').exists()
+    ? rootProject.file('.venv/bin/python').absolutePath
+    : 'python'
+
+tasks.register('installDependencies', Exec) {
+    group = 'agents'
+    description = 'Install Python dependencies for agents.'
+    workingDir = rootProject.projectDir
+    commandLine venvPythonPath, '-m', 'pip', 'install', '-r', 'requirements.txt'
+}
+
+tasks.register('run', Exec) {
+    group = 'agents'
+    description = 'Run the FastAPI application.'
+    workingDir = project.projectDir
+    commandLine venvPythonPath, '-m', 'uvicorn', 'app.main:app', '--reload', '--host', '0.0.0.0', '--port', '8085'
+    dependsOn 'installDependencies'
+}

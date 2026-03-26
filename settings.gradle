@@ -1,0 +1,4 @@
+rootProject.name = 'langgraph-trials'
+
+include('frontend')
+include('agents')
