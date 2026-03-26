@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from .ChatController import chat_router
+from agents.ChatController import chat_router
 
 app = FastAPI(title="Agents API", version="0.1.0")
 

@@ -9,7 +9,7 @@ allprojects {
 
 tasks.register('run', Exec) {
     group = 'application'
-    description = 'Run both frontend and agents modules together.'
+    description = 'Run both frontend and backend modules together.'
     workingDir = rootProject.projectDir
-    commandLine '/bin/zsh', '-lc', './gradlew :agents:run & ./gradlew :frontend:run & wait'
+    commandLine '/bin/zsh', '-lc', './gradlew :backend:run & ./gradlew :frontend:run & wait'
 }

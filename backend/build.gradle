@@ -7,16 +7,16 @@ def venvPythonPath = rootProject.file('.venv/bin/python').exists()
     : 'python'
 
 tasks.register('installDependencies', Exec) {
-    group = 'agents'
-    description = 'Install Python dependencies for agents.'
+    group = 'backend'
+    description = 'Install Python dependencies for backend.'
     workingDir = rootProject.projectDir
     commandLine venvPythonPath, '-m', 'pip', 'install', '-r', 'requirements.txt'
 }
 
 tasks.register('run', Exec) {
-    group = 'agents'
+    group = 'backend'
     description = 'Run the FastAPI application.'
     workingDir = project.projectDir
-    commandLine venvPythonPath, '-m', 'uvicorn', 'app.main:app', '--reload', '--host', '0.0.0.0', '--port', '8085'
+    commandLine venvPythonPath, '-m', 'uvicorn', 'main:app', '--reload', '--host', '0.0.0.0', '--port', '8085'
     dependsOn 'installDependencies'
 }
