@@ -12,6 +12,7 @@ iteration count (default 3) is reached.
 
 import json
 import logging
+import base64
 from typing import Any, Type, TypedDict, TypeVar
 
 from dotenv import load_dotenv
@@ -19,6 +20,7 @@ from google.genai.types import Content, CreateCachedContentConfig, Part
 from langchain_core.messages import HumanMessage
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
+from langchain_core.prompts import PromptTemplate
 
 from model_provider import build_chat_model, create_genai_client, default_model_name
 
@@ -107,6 +109,23 @@ def _parts_from_documents(documents: list[DocumentMetadata]) -> list[Part]:
     return document_parts
 
 
+def _base64_blocks_from_parts(document_parts: list[Part]) -> list[dict[str, str]]:
+    """Convert Gemini parts into LangChain-compatible base64 file blocks."""
+    file_blocks: list[dict[str, str]] = []
+    for part in document_parts:
+        if part.inline_data is None:
+            continue
+        file_blocks.append(
+            {
+                "type": "file",
+                "source_type": "base64",
+                "mime_type": part.inline_data.mime_type,
+                "data": base64.b64encode(part.inline_data.data).decode("utf-8"),
+            }
+        )
+    return file_blocks
+
+
 def _create_cache(
     document_parts: list[Part],
     system_instruction: str,
@@ -159,7 +178,7 @@ def invoke_data_extractor(
     system_prompts: dict[str, str] | None = None,
     model_name: str = MODEL_NAME,
     max_review_cycles: int = MAX_REVIEW_CYCLES,
-    use_content_cache: bool = True,
+    use_content_cache: bool = False,
 ) -> T:
     """Run the data extraction agent and return an instance of *extraction_model*.
 
@@ -182,6 +201,7 @@ def invoke_data_extractor(
     prompts: dict[str, str] = {**DEFAULT_PROMPTS, **(system_prompts or {})}
     schema_json = json.dumps(extraction_model.model_json_schema(), indent=2)
     document_parts = _parts_from_documents(documents)
+    base64_file_blocks = _base64_blocks_from_parts(document_parts)
 
     # -- Optionally create a shared context cache --------------------------
     system_instruction = (
@@ -202,13 +222,13 @@ def invoke_data_extractor(
         review_llm = build_chat_model(model_name=model_name)
 
         def _build_prompt(template: str, **kwargs: Any) -> HumanMessage:
-            prompt = template.format(**kwargs)
+            prompt = PromptTemplate.from_template(template).format(**kwargs)
             if cache is not None:
                 return HumanMessage(content=prompt)
             return HumanMessage(
                 content=[
                     {"type": "text", "text": prompt},
-                    *document_parts,
+                    *base64_file_blocks,
                 ]
             )
 
@@ -216,7 +236,8 @@ def invoke_data_extractor(
 
         def extract_node(state: dict[str, Any]) -> dict[str, Any]:
             structured_llm = extract_llm.with_structured_output(extraction_model)
-            message = _build_prompt(prompts["extract"], schema_json=schema_json)
+            kwargs = {"schema_json": schema_json}
+            message = _build_prompt(prompts["extract"], **kwargs)
             result = structured_llm.invoke([message])
             return {"extracted_data": result.model_dump(), "iteration_count": 0}
 

@@ -205,6 +205,7 @@ def main() -> None:
         documents=documents,
         extraction_model=ReportTypes,
         system_prompts=prompts_for_report_types,
+        use_content_cache=False,
     )
 
     print("\n--- Extracted Regulatory Report Types ---")
@@ -272,6 +273,7 @@ def main() -> None:
                     documents=documents,
                     extraction_model=RegulatoryAttributes,
                     system_prompts=prompts_for_attributes,
+                    use_content_cache=False,
                 )
                 all_attributes.extend(batch_result.attributes)
 
