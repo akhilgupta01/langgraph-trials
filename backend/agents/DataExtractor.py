@@ -16,12 +16,12 @@ import time
 from typing import Any, Type, TypedDict, TypeVar
 
 from dotenv import load_dotenv
-from google import genai
 from google.genai.types import Content, CreateCachedContentConfig, Part
 from langchain_core.messages import HumanMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
+
+from .model_provider import build_chat_model, create_genai_client, default_model_name
 
 load_dotenv()
 
@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 T = TypeVar("T", bound=BaseModel)
 
-MODEL_NAME = "gemini-2.5-flash"
+MODEL_NAME = default_model_name()
 MAX_REVIEW_CYCLES = 3
 
 DEFAULT_PROMPTS: dict[str, str] = {
@@ -88,7 +88,7 @@ class ExtractionState(TypedDict):
 
 def _upload_files(documents: list[DocumentMetadata]) -> list[Any]:
     """Upload documents to Google servers and wait until processed."""
-    client = genai.Client()
+    client = create_genai_client()
     uploaded: list[Any] = []
     for doc in documents:
         f = client.files.upload(file=doc.path)
@@ -105,7 +105,7 @@ def _create_cache(
     model_name: str,
 ) -> Any:
     """Create a context cache containing all uploaded files."""
-    client = genai.Client()
+    client = create_genai_client()
 
     if len(uploaded_files) == 1:
         contents = [uploaded_files[0]]
@@ -133,7 +133,7 @@ def _create_cache(
 
 def _cleanup(uploaded_files: list[Any], cache: Any) -> None:
     """Best-effort cleanup of uploaded files and cache."""
-    client = genai.Client()
+    client = create_genai_client()
     try:
         client.caches.delete(name=cache.name)
     except Exception:
@@ -164,7 +164,7 @@ def invoke_data_extractor(
         extraction_model: Pydantic model class defining the desired output schema.
         system_prompts: Optional overrides keyed by ``extract``, ``review``,
             ``rework``.
-        model_name: Gemini model identifier.
+        model_name: Model identifier for Gemini API or Vertex AI.
         max_review_cycles: Maximum review-rework iterations (default 3).
 
     Returns:
@@ -185,7 +185,7 @@ def invoke_data_extractor(
     cache = _create_cache(uploaded_files, cache_system_instruction, model_name)
 
     try:
-        cached_llm = ChatGoogleGenerativeAI(model=model_name, cached_content=cache.name)
+        cached_llm = build_chat_model(model_name=model_name, cached_content=cache.name)
 
         # -- Graph node functions (closures over cached_llm & prompts) -----
 
@@ -201,7 +201,7 @@ def invoke_data_extractor(
             result = structured_llm.invoke([message])
             return {"extracted_data": result.model_dump(), "iteration_count": 0}
 
-        review_llm = ChatGoogleGenerativeAI(model=model_name)
+        review_llm = build_chat_model(model_name=model_name)
 
         def review_node(state: ExtractionState) -> dict[str, Any]:
             structured_llm = review_llm.with_structured_output(ReviewResult)

@@ -1,5 +1,5 @@
 ---
-name: ChatGoogleGenerativeAI
+name: langgraph-chat-google-genai
 description: Using ChatGoogleGenerativeAI, a chat model wrapper from langchain for Google Gemini series, for various applications including file processing.
 ---
 

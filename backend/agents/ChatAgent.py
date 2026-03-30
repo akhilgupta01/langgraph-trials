@@ -6,13 +6,14 @@ from collections.abc import Iterator
 from langchain_core.messages import BaseMessage, HumanMessage
 from langgraph.graph import StateGraph, START, END, add_messages
 from langgraph.checkpoint.memory import MemorySaver
-from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
+from .model_provider import build_chat_model, default_model_name
+
 load_dotenv()
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.1)
+llm = build_chat_model(model_name=default_model_name(), temperature=0.1)
 
 
 class ReferenceDocument(BaseModel):
