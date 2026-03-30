@@ -47,11 +47,11 @@ def _resolve_provider() -> Provider:
 
 
 def _vertex_project() -> str | None:
-    return os.getenv("VERTEX_PROJECT_ID") or os.getenv("GOOGLE_CLOUD_PROJECT")
+    return os.getenv("VERTEX_PROJECT_ID") or os.getenv("GOOGLE_CLOUD_PROJECT") or os.getenv("GCP_PROJECT_ID")
 
 
 def _vertex_location() -> str | None:
-    return os.getenv("VERTEX_LOCATION") or os.getenv("GOOGLE_CLOUD_LOCATION")
+    return os.getenv("VERTEX_LOCATION") or os.getenv("GOOGLE_CLOUD_LOCATION") or os.getenv("GCP_LOCATION")
 
 
 def default_model_name() -> str:
