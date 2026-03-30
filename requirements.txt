@@ -3,3 +3,10 @@ langchain-google-genai
 python-dotenv
 fastapi
 uvicorn[standard]
+python-multipart
+pypdf
+python-docx
+pillow
+pytesseract
+
+pydantic

@@ -99,12 +99,56 @@ body {
   font-style: italic;
 }
 
+.message-typing {
+  font-style: normal;
+}
+
+.message-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  font-weight: 600;
+  animation: cursor-blink 0.9s steps(1, end) infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .chat-input-row {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
   padding: 14px 20px 20px;
   border-top: 1px solid var(--border);
+}
+
+.file-input-label {
+  grid-column: 1 / -1;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.chat-input-row input[type="file"] {
+  grid-column: 1 / -1;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.attachment-info {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .chat-input-row input {
