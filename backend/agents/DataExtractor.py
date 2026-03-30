@@ -12,7 +12,6 @@ iteration count (default 3) is reached.
 
 import json
 import logging
-import time
 from typing import Any, Type, TypedDict, TypeVar
 
 from dotenv import load_dotenv
@@ -21,7 +20,7 @@ from langchain_core.messages import HumanMessage
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
 
-from .model_provider import build_chat_model, create_genai_client, default_model_name
+from model_provider import build_chat_model, create_genai_client, default_model_name
 
 load_dotenv()
 
@@ -35,19 +34,31 @@ MAX_REVIEW_CYCLES = 3
 DEFAULT_PROMPTS: dict[str, str] = {
     "extract": (
         "You are an expert data extractor. Extract structured information from the "
-        "provided documents accurately and thoroughly. Capture every relevant detail."
+        "provided documents accurately and thoroughly. Capture every relevant detail.\n\n"
+        "Resolve any references to other pages and sections before extracting data.\n\n"
+        "<output_schema>\n{schema_json}\n</output_schema>"
     ),
     "review": (
-        "You are a meticulous data reviewer. Critically review the information present in the provided data."
-        "Look for any ambiguities, contradictions, incomplete or missing fields, and values that seem implausible or "
-        "internally inconsistent. If there are major issues that require rework, "
-        "set has_major_issues to true and describe them clearly. If the data looks "
-        "correct and complete, set has_major_issues to false."
+        "You are a meticulous data reviewer. Critically review the information present "
+        "in the provided data. Critically review the following extracted data against "
+        "the expected output schema. Look for any ambiguities, contradictions, incomplete "
+        "or missing fields, and values that seem implausible or internally inconsistent. "
+        "Ensure that the values of all fields are fully resolved and not just references to "
+        "other sections or documents (except for citations where it is actually needed)."
+        "If there are major issues that require rework, set has_major_issues to true "
+        "and describe them clearly. If the data looks correct and complete, set "
+        "has_major_issues to false.\n\n"
+        "<extracted_data>\n{extracted_json}\n\n</extracted_data>"
+        "<expected_output_schema>\n{schema_json}\n\n</expected_output_schema>"
     ),
     "rework": (
         "You are an expert data extractor. Refine the previously extracted data "
         "based on the review comments. Address each comment and improve the output "
-        "while preserving information that was already correct."
+        "while preserving information that was already correct.\n\n"
+        "<previously_extracted_data>\n{extracted_json}\n\n</previously_extracted_data>"
+        "<review_comments>\n{review_comments}\n\n</review_comments>"
+        "Refine the extracted data addressing the review comments.\n\n"
+        "<output_schema>\n{schema_json}\n\n</output_schema>"
     ),
 }
 
@@ -82,41 +93,35 @@ class ExtractionState(TypedDict):
 
 
 # ---------------------------------------------------------------------------
-# File upload & context-caching helpers
+# Document loading & context-caching helpers
 # ---------------------------------------------------------------------------
 
 
-def _upload_files(documents: list[DocumentMetadata]) -> list[Any]:
-    """Upload documents to Google servers and wait until processed."""
-    client = create_genai_client()
-    uploaded: list[Any] = []
+def _parts_from_documents(documents: list[DocumentMetadata]) -> list[Part]:
+    """Load local files and convert them into Gemini parts."""
+    document_parts: list[Part] = []
     for doc in documents:
-        f = client.files.upload(file=doc.path)
-        while f.state.name == "PROCESSING":
-            time.sleep(2)
-            f = client.files.get(name=f.name)
-        uploaded.append(f)
-    return uploaded
+        with open(doc.path, "rb") as f:
+            data = f.read()
+        document_parts.append(Part.from_bytes(data=data, mime_type=doc.mime_type))
+    return document_parts
 
 
 def _create_cache(
-    uploaded_files: list[Any],
+    document_parts: list[Part],
     system_instruction: str,
     model_name: str,
 ) -> Any:
-    """Create a context cache containing all uploaded files."""
+    """Create a context cache containing all document parts."""
     client = create_genai_client()
 
-    if len(uploaded_files) == 1:
-        contents = [uploaded_files[0]]
+    if len(document_parts) == 1:
+        contents = [Content(role="user", parts=[document_parts[0]])]
     else:
         contents = [
             Content(
                 role="user",
-                parts=[
-                    Part.from_uri(file_uri=f.uri, mime_type=f.mime_type)
-                    for f in uploaded_files
-                ],
+                parts=document_parts,
             )
         ]
 
@@ -131,18 +136,16 @@ def _create_cache(
     )
 
 
-def _cleanup(uploaded_files: list[Any], cache: Any) -> None:
-    """Best-effort cleanup of uploaded files and cache."""
+def _cleanup(cache: Any | None) -> None:
+    """Best-effort cleanup of cache resource."""
+    if cache is None:
+        return
+
     client = create_genai_client()
     try:
         client.caches.delete(name=cache.name)
     except Exception:
         logger.debug("Failed to delete cache %s", cache.name)
-    for f in uploaded_files:
-        try:
-            client.files.delete(name=f.name)
-        except Exception:
-            logger.debug("Failed to delete uploaded file %s", f.name)
 
 
 # ---------------------------------------------------------------------------
@@ -156,6 +159,7 @@ def invoke_data_extractor(
     system_prompts: dict[str, str] | None = None,
     model_name: str = MODEL_NAME,
     max_review_cycles: int = MAX_REVIEW_CYCLES,
+    use_content_cache: bool = True,
 ) -> T:
     """Run the data extraction agent and return an instance of *extraction_model*.
 
@@ -166,6 +170,8 @@ def invoke_data_extractor(
             ``rework``.
         model_name: Model identifier for Gemini API or Vertex AI.
         max_review_cycles: Maximum review-rework iterations (default 3).
+        use_content_cache: Enable Gemini cached content for document context.
+            If false, document contents are sent with every extract/rework call.
 
     Returns:
         Populated instance of *extraction_model*.
@@ -173,51 +179,55 @@ def invoke_data_extractor(
     if not documents:
         raise ValueError("At least one document is required")
 
-    prompts = {**DEFAULT_PROMPTS, **(system_prompts or {})}
+    prompts: dict[str, str] = {**DEFAULT_PROMPTS, **(system_prompts or {})}
     schema_json = json.dumps(extraction_model.model_json_schema(), indent=2)
+    document_parts = _parts_from_documents(documents)
 
-    # -- Upload files & create a shared context cache ----------------------
-    cache_system_instruction = (
+    # -- Optionally create a shared context cache --------------------------
+    system_instruction = (
         "You are an expert at analysing documents and extracting structured "
         "information. You have access to the provided documents for reference."
     )
-    uploaded_files = _upload_files(documents)
-    cache = _create_cache(uploaded_files, cache_system_instruction, model_name)
+    cache = (
+        _create_cache(document_parts, system_instruction, model_name)
+        if use_content_cache
+        else None
+    )
 
     try:
-        cached_llm = build_chat_model(model_name=model_name, cached_content=cache.name)
+        extract_llm = build_chat_model(
+            model_name=model_name,
+            cached_content=cache.name if cache is not None else None,
+        )
+        review_llm = build_chat_model(model_name=model_name)
 
-        # -- Graph node functions (closures over cached_llm & prompts) -----
-
-        def extract_node(state: ExtractionState) -> dict[str, Any]:
-            structured_llm = cached_llm.with_structured_output(extraction_model)
-            message = HumanMessage(
-                content=(
-                    f"{prompts['extract']}\n\n"
-                    "Extract structured information from the provided documents.\n\n"
-                    f"Output schema:\n{schema_json}"
-                )
+        def _build_prompt(template: str, **kwargs: Any) -> HumanMessage:
+            prompt = template.format(**kwargs)
+            if cache is not None:
+                return HumanMessage(content=prompt)
+            return HumanMessage(
+                content=[
+                    {"type": "text", "text": prompt},
+                    *document_parts,
+                ]
             )
+
+        # -- Graph node functions (closures over extraction/rework llm) -----
+
+        def extract_node(state: dict[str, Any]) -> dict[str, Any]:
+            structured_llm = extract_llm.with_structured_output(extraction_model)
+            message = _build_prompt(prompts["extract"], schema_json=schema_json)
             result = structured_llm.invoke([message])
             return {"extracted_data": result.model_dump(), "iteration_count": 0}
-
-        review_llm = build_chat_model(model_name=model_name)
 
         def review_node(state: ExtractionState) -> dict[str, Any]:
             structured_llm = review_llm.with_structured_output(ReviewResult)
             extracted_json = json.dumps(state["extracted_data"], indent=2, default=str)
-            message = HumanMessage(
-                content=(
-                    f"{prompts['review']}\n\n"
-                    "Critically review the following extracted data against "
-                    f"the expected output schema.\n\n"
-                    f"Extracted data:\n{extracted_json}\n\n"
-                    f"Expected output schema:\n{schema_json}\n\n"
-                    "Identify any ambiguities, contradictions, incomplete or "
-                    "missing fields, and values that seem implausible or "
-                    "internally inconsistent."
-                )
-            )
+            kwargs = {
+                "extracted_json": extracted_json,
+                "schema_json": schema_json,
+            }
+            message = _build_prompt(prompts["review"], **kwargs)
             result = structured_llm.invoke([message])
             return {
                 "review_comments": result.comments,
@@ -226,17 +236,14 @@ def invoke_data_extractor(
             }
 
         def rework_node(state: ExtractionState) -> dict[str, Any]:
-            structured_llm = cached_llm.with_structured_output(extraction_model)
+            structured_llm = extract_llm.with_structured_output(extraction_model)
             extracted_json = json.dumps(state["extracted_data"], indent=2, default=str)
-            message = HumanMessage(
-                content=(
-                    f"{prompts['rework']}\n\n"
-                    f"Previously extracted data:\n{extracted_json}\n\n"
-                    f"Review comments:\n{state['review_comments']}\n\n"
-                    "Refine the extracted data addressing the review comments.\n\n"
-                    f"Output schema:\n{schema_json}"
-                )
-            )
+            kwargs = {
+                "extracted_json": extracted_json,
+                "review_comments": state["review_comments"],
+                "schema_json": schema_json,
+            }
+            message = _build_prompt(prompts["rework"], **kwargs)
             result = structured_llm.invoke([message])
             return {"extracted_data": result.model_dump()}
 
@@ -279,4 +286,4 @@ def invoke_data_extractor(
         return extraction_model.model_validate(final_state["extracted_data"])
 
     finally:
-        _cleanup(uploaded_files, cache)
+        _cleanup(cache)

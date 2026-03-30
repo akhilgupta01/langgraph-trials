@@ -25,11 +25,12 @@
 - Instantiate a generic extraction agent with arbitrary Pydantic extraction schemas and document lists.
 - Configure the extraction model name, system prompt, and review iteration budget at runtime.
 - Support both Gemini Developer API and Vertex AI model backends, selected by runtime configuration.
-- Upload documents to Google servers and cache them for efficient multi-step extraction.
+- Read uploaded document files from local storage and convert them to model-ready byte parts.
+- Optionally cache document context for efficient multi-step extraction, or send document contents with each extraction/rework invocation.
 - Extract structured information from documents in an initial extraction pass.
 - Review extracted data against source documents for ambiguities, contradictions, or missing information.
 - Automatically rework and refine extracted data based on review feedback (up to a configurable cycle limit).
-- Clean up uploaded files and cached content after extraction completes.
+- Clean up cached content after extraction completes when caching is enabled.
 
 ### Conversation Continuity
 
