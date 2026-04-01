@@ -1,0 +1,35 @@
+{
+  "name": "Client Code",
+  "description": "An entity identifier that is not an LEI, used for Counterparty 2, Beneficiary 1, Other payment payer and/or Other payment receiver.",
+  "dataType": "String",
+  "format": "LEI of the Reporting Entity (or Execution agent) + up to 52 alphanumeric characters",
+  "optionalityRules": [
+    "Required for new transaction report if entity eligible for LEI does not have LEI and LEI has not been applied for within 2 business days (Rule S1.3.1(2)(a)).",
+    "Required for new transaction report if entity is a natural person not eligible for an LEI (Rule S1.3.1(2)(b))."
+  ],
+  "valueRules": [
+    "A unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters (Paragraph 129(b))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "22",
+      "section": "41"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "25",
+      "section": "S1.3.1(2)(a)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "25",
+      "section": "S1.3.1(2)(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "43",
+      "section": "129(b)"
+    }
+  ]
+}

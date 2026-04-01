@@ -1,0 +1,53 @@
+{
+  "name": "Day count convention\u2014Leg 1",
+  "description": "This data element reports an indicator code of the day count convention used in the calculation of periodic interest payments of leg 1 of the transaction.",
+  "dataType": "string",
+  "format": "4-character alphabetical code",
+  "optionalityRules": [
+    "Conditionally required where a leg of a transaction is an interest rate leg.",
+    "Required if Fixed rate\u2014Leg 1 is reported.",
+    "Not-reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "Report the code(s) applicable to the transaction or, if no such code is applicable, report the value NARR.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "114",
+      "section": "Item 66\u2014Day count convention\u2014Leg 1"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "114",
+      "section": "427"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "114",
+      "section": "428"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "115",
+      "section": "429"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "115",
+      "section": "432"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "115",
+      "section": "433"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "116",
+      "section": "434"
+    }
+  ]
+}

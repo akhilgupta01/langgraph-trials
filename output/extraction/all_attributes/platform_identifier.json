@@ -1,0 +1,38 @@
+{
+  "name": "Platform identifier",
+  "description": "Reports a 4-character code created and maintained under ISO 10383 Securities and Related Financial Instruments\u2014Codes for Exchanges and Market Identification (MIC).",
+  "dataType": "string",
+  "format": "4-character code (ISO 10383 MIC)",
+  "optionalityRules": [
+    "Required, other than where Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+    "Optionally reported where Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "If reported, the value is a valid ISO 10383 MIC code, which may be XOFF, XXXX or BILT.",
+    "If Cleared is reported as N or I, a value is required to be reported as a valid segment MIC or operating MIC.",
+    "The MIC list also includes the codes XOFF, XXXX and BILT which are not codes of any specific market but relate to whether the OTC derivative that is the subject of the reportable transaction is: (a) XOFF\u2014able to be traded on a financial market but the particular reportable transaction was not itself traded on a financial market; (b) XXXX\u2014not able to be traded on any financial market; or (c) BILT\u2014the reporting entity is not able to determine if the conditions for XOFF or XXXX apply to the reportable transaction."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "75",
+      "section": "Item 25\u2014Platform identifier"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "76",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "77",
+      "section": "paragraph 260"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "78",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Underlier ID (Other) source",
+  "description": "Reports information about an underlier which is not identified as a specific underlier in the UPI reference data for the UPI code that is reported\u2014that is, the underlier is identified as \u2018OTHER\u2019 in the UPI reference data, or as a \u2018Proprietary Index\u2019 which has only one constituent (collectively a \u2018non-UPI underlier\u2019). For each Basket constituent identifier, the source of the identifier is reported.",
+  "dataType": "String",
+  "format": "String",
+  "optionalityRules": [
+    "Conditionally required where the underlier is a non-UPI underlier (page 126, Condition table, paragraph 477).",
+    "Optionally reported where the underlier is UPI underlier (page 126, Condition table, paragraph 478).",
+    "Required if Underlier ID (Other) is reported (page 130, paragraph 488(a)(ii))."
+  ],
+  "valueRules": [
+    "Values are from the UPI Service source, such as 'ISIN', 'COMM', 'FRO name', 'CRP name', 'CDE equity name and type', 'CDE debt name and type', or 'AII' (page 124, paragraph 473; page 127, paragraph 487).",
+    "If reported, the format of the values conform to the 2024 Rules specifications (page 130, paragraph 488(b)).",
+    "Values are not reported for the not-reported Action types (page 130, paragraph 488(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "126",
+      "section": "Item 84\u2014Underlier ID (Other) source"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "124",
+      "section": "473"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "127",
+      "section": "487"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "130",
+      "section": "488"
+    }
+  ]
+}

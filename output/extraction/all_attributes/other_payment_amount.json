@@ -1,0 +1,36 @@
+{
+  "name": "Other payment amount",
+  "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps.",
+  "dataType": "Numeric",
+  "format": "Any numeric value",
+  "optionalityRules": [
+    "Required for upfront payments if applicable (page 120, Condition table).",
+    "Required for termination payments if applicable (page 120, Condition table).",
+    "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+    "If Other payment type is UFRO or PEXH, at least one value for Other payment amount is required for Action type of NEWT or MODI or CORR or REVI (page 122, paragraph 462(c)(i)).",
+    "If Other payment type is UWIN, a value for Other payment amount is required for Action type of TERM (page 122, paragraph 462(d)(i)).",
+    "For any Action type for which an Other payment amount is reported, for each Other payment amount, Other payment amount is required (page 122, paragraph 462(e)(i))."
+  ],
+  "valueRules": [
+    "Always reported as a greater than or equal to zero value (page 121, paragraph 458).",
+    "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+    "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "120",
+      "section": "Item 74\u2014Other payment amount"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "121",
+      "section": "458"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "122",
+      "section": "462"
+    }
+  ]
+}

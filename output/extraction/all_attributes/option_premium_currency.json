@@ -1,0 +1,52 @@
+{
+  "name": "Option premium currency",
+  "description": "For options transactions (including swaptions transactions), this data element reports the currency of the option premium.",
+  "dataType": "string",
+  "format": "ISO 4217 Currency codes",
+  "optionalityRules": [
+    "Conditionally required where Contract type is reported as OPTN or SWPT.",
+    "Required if Option amount is reported.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "For an option transaction for which no option premium is paid, Option premium currency is reported as either Notional currency\u2014Leg 1 or Notional currency\u2014Leg 2.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Item 62"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 414"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 415"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 418"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(a)(ii)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(c)"
+    }
+  ]
+}

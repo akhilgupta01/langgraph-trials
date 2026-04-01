@@ -10,6 +10,3 @@ frontend/dist/
 
 .idea
 **/*.pyc
-
-output
-output-1

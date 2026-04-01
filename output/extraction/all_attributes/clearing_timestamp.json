@@ -1,0 +1,41 @@
+{
+  "name": "Clearing timestamp",
+  "description": "For a transaction cleared at a CCP, Clearing timestamp is the date and time, notified to the reporting entity by the CCP, that the transaction was cleared by the CCP.",
+  "dataType": "Date and Time",
+  "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ date and time in UTC.",
+  "optionalityRules": [
+    "Required where Cleared is reported as Y.",
+    "Not reported for Cleared reported as \u2018N\u2019 or \u2018I\u2019.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "If Cleared is reported as Y, Clearing timestamp is equal to Execution timestamp."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "69",
+      "section": "Item 21\u2014Clearing timestamp"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "69",
+      "section": "234"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "69",
+      "section": "235"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "69",
+      "section": "236"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "70",
+      "section": "239a"
+    }
+  ]
+}

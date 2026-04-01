@@ -1,0 +1,42 @@
+{
+  "name": "Exchange rate basis",
+  "description": "The exchange rate basis of Exchange rate, reported in the order of the unit currency followed by the quoted currency, where the quoted currency is the currency of the units in which Exchange rate is expressed (e.g. in USD/EUR 0.9426, USD is the unit currency and EUR is the quoted currency).",
+  "dataType": "string",
+  "format": "3-character alphabetical code",
+  "optionalityRules": [
+    "Exchange rate basis is required to be reported if Exchange rate is reported",
+    "Not-reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "Exchange rate and Exchange rate basis should use values and the order of the currencies that is in the same way in which the currency pair is conventionally quoted in foreign exchange markets (e.g. AUD/USD, USD/EUR, EUR/JPY).",
+    "Other than for digital options, each currency code of Exchange rate basis is one of Notional currency\u2014Leg 1 or Notional currency\u2014Leg 2.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "Item 65\u2014Exchange rate basis"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "421"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "422"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "423"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "114",
+      "section": "426"
+    }
+  ]
+}

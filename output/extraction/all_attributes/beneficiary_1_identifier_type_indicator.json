@@ -1,0 +1,20 @@
+{
+  "name": "Beneficiary 1 identifier type indicator",
+  "description": "Beneficiary 1 identifier type indicator is reported as a boolean True/False value, where True indicates that Beneficiary 1 is reported as an LEI.",
+  "dataType": "Boolean",
+  "format": "True or False",
+  "optionalityRules": [
+    "Conditionally required where Beneficiary 1 is reported (for Action types: NEWT, MODI, CORR, REVI)",
+    "Not reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "True indicates that Beneficiary 1 is reported as an LEI."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "50",
+      "section": "Item 11\u2014Beneficiary 1 identifier type indicator, par 162, 164"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Option premium amount",
+  "description": "For options transactions (including swaptions transactions), this data element reports the amount of the option premium.",
+  "dataType": "decimal",
+  "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+  "optionalityRules": [
+    "Conditionally required where Contract type is reported as OPTN or SWPT.",
+    "Required if Contract type is OPTN or SWPT.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "The amount paid, or due to be paid, by the option buyer and is reported in absolute value terms (e.g. an option premium amount paid by Counterparty 1 is not reported as a negative value).",
+    "For option transactions that are reported as components of a package, the option premium information is reported for the gross value of each component option, and not as a net premium.",
+    "For an option transaction for which no option premium is paid, Option premium amount is reported as zero.",
+    "For option premium amounts that are paid in instalments, Option premium amount is reported as the sum of all such instalments.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Item 61"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 414"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 415"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 416"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "111",
+      "section": "Paragraph 417"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 418"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 419"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(a)(i)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "112",
+      "section": "Paragraph 420(c)"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Notional amount schedule effective date\u2014Leg 2",
+  "description": "These data elements describe the notional amount schedule of Leg 2 in terms of each schedule period\u2019s effective date applicable in the period.",
+  "dataType": "date",
+  "format": "YYYY-MM-DD",
+  "optionalityRules": [
+    "Required, if applicable, for certain Action types and not reported for other Action types.",
+    "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative and the notional amount schedule information for Leg 2 is not the same as the notional amount schedule information for Leg 1.",
+    "If the notional amount schedule information of leg 2 is the same as the notional amount schedule information of leg 1, these data elements are not required to be reported.",
+    "If values for Notional amount schedule amount\u2014Leg 2 are reported, a value for Notional amount schedule effective date\u2014Leg 2 is reported for each value of Notional amount schedule amount\u2014Leg 2 that is reported."
+  ],
+  "valueRules": [
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "96",
+      "section": "Item 43"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "96",
+      "section": "Paragraph 350"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "96",
+      "section": "Paragraph 351"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "96",
+      "section": "Paragraph 352"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "97",
+      "section": "Paragraph 354"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "97",
+      "section": "Paragraph 355"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "97",
+      "section": "Paragraph 356(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "97",
+      "section": "Paragraph 356(d)"
+    }
+  ]
+}

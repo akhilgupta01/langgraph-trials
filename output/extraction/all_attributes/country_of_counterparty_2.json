@@ -1,0 +1,26 @@
+{
+  "name": "Country of Counterparty 2",
+  "description": "This data element reports the two-character ISO 3166 country code of Counterparty 2.",
+  "dataType": "string",
+  "format": "Two-character ISO 3166 country code (two uppercase alphabetic characters)",
+  "optionalityRules": [
+    "Conditionally required if Counterparty 2 is not reported as an LEI (for Action types: NEWT, MODI, CORR, REVI)",
+    "Not reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "If Counterparty 2 is reported as ANON, reporting entities should report their own country of residence or business address.",
+    "If Counterparty 2 identifier type indicator is reported as True (i.e., Counterparty 2 is an LEI), no value is reported."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "47",
+      "section": "Item 9\u2014Country of Counterparty 2, par 147, 148, 149"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "48",
+      "section": "par 150"
+    }
+  ]
+}

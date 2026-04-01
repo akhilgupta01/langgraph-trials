@@ -1,0 +1,29 @@
+{
+  "name": "Spread notation\u2014Leg 1",
+  "description": "An indicator of the type of units in which Spread\u2014Leg 1 is reported.",
+  "dataType": "String",
+  "format": "'1' (monetary amount), '3' (decimal), or '4' (basis points)",
+  "optionalityRules": [
+    "Conditionally required for NEWT, MODI, CORR, REVI where the 'price' of the transaction is not indicated by other reported data elements, and is reported for other transactions, if applicable (Paragraph 387).",
+    "Required if a value for Spread\u2014Leg 1 or Spread\u2014Leg 2 is required to be reported (Paragraph 396(a)).",
+    "Not reported for TERM, EROR, PRTO (Paragraph 387)."
+  ],
+  "valueRules": [
+    "Must be '1' where the spread is reported as a monetary amount (Paragraph 392(a)).",
+    "Must be '3' where the spread is reported as a decimal (Paragraph 392(b)).",
+    "Must be '4' where the spread is reported in basis points (Paragraph 392(c)).",
+    "Must conform to 2024 Rules specifications (Paragraph 396(d))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "104",
+      "section": "Item 52, 387"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "106",
+      "section": "392, 396(a), 396(d)"
+    }
+  ]
+}

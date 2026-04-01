@@ -1,0 +1,80 @@
+{
+  "name": "Strike price",
+  "description": "Strike price describes the strike price value, in terms of its values, the units and currency or currency pair in which they are reported.",
+  "dataType": "decimal",
+  "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+  "optionalityRules": [
+    "Required if Contract type is OPTN or SWPT.",
+    "May be optionally reported if Contract type is SWAP or OTHR (e.g. to allow for the market convention of reporting Strike price for volatility, variance and dividend swaps).",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "For options over equity or debt instruments or commodities, the price at which the option can be exercised to buy or sell the underlier for physical delivery or cash settlement.",
+    "For foreign exchange options, the exchange rate at which the option can be exercised, expressed as the rate of exchange from converting the unit currency into the quoted currency.",
+    "For interest rate caps, floors and swaptions, the interest rate at which the option can be exercised.",
+    "For commodity and equity swaptions, the price at which the option can be exercised by entering into a swap.",
+    "For credit default swaptions, generally the rate of the spread at which the option can be exercised by entering into a swap.",
+    "For volatility, variance and dividend swaps, the volatility strike, variance strike, dividend strike or predetermined fixed volatility, variance level or dividend level.",
+    "The \u2018trigger\u2019 for a digital option is reported as the Strike price.",
+    "Where the value for Strike price is not known at the time of reporting, \u2018all 9s\u2019 is reported but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications.",
+    "The default value of \u2018all 9s\u2019 for Strike price is an allowable value."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Item 59"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Paragraph 397"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Paragraph 398"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Paragraph 399"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "108",
+      "section": "Paragraph 400"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "109",
+      "section": "Paragraph 411"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "109",
+      "section": "Paragraph 413(a)(i)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "109",
+      "section": "Paragraph 413(a)(ii)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(d)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(e)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(f)"
+    }
+  ]
+}

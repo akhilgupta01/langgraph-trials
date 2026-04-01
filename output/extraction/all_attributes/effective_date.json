@@ -1,0 +1,32 @@
+{
+  "name": "Effective date",
+  "description": "The unadjusted date at which obligations of the transaction come into effect, taken from the trade confirmation.",
+  "dataType": "date",
+  "format": "ISO 8601 YYYY-MM-DD",
+  "optionalityRules": [
+    "Required, if applicable, for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "An exception is that, in keeping with international practices, the Effective date of an interest rate forward rate agreement is reported as the date portion, or the date and time value, of the Execution timestamp.",
+    "If a transaction does not have an Effective date, it may still be reported as the date value of Execution timestamp.",
+    "May be reported as a value earlier than Execution timestamp where there is a future settlement or pay-off that is dependent on: (a) an interest amount accrual from an earlier date, or (b) reference price/rate setting event(s) that commenced at an earlier date and Effective date is reported as that earlier date."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "60",
+      "section": "Item 17\u2014Effective date"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "61",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "62",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

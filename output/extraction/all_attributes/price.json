@@ -1,0 +1,73 @@
+{
+  "name": "Price",
+  "description": "Price is reported for certain kinds of OTC derivatives as the value agreed by the counterparties and as set out in the trade confirmation, not including any additional amounts for fees, taxes or commissions.",
+  "dataType": "decimal",
+  "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+  "optionalityRules": [
+    "Price is conditionally required to be reported for certain kinds of OTC derivatives.",
+    "Required if Contract type is CFDS and Asset class is not CURR.",
+    "Required if Asset class is COMM or EQUI and Contract type is FORW.",
+    "Required if Asset class is COMM or EQUI and Contract type is SWAP and neither Spread\u2014Leg 1 nor Spread\u2014Leg 2 nor Strike price is reported (i.e. Price is required if the \u2018price\u2019 of the transaction is not reported in terms of a spread).",
+    "Required if none of Fixed rate\u2014Leg 1, Fixed rate\u2014Leg 2, Spread\u2014Leg 1, Spread\u2014Leg 2, Strike price, Option premium amount and Exchange rate are reported, and, for Asset class is CRDT, Other payment type is not reported as UFRO.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "Price is reported as a monetary amount when it is reported as, for example, US$85 per barrel.",
+    "Price is reported as a decimal when it is reported as, for example, 0.01 per unit of the notional amount.",
+    "Where Price is not known at the time of reporting, \u2018all 9s\u2019 is reported.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications.",
+    "The default value of \u2018all 9s\u2019 for Price is an allowable value."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Item 47"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Paragraph 357"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Paragraph 359"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "99",
+      "section": "Paragraph 366"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "100",
+      "section": "Paragraph 367"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "100",
+      "section": "Paragraph 373"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(a)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(c)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(d)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(e)"
+    }
+  ]
+}

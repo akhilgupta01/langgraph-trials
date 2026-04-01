@@ -1,0 +1,28 @@
+{
+  "name": "Direction 2\u2014Leg 1",
+  "description": "Indicates, for certain kinds of OTC derivatives, whether the reporting entity is the payer (MAKE) or receiver (TAKE) of Leg 1 in a transaction.",
+  "dataType": "string",
+  "format": "4-character alphabetical code",
+  "optionalityRules": [
+    "Conditionally required for the applicable kinds of OTC derivatives.",
+    "A value must be reported for either Direction 1 or both of Direction 2\u2014Leg 1 and Direction 2\u2014Leg 2.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "If reported, the value of Direction 2\u2014Leg 1 is one of MAKE or TAKE.",
+    "Applicable to OTC derivatives other than those for which a value is reported for Direction 1.",
+    "These kinds of OTC derivatives are indicated at 2.13.2 of the ROC CDE Technical Guidance as being: most swaps and swap-like contracts including interest rate swaps, credit total return swaps and equity swaps (except for credit default swaps, variance, volatility and correlation swaps); foreign exchange swaps, forwards, non-deliverable forwards; and under the 2024 Rules, foreign exchange contracts for difference."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "58",
+      "section": "Item 15\u2014Direction 2\u2014Leg 1, and Item 16\u2014Direction 2\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "59",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

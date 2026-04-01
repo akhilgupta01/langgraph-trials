@@ -1,0 +1,19 @@
+{
+  "name": "Secondary transaction identifier",
+  "description": "This data element reports a reporting entity\u2019s proprietary, secondary transaction identifier of the transaction.",
+  "dataType": "String",
+  "format": "up to 72-character alphanumeric code",
+  "optionalityRules": [
+    "Optional for all transaction report Action types"
+  ],
+  "valueRules": [
+    "If reported, the format of the value conforms to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "32",
+      "section": "Item 1a\u2014Secondary transaction identifier, par 82, 83, 85(a)"
+    }
+  ]
+}

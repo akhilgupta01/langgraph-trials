@@ -1,0 +1,58 @@
+{
+  "name": "Strike price notation",
+  "description": "Strike price notation describes the strike price in terms of its units.",
+  "dataType": "string",
+  "format": "1-character numeric code",
+  "optionalityRules": [
+    "Required if Strike price, Lower or only barrier price and Upper barrier price, respectively, is reported.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "Reported as \u20181\u2019 where the strike price or barrier price is reported as a monetary amount; or \u20183\u2019 where the strike price or barrier price is reported as a decimal.",
+    "In alignment with the requirements in other major jurisdictions, notation should be reported as: \u20181\u2019 (i.e. a monetary amount) for equity and debt security options, commodity options, foreign exchange options and similar products; and \u20183\u2019 (i.e. a decimal) for interest rate options, interest rate and credit swaptions quoted in spread terms, and similar products.",
+    "Currently either notation of \u20181\u2019 or \u20183\u2019 may be reported for FX options, but reporting entities are encouraged to change to reporting with notation \u20181\u2019 as soon as practically possible.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Item 58"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "107",
+      "section": "Paragraph 397"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "108",
+      "section": "Paragraph 404"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "108",
+      "section": "Paragraph 405"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "109",
+      "section": "Paragraph 406"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(d)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "110",
+      "section": "Paragraph 413(f)"
+    }
+  ]
+}

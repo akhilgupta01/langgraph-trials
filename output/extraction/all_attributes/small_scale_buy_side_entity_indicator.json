@@ -1,0 +1,31 @@
+{
+  "name": "Small-scale Buy-side Entity indicator",
+  "description": "Reports to indicate that the Reporting Entity is making the report as a Small-scale Buy-side Entity.",
+  "dataType": "String",
+  "format": "String literal 'SSBS'",
+  "optionalityRules": [
+    "Optionally reported in a Valuation report (page 152, paragraph 585).",
+    "Small-scale Buy-side Entity indicator may be optionally reported in a Collateral report (page 163, paragraph 656)."
+  ],
+  "valueRules": [
+    "If reported, the value is SSBS (page 152, paragraph 584, 588(b)).",
+    "If reported, the value is SSBS (page 164, paragraph 659(b))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "152",
+      "section": "Item 4\u2014Small-scale Buy-side Entity indicator"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "163",
+      "section": "Item 4\u2014Small-scale Buy-side Entity indicator"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "164",
+      "section": "659"
+    }
+  ]
+}

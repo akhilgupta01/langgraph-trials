@@ -1,0 +1,31 @@
+{
+  "name": "Event identifier",
+  "description": "A unique identifier to connect termination, modification and new transactions resulting from an event.",
+  "dataType": "String",
+  "format": "LEI of the entity assigning the Event identifier followed by a unique identifier of not more than 32 characters",
+  "optionalityRules": [
+    "Conditionally required where Event type is reported as COMP or CREV (Paragraph 551).",
+    "May be optionally reported for any other Event type (Paragraph 552(b)).",
+    "Not reported for EROR, PRTO (Paragraph 551)."
+  ],
+  "valueRules": [
+    "Must conform to 2024 Rules specifications (Paragraph 552(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "22",
+      "section": "42"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "144",
+      "section": "Item 100, 550, 551"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "145",
+      "section": "552(b), 552(c)"
+    }
+  ]
+}

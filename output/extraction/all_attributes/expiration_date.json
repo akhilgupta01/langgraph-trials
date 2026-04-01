@@ -1,0 +1,36 @@
+{
+  "name": "Expiration date",
+  "description": "The unadjusted date at which obligations of the transaction cease, taken from the trade confirmation.",
+  "dataType": "date",
+  "format": "ISO 8601 YYYY-MM-DD",
+  "optionalityRules": [
+    "Required, if applicable, for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO.",
+    "For CFDs, Expiration date is reported if applicable.",
+    "If Contract type is not CFDS, a value is required to be reported.",
+    "If Contract type is CFDS, a value may be optionally reported."
+  ],
+  "valueRules": [
+    "For single-period options where the option may only be exercised once, this data element should be reported as the only date on which, or the latest date by which, the option may be exercised.",
+    "For multi-period options, such as an interest rate cap, this data element should be reported as the date of the end of the last calculation period.",
+    "If reported, Expiration date is greater than or equal to the later of the date element of Execution timestamp and Effective date.",
+    "Where an OTC derivative is terminated prior to its Expiration date, Expiration date should not be updated in the report of the termination\u2014Event timestamp will report the date and time value of the execution of the termination and there is no requirement to report an amended Expiration date upon which the termination takes effect."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "62",
+      "section": "Item 18\u2014Expiration date"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "63",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "64",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

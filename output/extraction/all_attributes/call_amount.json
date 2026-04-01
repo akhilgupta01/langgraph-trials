@@ -1,0 +1,52 @@
+{
+  "name": "Call amount",
+  "description": "The monetary amount that the option gives the right to buy.",
+  "dataType": "Numeric",
+  "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+  "optionalityRules": [
+    "Conditionally required for a foreign exchange option (other than a digital option).",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "For the conditionally required Action types, if Asset class is CURR and Contract type is OPTN and UPI Product is not a digital option, a value is required for at least one of Call amount and Put amount.",
+    "Where the value of either Notional amount\u2014Leg 1 or Notional amount\u2014Leg 2 is not known at the time of reporting and is reported as \u2018all 9s\u2019, the corresponding Call amount is also reported as \u2018all 9s\u2019.",
+    "Call amount is updated to the amount subsequently determined, using a MODI-TRAD report."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "Item 32\u2014Call amount"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "318"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "319"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "321"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "322a"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "322b"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "88",
+      "section": "322c"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Central counterparty",
+  "description": "The LEI of the CCP\u2014the LEI is the \u2018current LEI\u2019 (with a registration status of \u2018Issued\u2019, \u2018Pending transfer\u2019 or \u2018Pending archival\u2019 in the GLEIF database) and must not be an LEI of a branch of the entity.",
+  "dataType": "string",
+  "format": "ISO 17442 Legal entity identifier (LEI)",
+  "optionalityRules": [
+    "Required where Cleared is reported as Y.",
+    "May be optionally reported where Cleared is reported as I.",
+    "Not reported where Cleared is reported as N.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "If reported, Central counterparty does not equal Clearing member."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "72",
+      "section": "Item 23\u2014Central counterparty"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "73",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "73",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

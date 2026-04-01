@@ -1,0 +1,23 @@
+{
+  "name": "Counterparty 2",
+  "description": "The allowable value for Counterparty 2 is an LEI or another identifier determined in accordance with Rule S1.3.1(2). In the case of a transaction traded on a facility and cleared by a CCP, and the identities of the counterparties are not disclosed to each other, 'ANON' is reported. Another identifier may be a Designated Business Identifier (such as an ABN, AVID or BIC) or, if unavailable, a unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters. An LEI of Counterparty 2 must not be an LEI of a branch of the entity.",
+  "dataType": "string",
+  "format": "ISO 17442 Legal entity identifier (LEI); Alphanumeric code up to 52 characters; ABN; AVID; BIC; 'ANON'",
+  "optionalityRules": [
+    "Required for all transaction reports."
+  ],
+  "valueRules": [
+    "If LEI is reported, it must be a valid GLEIF LEI of the required registration status and pertain to a legal entity and not a branch.",
+    "If a non-LEI identifier is reported, the format of the value must conform to the 2024 Rules specifications.",
+    "For Action types NEWT, MODI, CORR, the LEI registration status must be 'Issued', 'Lapsed', 'Pending transfer' or 'Pending archival'.",
+    "For Action types REVI, TERM, EROR, PRTO, the LEI registration status can be any status.",
+    "May be 'ANON' for transactions traded on a facility and cleared by a CCP where counterparties are not disclosed."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "43-44",
+      "section": "Item 7\u2014Counterparty 2, paragraphs 128-137"
+    }
+  ]
+}

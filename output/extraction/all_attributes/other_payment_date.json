@@ -1,0 +1,33 @@
+{
+  "name": "Other payment date",
+  "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps. It is reported as an ISO 8601 date.",
+  "dataType": "Date",
+  "format": "ISO 8601 date",
+  "optionalityRules": [
+    "Required for upfront payments if applicable (page 120, Condition table).",
+    "Required for termination payments if applicable (page 120, Condition table).",
+    "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+    "For any Action type for which an Other payment amount is reported, Other payment date is required (page 122, paragraph 462(e)(i))."
+  ],
+  "valueRules": [
+    "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+    "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "120",
+      "section": "Item 77\u2014Other payment date"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "121",
+      "section": "459"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "122",
+      "section": "462"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "Execution timestamp",
+  "description": "The date and time a transaction was entered into.",
+  "dataType": "datetime",
+  "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ in UTC",
+  "optionalityRules": [
+    "Required for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types EROR-<no Event type> and PRTO-PTNG."
+  ],
+  "valueRules": [
+    "If Cleared is reported as Y, Execution timestamp is equal to Clearing timestamp.",
+    "For MODI, TERM, CORR, REVI, the original Execution timestamp of the trade as reported in a NEWT-<any Event type> report.",
+    "This data element remains unchanged throughout the life of the UTI for the OTC derivative."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "64",
+      "section": "Item 19\u2014Execution timestamp"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "65",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "66",
+      "section": "Minimum TR validations"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "67",
+      "section": "Legacy trades, migration and Rule 2.4.1 re-reporting\u2014Key points"
+    }
+  ]
+}

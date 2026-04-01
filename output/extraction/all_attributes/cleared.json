@@ -1,0 +1,30 @@
+{
+  "name": "Cleared",
+  "description": "Indicates whether the transaction has been cleared (\u2018Y\u2019), not cleared (\u2018N\u201d) or that the reporting entity intends it to be cleared by a CCP (\u2018I\u2019).",
+  "dataType": "string",
+  "format": "1-character alphabetical code",
+  "optionalityRules": [
+    "Required for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "The value is one of Y, N or I."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "72",
+      "section": "Item 22\u2014Cleared, and Item 23\u2014Central counterparty"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "72",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "72",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

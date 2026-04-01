@@ -1,0 +1,46 @@
+{
+  "name": "Total notional quantity\u2014Leg 2",
+  "description": "The aggregate notional quantity of the underlier of Leg 2 for the entire term of the transaction.",
+  "dataType": "Numeric",
+  "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+  "optionalityRules": [
+    "Conditionally required for NEWT, MODI, CORR, REVI, if applicable.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "If Notional quantity\u2014Leg 2 is reported, Total notional quantity\u2014Leg 2 has the same meanings and relationships for Leg 2 as Total notional quantity\u2014Leg 1 for Leg 1 (referencing 307 and 311b).",
+    "If the value(s) for these data elements is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "85",
+      "section": "Item 29\u2014Total notional quantity\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "85",
+      "section": "307"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "85",
+      "section": "308"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "86",
+      "section": "313"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "87",
+      "section": "317d"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "87",
+      "section": "317e"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Package identifier",
+  "description": "The identifier code of the package in each of the reports of a component transaction in a package.",
+  "dataType": "String",
+  "format": "Not more than 100 characters",
+  "optionalityRules": [
+    "Conditionally required or if applicable for NEWT, MODI, CORR, REVI (Paragraph 524).",
+    "May be optionally reported for conditionally required Action types (Paragraph 536(a)(i)).",
+    "Not reported for TERM, EROR, PRTO (Paragraph 524)."
+  ],
+  "valueRules": [
+    "Must conform to 2024 Rules specifications (Paragraph 536(b))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "22",
+      "section": "41, Item 92"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "138",
+      "section": "Item 92, 524, 526"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "141",
+      "section": "536(a)(i), 536(b)"
+    }
+  ]
+}

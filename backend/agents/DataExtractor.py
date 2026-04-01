@@ -17,7 +17,7 @@ from typing import Any, Type, TypedDict, TypeVar
 
 from dotenv import load_dotenv
 from google.genai.types import Content, CreateCachedContentConfig, Part
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
 from langchain_core.prompts import PromptTemplate
@@ -33,34 +33,49 @@ T = TypeVar("T", bound=BaseModel)
 MODEL_NAME = default_model_name()
 MAX_REVIEW_CYCLES = 3
 
-DEFAULT_PROMPTS: dict[str, str] = {
+NODE_KEYS = ("extract", "review", "rework")
+
+DEFAULT_SYSTEM_PROMPTS: dict[str, str] = {
     "extract": (
         "You are an expert data extractor. Extract structured information from the "
-        "provided documents accurately and thoroughly. Capture every relevant detail.\n\n"
-        "Resolve any references to other pages and sections before extracting data.\n\n"
+        "provided documents accurately and thoroughly."
+    ),
+    "review": (
+        "You are a meticulous data reviewer. Critically review extracted data for "
+        "ambiguity, contradictions, missing values, and schema non-compliance."
+    ),
+    "rework": (
+        "You are an expert data extractor. Improve previously extracted data using "
+        "review feedback while preserving already-correct information."
+    ),
+}
+
+DEFAULT_USER_PROMPTS: dict[str, str] = {
+    "extract": (
+        "Extract structured information from the provided documents. Capture every "
+        "relevant detail and resolve references to other pages/sections before "
+        "extracting values.\n\n"
         "<output_schema>\n{schema_json}\n</output_schema>"
     ),
     "review": (
-        "You are a meticulous data reviewer. Critically review the information present "
-        "in the provided data. Critically review the following extracted data against "
-        "the expected output schema. Look for any ambiguities, contradictions, incomplete "
-        "or missing fields, and values that seem implausible or internally inconsistent. "
-        "Ensure that the values of all fields are fully resolved and not just references to "
-        "other sections or documents (except for citations where it is actually needed)."
-        "If there are major issues that require rework, set has_major_issues to true "
-        "and describe them clearly. If the data looks correct and complete, set "
-        "has_major_issues to false.\n\n"
-        "<extracted_data>\n{extracted_json}\n\n</extracted_data>"
-        "<expected_output_schema>\n{schema_json}\n\n</expected_output_schema>"
+        "Review the following extracted data against the expected output schema.\n"
+        "Review Guidelines:\n"
+        "- Look for ambiguities, contradictions, incomplete or missing fields\n"
+        "- Flag implausible or internally inconsistent values\n"
+        "- Check if values adhere to schema type/format expectations\n"
+        "- Ensure values are resolved and not just references to other sections/documents "
+        "(except citations where needed)\n"
+        "If there are major issues that require rework, set has_major_issues=true and "
+        "describe them clearly. Otherwise set has_major_issues=false.\n\n"
+        "<extracted_data>\n{extracted_json}\n</extracted_data>\n"
+        "<expected_output_schema>\n{schema_json}\n</expected_output_schema>"
     ),
     "rework": (
-        "You are an expert data extractor. Refine the previously extracted data "
-        "based on the review comments. Address each comment and improve the output "
-        "while preserving information that was already correct.\n\n"
-        "<previously_extracted_data>\n{extracted_json}\n\n</previously_extracted_data>"
-        "<review_comments>\n{review_comments}\n\n</review_comments>"
-        "Refine the extracted data addressing the review comments.\n\n"
-        "<output_schema>\n{schema_json}\n\n</output_schema>"
+        "Refine the extracted data based on the review comments and address each "
+        "comment.\n\n"
+        "<previously_extracted_data>\n{extracted_json}\n</previously_extracted_data>\n"
+        "<review_comments>\n{review_comments}\n</review_comments>\n"
+        "<output_schema>\n{schema_json}\n</output_schema>"
     ),
 }
 
@@ -176,6 +191,7 @@ def invoke_data_extractor(
     documents: list[DocumentMetadata],
     extraction_model: Type[T],
     system_prompts: dict[str, str] | None = None,
+    user_prompts: dict[str, str] | None = None,
     model_name: str = MODEL_NAME,
     max_review_cycles: int = MAX_REVIEW_CYCLES,
     use_content_cache: bool = False,
@@ -185,8 +201,10 @@ def invoke_data_extractor(
     Args:
         documents: One or more documents to extract information from.
         extraction_model: Pydantic model class defining the desired output schema.
-        system_prompts: Optional overrides keyed by ``extract``, ``review``,
-            ``rework``.
+        system_prompts: Optional system prompt overrides keyed by ``extract``,
+            ``review``, ``rework``.
+        user_prompts: Optional user prompt overrides keyed by ``extract``,
+            ``review``, ``rework``.
         model_name: Model identifier for Gemini API or Vertex AI.
         max_review_cycles: Maximum review-rework iterations (default 3).
         use_content_cache: Enable Gemini cached content for document context.
@@ -198,7 +216,27 @@ def invoke_data_extractor(
     if not documents:
         raise ValueError("At least one document is required")
 
-    prompts: dict[str, str] = {**DEFAULT_PROMPTS, **(system_prompts or {})}
+    resolved_system_prompts: dict[str, str] = {
+        **DEFAULT_SYSTEM_PROMPTS,
+        **(system_prompts or {}),
+    }
+    resolved_user_prompts: dict[str, str] = {**DEFAULT_USER_PROMPTS}
+
+    # Backward compatibility: existing callers used ``system_prompts`` as the
+    # only prompt channel. Keep honoring that behavior unless ``user_prompts``
+    # is explicitly provided.
+    if user_prompts is None and system_prompts:
+        resolved_user_prompts.update(system_prompts)
+    else:
+        resolved_user_prompts.update(user_prompts or {})
+
+    for key in NODE_KEYS:
+        if key not in resolved_system_prompts or key not in resolved_user_prompts:
+            raise ValueError(
+                f"Missing prompt configuration for node '{key}'. "
+                "Expected keys: extract, review, rework."
+            )
+
     schema_json = json.dumps(extraction_model.model_json_schema(), indent=2)
     document_parts = _parts_from_documents(documents)
     base64_file_blocks = _base64_blocks_from_parts(document_parts)
@@ -221,24 +259,35 @@ def invoke_data_extractor(
         )
         review_llm = build_chat_model(model_name=model_name)
 
-        def _build_prompt(template: str, **kwargs: Any) -> HumanMessage:
-            prompt = PromptTemplate.from_template(template).format(**kwargs)
+        def _build_messages(node_key: str, **kwargs: Any) -> list[Any]:
+            system_prompt = PromptTemplate.from_template(
+                resolved_system_prompts[node_key]
+            ).format(**kwargs)
+            user_prompt = PromptTemplate.from_template(
+                resolved_user_prompts[node_key]
+            ).format(**kwargs)
+
+            system_message = SystemMessage(content=system_prompt)
             if cache is not None:
-                return HumanMessage(content=prompt)
-            return HumanMessage(
-                content=[
-                    {"type": "text", "text": prompt},
-                    *base64_file_blocks,
-                ]
-            )
+                return [system_message, HumanMessage(content=user_prompt)]
+
+            return [
+                system_message,
+                HumanMessage(
+                    content=[
+                        {"type": "text", "text": user_prompt},
+                        *base64_file_blocks,
+                    ]
+                ),
+            ]
 
         # -- Graph node functions (closures over extraction/rework llm) -----
 
         def extract_node(state: dict[str, Any]) -> dict[str, Any]:
             structured_llm = extract_llm.with_structured_output(extraction_model)
             kwargs = {"schema_json": schema_json}
-            message = _build_prompt(prompts["extract"], **kwargs)
-            result = structured_llm.invoke([message])
+            messages = _build_messages("extract", **kwargs)
+            result = structured_llm.invoke(messages)
             return {"extracted_data": result.model_dump(), "iteration_count": 0}
 
         def review_node(state: ExtractionState) -> dict[str, Any]:
@@ -248,8 +297,8 @@ def invoke_data_extractor(
                 "extracted_json": extracted_json,
                 "schema_json": schema_json,
             }
-            message = _build_prompt(prompts["review"], **kwargs)
-            result = structured_llm.invoke([message])
+            messages = _build_messages("review", **kwargs)
+            result = structured_llm.invoke(messages)
             return {
                 "review_comments": result.comments,
                 "review_has_major_issues": result.has_major_issues,
@@ -264,8 +313,8 @@ def invoke_data_extractor(
                 "review_comments": state["review_comments"],
                 "schema_json": schema_json,
             }
-            message = _build_prompt(prompts["rework"], **kwargs)
-            result = structured_llm.invoke([message])
+            messages = _build_messages("rework", **kwargs)
+            result = structured_llm.invoke(messages)
             return {"extracted_data": result.model_dump()}
 
         def should_continue(state: ExtractionState) -> str:

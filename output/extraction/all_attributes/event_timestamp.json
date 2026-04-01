@@ -1,0 +1,33 @@
+{
+  "name": "Event timestamp",
+  "description": "The date, or date and time, of the occurrence of the event of the Action type that is reported.",
+  "dataType": "datetime",
+  "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ in UTC (time portion 00:00:00 if reported as date)",
+  "optionalityRules": [
+    "Required for all Action types."
+  ],
+  "valueRules": [
+    "For NEWT, Event timestamp is equal to Execution timestamp.",
+    "For MODI, TERM, Event timestamp is unique within the transaction report, and \u2018the occurrence of the event\u2019 may be taken as: (a) the date and time of the agreement of the counterparties of the event (i.e. the modification or termination execution time); or (b) the date that the event becomes effective (i.e. the modification or termination effective date).",
+    "Event timestamp is greater than or equal to the date value of Execution timestamp.",
+    "The date value of Event timestamp is less than or equal to Expiration date.",
+    "For Action types of CORR, EROR, REVI or PRTO, Event Timestamp is less than or equal to Reporting timestamp."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "67",
+      "section": "Item 20\u2014Event timestamp"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "68",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "69",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

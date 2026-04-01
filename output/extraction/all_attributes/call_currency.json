@@ -1,0 +1,47 @@
+{
+  "name": "Call currency",
+  "description": "The ISO 4217 currency code for the currency in which Call amount is denominated.",
+  "dataType": "String",
+  "format": "ISO 4217 currency code.",
+  "optionalityRules": [
+    "Conditionally required where Call amount is reported.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "For the conditionally required Action types, a value is required for these items if the corresponding items Call amount and/or Put amount are reported.",
+    "If reported, the value is an ISO 4217 code, but excluding XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+    "For certain FX option transactions, Call currency is reported as the ISO 4217 code of XXX."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "92",
+      "section": "Item 38\u2014Call currency"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "92",
+      "section": "335"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "92",
+      "section": "336"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "93",
+      "section": "338"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "93",
+      "section": "339a"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "93",
+      "section": "339b"
+    }
+  ]
+}

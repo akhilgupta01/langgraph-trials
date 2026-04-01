@@ -1,0 +1,27 @@
+{
+  "name": "Collateral portfolio code (variation margin)",
+  "description": "Unique code(s) to identify the collateral portfolio(s) of variation margin in which the transaction is collateralised.",
+  "dataType": "String",
+  "format": "Not more than 52 characters",
+  "optionalityRules": [
+    "Required in a transaction report (NEWT, MODI, CORR, REVI) if applicable (Paragraph 693).",
+    "Required in collateral reports (MARU, CORR) if applicable (Paragraph 695).",
+    "Required if Collateral portfolio indicator is True (Paragraph 698(a))."
+  ],
+  "valueRules": [
+    "Value NOAP ('not applicable') is reported if not collateralised in a portfolio, or not collateralised at all (Paragraph 691).",
+    "Must conform to 2024 Rules specifications (Paragraph 698(d))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "22",
+      "section": "41, Item 11"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "169",
+      "section": "Item 11, 690, 691, 693, 695, 698(a), 698(d)"
+    }
+  ]
+}

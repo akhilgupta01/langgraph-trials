@@ -1,0 +1,27 @@
+{
+  "name": "Notional currency\u2014Leg 1",
+  "description": "The ISO 4217 currency codes for the currencies in which Notional amount\u2014Leg 1 is denominated.",
+  "dataType": "string",
+  "format": "ISO 4217 Currency codes (3-character alphabetical code)",
+  "optionalityRules": [
+    "Conditionally required where Notional amount\u2014Leg 1 is reported, for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "Exclude the reporting of the non-currency ISO 4217 codes of XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+    "For an FX option, other than a digital option, Notional currency\u2014Leg 1 is equal to one of Call currency or Put currency.",
+    "For an FX transaction where the underlier is a currency index or a basket of currencies, the denomination of the underlier is as \u2018index units\u2019 or \u2018basket units\u2019 and not as \u2018currency units\u2019. In this case, we expect that the index or basket is reported as leg 2 and Notional currency\u2014Leg 2 is reported as the ISO 4217 code of XXX."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "89",
+      "section": "Item 34\u2014Notional currency\u2014Leg 1"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "90",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

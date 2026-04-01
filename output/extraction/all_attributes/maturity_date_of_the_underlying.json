@@ -1,0 +1,32 @@
+{
+  "name": "Maturity date of the underlying",
+  "description": "Reports the maturity date of the swap that is the underlier in a swaption transaction.",
+  "dataType": "Date",
+  "format": "ISO 8601 date",
+  "optionalityRules": [
+    "Conditionally required for the underlier of a swap in a swaption transaction (page 131, Condition table, paragraph 490).",
+    "Required if Contract type is SWPT (page 131, paragraph 492(a)(i))."
+  ],
+  "valueRules": [
+    "If reported, Maturity date of the underlier is greater than Expiration date (page 131, paragraph 492(a)(ii)).",
+    "The format of the value conforms to the 2024 Rules specifications (page 131, paragraph 492(b)).",
+    "A value is not reported for the not-reported Action types (page 131, paragraph 492(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "130",
+      "section": "Item 85\u2014Maturity date of the underlying"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "131",
+      "section": "490"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "131",
+      "section": "492"
+    }
+  ]
+}

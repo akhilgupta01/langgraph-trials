@@ -1,0 +1,51 @@
+{
+  "name": "Action type",
+  "description": "Action type and Event type provide important descriptive information about the type of transaction that is being reported and, more importantly, condition the data elements content of a report, enable a TR to tailor technical validation requirements to different type of reports and inform a TR\u2019s data handling practices.",
+  "dataType": "string",
+  "format": "Four-character alphabetical code (e.g., NEWT, MODI, TERM, CORR, EROR, REVI, PRTO, VALU, MARU).",
+  "optionalityRules": [
+    "Action type is required to be reported for all transaction reports (Action types: ALL)."
+  ],
+  "valueRules": [
+    "Allowable Action types are: NEWT (New transaction), MODI (Modification), TERM (Full termination), CORR (Correction), EROR (Error), REVI (Revive), PRTO (Transfer out), VALU (Valuation), MARU (Margin update).",
+    "If an OTC derivative is in the state of \u2018Not reported\u2019, only the Action type NEWT is permitted.",
+    "If an OTC derivative is in the state of \u2018Outstanding\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, PRTO, EROR and TERM. The process flow of \u2018Expire\u2019 indicates the automatic expiration of an OTC derivative upon reaching its Expiration date, about which a report is not made.",
+    "If an OTC derivative is in the state of \u2018Terminated\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, EROR and REVI.",
+    "If an OTC derivative is in the state of \u2018Errored\u2019, only the REVI Action type is permitted.",
+    "If an OTC derivative is in the state of \u2018Expired\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, EROR and REVI.",
+    "Action types MODI, CORR, VALU and MARU do not impact the state of the OTC derivative. They are allowed to be reported for terminated or expired trades only in the case of reporting information that was applicable to the OTC derivative prior to entering the terminated or expired state, but they cannot be used to change the state of the OTC derivative to \u2018Outstanding\u2019 (e.g. by modifying the maturity date).",
+    "Only the Action type REVI can be used to change the state of an OTC derivative to \u2018Outstanding\u2019 (re-open an OTC derivative that was cancelled or terminated in error or expired due to an erroneous expiration date)."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "8",
+      "section": "Action types and Event types, paragraphs 8-10"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "9",
+      "section": "Action type Event type tables, paragraphs 11-12"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "16",
+      "section": "paragraphs 14-19"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "17",
+      "section": "paragraph 19"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "145",
+      "section": "Item 101\u2014Action type, paragraph 553"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "146",
+      "section": "Use conditions, Minimum TR validations, paragraphs 554-555"
+    }
+  ]
+}

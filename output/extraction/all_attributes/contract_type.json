@@ -1,0 +1,27 @@
+{
+  "name": "Contract type",
+  "description": "This data element reports a code for the type of contract of the transaction.",
+  "dataType": "string",
+  "format": "4-character code (e.g., CFDS, FRAS)",
+  "optionalityRules": [
+    "Required for Action types: NEWT, MODI, CORR, REVI",
+    "Optional for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "The allowable values are CFDS (contract for difference), FRAS (forward rate agreement), FORW (forward), OPTN (option), SWAP (swap), SWPT (swaption) and OTHR (other).",
+    "OTHR is reported only if the UPI reference data of the reported UPI code includes both a value for 'Return or Payout Trigger' (a FORW or SWAP attribute) and 'Valuation Method or Trigger' (an OPTN attribute).",
+    "If there is only one of those values in the UPI reference data of the reported UPI code, then Contract type would be, as applicable, FORW, SWAP, CFDS, FRAS, OPTN or SWPT."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "38",
+      "section": "Item 4\u2014Contract type, par 108, 109, 110"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "39",
+      "section": "par 112"
+    }
+  ]
+}

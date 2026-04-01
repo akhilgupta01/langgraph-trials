@@ -1,0 +1,46 @@
+{
+  "name": "Other payment type",
+  "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps.",
+  "dataType": "String",
+  "format": "UFRO, UWIN, PEXH (inferred from paragraphs 450, 453, 456)",
+  "optionalityRules": [
+    "Required for upfront payments if applicable (page 120, Condition table).",
+    "Required for termination payments if applicable (page 120, Condition table).",
+    "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+    "For any Action type for which an Other payment amount is reported, Other payment type is required (page 122, paragraph 462(e)(i)).",
+    "If Asset class is CRDT and all of Fixed rate\u2014Leg 1, Fixed rate\u2014Leg 2, Spread\u2014Leg 1 and Spread\u2014Leg 2 are not reported, the value of UFRO is required for Action type NEWT (page 122, paragraph 462(a)(i)).",
+    "If Asset class is not CRDT, values may be optionally reported for Other payment type for each Other payment amount for Action type NEWT (page 122, paragraph 462(a)(ii)).",
+    "For any other Action type, values may be optionally reported for Other payment type for each Other payment amount (page 122, paragraph 462(b))."
+  ],
+  "valueRules": [
+    "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+    "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "120",
+      "section": "Item 75\u2014Other payment type"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "121",
+      "section": "450"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "121",
+      "section": "453"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "121",
+      "section": "456"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "122",
+      "section": "462"
+    }
+  ]
+}

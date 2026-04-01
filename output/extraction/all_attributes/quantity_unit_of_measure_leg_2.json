@@ -1,0 +1,58 @@
+{
+  "name": "Quantity unit of measure\u2014Leg 2",
+  "description": "The unit in which both Total notional quantity\u2014Leg 2 and Notional quantity\u2014Leg 2 are expressed.",
+  "dataType": "String",
+  "format": "Applicable code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+  "optionalityRules": [
+    "Conditionally required where Total notional quantity\u2014Leg 2 is reported as a value other than \u2018all 9s\u2019.",
+    "May be optionally reported if Total notional quantity\u2014Leg 2 is reported as 'all 9s'.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "If reported, the value is a code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+    "Reporting entities should report the code that most accurately describes the unit of measure for the particular commodity underlier quantity.",
+    "Specific codes are provided for environmental commodity units (MWHO, CEER, CLRT, ENVC), commodity index units (IPNT), equity index units (IPNT), and equity instrument units (SHAS)."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "90",
+      "section": "Item 37\u2014Quantity unit of measure\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "90",
+      "section": "328"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "90",
+      "section": "329"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "91",
+      "section": "330"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "91",
+      "section": "331"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "91",
+      "section": "332"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "91",
+      "section": "333"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "92",
+      "section": "334c"
+    }
+  ]
+}

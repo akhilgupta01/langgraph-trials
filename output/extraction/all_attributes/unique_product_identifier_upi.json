@@ -1,0 +1,22 @@
+{
+  "name": "Unique product identifier (UPI)",
+  "description": "This data element reports the ISO 4914 Unique product identifier of the transaction.",
+  "dataType": "String",
+  "format": "ISO 4914 Unique product identifier (UPI)",
+  "optionalityRules": [
+    "Required for NEWT, MODI, CORR, REVI transaction report Action types",
+    "Optional for TERM, EROR, PRTO transaction report Action types"
+  ],
+  "valueRules": [
+    "The UPI reported is a valid UPI Service code.",
+    "Reporting entities should obtain and report the UPI that has the same UPI asset class, instrument type, product and UPI attributes as the reportable transaction.",
+    "Where there is not an exact match, report the UPI that most closely matches the reportable transaction."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "32-34",
+      "section": "Item 2\u2014Unique product identifier (UPI), par 86, 89, 90(c), 93, 94"
+    }
+  ]
+}

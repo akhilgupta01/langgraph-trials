@@ -1,0 +1,26 @@
+{
+  "name": "Beneficiary 1",
+  "description": "This data element reports the beneficiary of the rights and obligations of the transaction entered into by the Reporting Entity/Counterparty 1 on behalf of the beneficiary. A beneficiary is a person, other than the Reporting Entity or the beneficiaries of a trust (which would be reported as Counterparty 1), with the ultimate rights and obligations of a transaction.",
+  "dataType": "string",
+  "format": "LEI or other identifier (Designated Business Identifier as an ABN, AVID or BIC; or if no Designated Business Identifier, a unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters).",
+  "optionalityRules": [
+    "Required, if applicable, for Action types: NEWT, MODI, CORR, REVI",
+    "Not reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "Beneficiary 1 must not equal Reporting Entity or Counterparty 1.",
+    "For block trades, the beneficiaries of the block trade are not expected to be reported."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "48",
+      "section": "Item 10\u2014Beneficiary 1, par 151, 152, 153, 155, 156"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "49",
+      "section": "par 160, 161"
+    }
+  ]
+}

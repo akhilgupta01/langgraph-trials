@@ -1,0 +1,35 @@
+{
+  "name": "Clearing member",
+  "description": "The clearing member of the CCP facility through which the transaction was cleared.",
+  "dataType": "string",
+  "format": "ISO 17442 Legal entity identifier (LEI)",
+  "optionalityRules": [
+    "Conditionally required if Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+    "May be optionally reported where Cleared is reported as I, for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported where Cleared is reported as N.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "Reported as the LEI of the clearing member that may be of any registration status in the GLEIF database.",
+    "Must not be an LEI of a branch of the entity.",
+    "If reported, Clearing member does not equal Central counterparty.",
+    "Counterparties that directly clear (as a clearing member themselves) report themselves as both Counterparty 1 and Clearing member."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "73",
+      "section": "Item 24\u2014Clearing member"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "74",
+      "section": "Use conditions"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "75",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

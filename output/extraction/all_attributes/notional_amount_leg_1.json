@@ -1,0 +1,42 @@
+{
+  "name": "Notional amount\u2014Leg 1",
+  "description": "A key data element required to be reported for all transactions.",
+  "dataType": "decimal",
+  "format": "up to 25 numerals, including up to 5 numerals after the decimal point",
+  "optionalityRules": [
+    "Required for Action types NEWT, MODI, CORR, REVI.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "For transactions negotiated in monetary amounts, the amount taken from the trade confirmation.",
+    "For transactions negotiated in non-monetary amounts, the amount calculated by multiplying the non-monetary amount by the value reported for Strike price, Price or the market price for the underlier at the time of the transaction, as applicable.",
+    "May be a negative number for commodity transactions.",
+    "Other than for commodity derivatives, Notional amount\u2014Leg 1 is greater than or equal to zero.",
+    "If Notional amount\u2014Leg 1 is not initially known but will become known when the Strike Price or Price or an FX rate for a cross-currency transaction is determined at a later time after the execution of the transaction, Notional amount\u2014Leg 1 is... \u2018determinable\u2019 at the time of execution of the transaction; and \u2018determined\u2019 when the Strike Price or Price is determined.",
+    "May be first reported as \u2018all 9s\u2019 and then updated as the amount subsequently determined by a MODI-TRAD report.",
+    "If the Strike Price or Price or an FX rate will be determined more than one month after the execution of the transaction, reporting entities should report a calculated amount using the market price of the underlier or FX rate that will ultimately determine Notional amount\u2014Leg 1.",
+    "Default value of \u2018all 9s\u2019 is an allowable value."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "79",
+      "section": "Item 26\u2014Notional amount\u2014Leg 1"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "80",
+      "section": "paragraph 281-287"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "81",
+      "section": "paragraph 288-291"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "82",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

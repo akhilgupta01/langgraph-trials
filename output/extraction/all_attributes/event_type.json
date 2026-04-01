@@ -1,0 +1,78 @@
+{
+  "name": "Event type",
+  "description": "Action type and Event type provide important descriptive information about the type of transaction that is being reported and, more importantly, condition the data elements content of a report, enable a TR to tailor technical validation requirements to different type of reports and inform a TR\u2019s data handling practices.",
+  "dataType": "string",
+  "format": "Four-character alphabetical code (e.g., TRAD, NOVA, COMP, ETRM, CLRG, EXER, ALOC, CREV, PTNG, CORP, INCP, UPDT). A null value implicitly means 'No Event type'.",
+  "optionalityRules": [
+    "Event type is conditionally required based on the associated Action type.",
+    "Event type is required for applicable transaction reports, including when re-reporting."
+  ],
+  "valueRules": [
+    "Allowable Event types are: TRAD (Trade), NOVA (Novation), COMP (Compression), ETRM (Partial or full termination), CLRG (Clearing), EXER (Option exercise), ALOC (Allocation), CREV (Credit event), PTNG (Transfer out), CORP (Equity corporate action), INCP (Inclusion into a position), UPDT (Update of legacy trade), and a null value which is implicitly 'No Event type'.",
+    "The document provides a detailed matrix of allowed Action type and Event type combinations in the table on Page 9, paragraph 11.",
+    "NEWT-TRAD: First-time trade report with a new ISO 23897 UTI, other than trades reported with CLRG, NOVA, ALOC, COMP, CORP, EXER or INCP Event types.",
+    "NEWT-NOVA: First-time trade report with a new ISO 23897 UTI, arising from a step-in novation, which is not a new cleared trade.",
+    "NEWT-COMP: First-time trade report with a new ISO 23897 UTI, arising from a compression event, including a compression event at a CCP resulting in new cleared trades.",
+    "NEWT-CLRG: First-time trade report with a new ISO 23897 UTI of a cleared trade, including trades with a CCP or a clearing member as a counterparty.",
+    "NEWT-EXER: First-time trade report with new ISO 23897 UTI, being a new OTC derivative arising from the exercise of an option.",
+    "NEWT-ALOC: First-time trade report with new ISO 23897 UTI, arising from an allocation event.",
+    "NEWT-PTNG: First-time report in the new destination TR with the existing UTI, following a transfer-out from a previous TR.",
+    "NEWT-CORP: First-time report with new ISO 23897 UTI, arising from a corporate action on the underlying equity.",
+    "NEWT-INCP: First-time trade report with new ISO 23897 UTI of a new position, arising from the inclusion of previously reported trades in that position for the first time.",
+    "MODI-TRAD: Outstanding OTC derivative with an existing UTI is modified due to renegotiation of its latest terms, or modified when previously not available or newly current data elements are reported, or a change in the identifier of Counterparty 2, Beneficiary 1, Other payment payer or Other payment receiver in specified use cases.",
+    "TERM-<no Event type>: Full termination of an OTC derivative.",
+    "CORR-<no Event type>: Reported information about an outstanding OTC derivative with an existing UTI is updated to correct prior reporting errors, but not to report previously not available or newly current data elements.",
+    "EROR-<no Event type>: Cancellation of report previously made in error, or reporting a change to the data elements that the TR uses to uniquely identify the OTC derivative within its records for specified use cases.",
+    "REVI-<no Event type>: Reinstatement of an outstanding OTC derivative that was cancelled or terminated in error or expired due to an erroneous expiration date.",
+    "PRTO-PTNG: Report to the current TR that an outstanding OTC derivative is to be removed from the TR\u2019s records due to it being transferred-out to a new TR.",
+    "VALU-<no Event type>: First or subsequent reporting of valuation information.",
+    "MARU-<no Event type>: First or subsequent reporting of collateral amounts information."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "8",
+      "section": "Action types and Event types, paragraphs 8-10"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "9",
+      "section": "Action type Event type table, paragraphs 11-12"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "10",
+      "section": "NEWT-TRAD to NEWT-INCP General usage and Example use cases"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "11",
+      "section": "MODI-TRAD to MODI-EXER General usage and Example use cases"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "12",
+      "section": "MODI-ALOC to TERM-COMP General usage and Example use cases"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "13",
+      "section": "TERM-ETRM to EROR-<no event type> General usage and Example use cases"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "14",
+      "section": "EROR-<no event type> to MARU-<no event type> General usage and Example use cases"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "145",
+      "section": "Item 102\u2014Event type, paragraph 553"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "146",
+      "section": "Use conditions, Minimum TR validations, paragraphs 554-555"
+    }
+  ]
+}

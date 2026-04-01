@@ -1,0 +1,41 @@
+{
+  "name": "Exchange rate",
+  "description": "For foreign exchange transactions that are not options, this data element reports: (a) the exchange rate taken from the trade confirmation, or (b) if there is no such exchange rate specified in the trade confirmation, calculated by dividing Notional amount\u2014Leg 1 by Notional amount\u2014Leg 2 (and, if necessary, inverted to the rate as is conventionally quoted in foreign exchange markets for the currency pair\u2014see paragraph 424).",
+  "dataType": "decimal",
+  "format": "up to 25 numerals, including up to 5 numerals after the decimal point",
+  "optionalityRules": [
+    "Exchange rate is required to be reported if Asset class is CURR and Contract type is not OPTN",
+    "Not-reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "If the calculated exchange rate is not of the same magnitude as is conventionally quoted in foreign exchange markets for the currency pair, the calculated exchange rate should be inverted for reporting as Exchange rate.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "Item 64\u2014Exchange rate"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "421"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "422"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "424"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "113",
+      "section": "426"
+    }
+  ]
+}

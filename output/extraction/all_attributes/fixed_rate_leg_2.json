@@ -1,0 +1,28 @@
+{
+  "name": "Fixed rate\u2014Leg 2",
+  "description": "The value of the per annum rate of the fixed rate of leg 2.",
+  "dataType": "Decimal",
+  "format": "Decimal",
+  "optionalityRules": [
+    "Conditionally required for NEWT, MODI, CORR, REVI where the reported UPI is of a product with a fixed rate, and for other products, if applicable (Paragraph 380).",
+    "Required if Asset class is INTR, Contract type is SWAP and the UPI is for a fixed-fixed product (Paragraph 384(b)(i)).",
+    "May be optionally reported in any other case if Asset class is not CURR (Paragraph 384(b)(ii)).",
+    "Not reported for TERM, EROR, PRTO (Paragraph 380)."
+  ],
+  "valueRules": [
+    "Always reported as a decimal of any numeric value (positive, negative or zero) (Paragraph 379).",
+    "Must conform to 2024 Rules specifications (Paragraph 384(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "102",
+      "section": "Item 51, 379, 380"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "103",
+      "section": "384(b)(i), 384(b)(ii), 384(c)"
+    }
+  ]
+}

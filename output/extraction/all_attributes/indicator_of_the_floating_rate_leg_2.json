@@ -1,0 +1,32 @@
+{
+  "name": "Indicator of the floating rate\u2014Leg 2",
+  "description": "Reports the indicator of the interest rate reference rate for transactions, other than interest rate swaps, where Leg 2 is a floating rate interest rate leg.",
+  "dataType": "String",
+  "format": "ISO 20022 ExternalBenchmarkCurveName1Code (four-character code)",
+  "optionalityRules": [
+    "Conditionally required for transactions, other than interest rate swaps, where Leg 2 is a floating rate interest rate leg (page 132, Condition table, paragraph 495).",
+    "If Asset class is not INTR or CURR, a value may be optionally reported (page 133, paragraph 502(a)(i))."
+  ],
+  "valueRules": [
+    "If reported, the value is a code in the ISO 20022 code set ExternalBenchmarkCurveName1Code (page 133, paragraph 502(b)).",
+    "A value is not reported for the not-reported Action types (page 133, paragraph 502(c)).",
+    "Should not be reported if the actual floating rate reference rate does not properly fall within a \u2018family\u2019 within the ExternalBenchmarkCurveName1Code code set (page 132, paragraph 499)."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "132",
+      "section": "Item 86\u2014Indicator of the floating rate\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "132",
+      "section": "493"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "133",
+      "section": "502"
+    }
+  ]
+}

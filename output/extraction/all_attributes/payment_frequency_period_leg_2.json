@@ -1,0 +1,42 @@
+{
+  "name": "Payment frequency period\u2014Leg 2",
+  "description": "This data element reports payment frequency period information for leg 2 of the transaction.",
+  "dataType": "string",
+  "format": "4-character alphabetical code",
+  "optionalityRules": [
+    "Conditionally required where a leg of a transaction is an interest rate leg.",
+    "Required if one of Fixed rate\u2014Leg 2 or Indicator of the floating rate\u2014Leg 2 is reported.",
+    "Not-reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "If reported, the formats of the values conform to the 2024 Rules specifications.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "116",
+      "section": "Item 69\u2014Payment frequency period\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "116",
+      "section": "435"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "116",
+      "section": "436"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "117",
+      "section": "437"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "117",
+      "section": "439"
+    }
+  ]
+}

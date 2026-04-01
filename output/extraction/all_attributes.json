@@ -1,0 +1,3773 @@
+{
+  "extractedAttributes": [
+    {
+      "name": "Action type",
+      "description": "Action type and Event type provide important descriptive information about the type of transaction that is being reported and, more importantly, condition the data elements content of a report, enable a TR to tailor technical validation requirements to different type of reports and inform a TR\u2019s data handling practices.",
+      "dataType": "string",
+      "format": "Four-character alphabetical code (e.g., NEWT, MODI, TERM, CORR, EROR, REVI, PRTO, VALU, MARU).",
+      "optionalityRules": [
+        "Action type is required to be reported for all transaction reports (Action types: ALL)."
+      ],
+      "valueRules": [
+        "Allowable Action types are: NEWT (New transaction), MODI (Modification), TERM (Full termination), CORR (Correction), EROR (Error), REVI (Revive), PRTO (Transfer out), VALU (Valuation), MARU (Margin update).",
+        "If an OTC derivative is in the state of \u2018Not reported\u2019, only the Action type NEWT is permitted.",
+        "If an OTC derivative is in the state of \u2018Outstanding\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, PRTO, EROR and TERM. The process flow of \u2018Expire\u2019 indicates the automatic expiration of an OTC derivative upon reaching its Expiration date, about which a report is not made.",
+        "If an OTC derivative is in the state of \u2018Terminated\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, EROR and REVI.",
+        "If an OTC derivative is in the state of \u2018Errored\u2019, only the REVI Action type is permitted.",
+        "If an OTC derivative is in the state of \u2018Expired\u2019, certain Action types are permitted: MODI, CORR, VALU, MARU, EROR and REVI.",
+        "Action types MODI, CORR, VALU and MARU do not impact the state of the OTC derivative. They are allowed to be reported for terminated or expired trades only in the case of reporting information that was applicable to the OTC derivative prior to entering the terminated or expired state, but they cannot be used to change the state of the OTC derivative to \u2018Outstanding\u2019 (e.g. by modifying the maturity date).",
+        "Only the Action type REVI can be used to change the state of an OTC derivative to \u2018Outstanding\u2019 (re-open an OTC derivative that was cancelled or terminated in error or expired due to an erroneous expiration date)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "8",
+          "section": "Action types and Event types, paragraphs 8-10"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "9",
+          "section": "Action type Event type tables, paragraphs 11-12"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "16",
+          "section": "paragraphs 14-19"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "17",
+          "section": "paragraph 19"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "145",
+          "section": "Item 101\u2014Action type, paragraph 553"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "146",
+          "section": "Use conditions, Minimum TR validations, paragraphs 554-555"
+        }
+      ]
+    },
+    {
+      "name": "Asset class",
+      "description": "This data element reports a code for the Asset class of the transaction.",
+      "dataType": "String",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Required for all transaction reports"
+      ],
+      "valueRules": [
+        "The allowable values for Asset class are COMM (commodity), CRDT (credit), CURR (foreign exchange), EQUI (equity), INTR (interest rates) and OTHR (other).",
+        "OTC derivatives with precious metals underliers are reported in the commodity (COMM) asset class.",
+        "OTC derivatives where Leg 2 is an interest rate leg are in the Asset class applicable to its Leg 1.",
+        "OTHR is only reported for transactions where none of the other Asset classes are solely applicable.",
+        "If OTHR is not supported as a reportable Asset class by a TR, the transaction should be reported in the Asset class that is alphabetically first among the asset classes of the transaction.",
+        "The Asset class reported is one of COMM, CRDT, CURR, EQUI, INTR or, if supported by a TR, OTHR."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "36-37",
+          "section": "Item 3\u2014Asset class, par 100, 101, 105, 106, 107(b)"
+        }
+      ]
+    },
+    {
+      "name": "Beneficiary 1",
+      "description": "This data element reports the beneficiary of the rights and obligations of the transaction entered into by the Reporting Entity/Counterparty 1 on behalf of the beneficiary. A beneficiary is a person, other than the Reporting Entity or the beneficiaries of a trust (which would be reported as Counterparty 1), with the ultimate rights and obligations of a transaction.",
+      "dataType": "string",
+      "format": "LEI or other identifier (Designated Business Identifier as an ABN, AVID or BIC; or if no Designated Business Identifier, a unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters).",
+      "optionalityRules": [
+        "Required, if applicable, for Action types: NEWT, MODI, CORR, REVI",
+        "Not reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Beneficiary 1 must not equal Reporting Entity or Counterparty 1.",
+        "For block trades, the beneficiaries of the block trade are not expected to be reported."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "48",
+          "section": "Item 10\u2014Beneficiary 1, par 151, 152, 153, 155, 156"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "49",
+          "section": "par 160, 161"
+        }
+      ]
+    },
+    {
+      "name": "Beneficiary 1 identifier type indicator",
+      "description": "Beneficiary 1 identifier type indicator is reported as a boolean True/False value, where True indicates that Beneficiary 1 is reported as an LEI.",
+      "dataType": "Boolean",
+      "format": "True or False",
+      "optionalityRules": [
+        "Conditionally required where Beneficiary 1 is reported (for Action types: NEWT, MODI, CORR, REVI)",
+        "Not reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "True indicates that Beneficiary 1 is reported as an LEI."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "50",
+          "section": "Item 11\u2014Beneficiary 1 identifier type indicator, par 162, 164"
+        }
+      ]
+    },
+    {
+      "name": "Broker",
+      "description": "This data element reports the intermediary that arranged the transaction on behalf of the Reporting Entity (and potentially also on behalf of Counterparty 2) without becoming a counterparty to the transaction.",
+      "dataType": "string",
+      "format": "LEI (Legal Entity Identifier) with a registration status of \u2018Issued\u2019, \u2018Lapsed\u2019, \u2018Pending transfer\u2019 or \u2018Pending archival\u2019. Must not be an LEI of a branch of the entity. For reports with Action type REVI, any LEI registration status is allowed.",
+      "optionalityRules": [
+        "Required, if applicable, for Action types: NEWT, MODI, CORR, REVI",
+        "Not reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Broker's LEI must not equal the LEI for Counterparty 1 or Counterparty 2.",
+        "If a broker enters into a transaction in a principal or 'matched principal' capacity, it is reported as Counterparty 2, not Broker.",
+        "Reporting entity should not report themselves as Broker."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "51",
+          "section": "Item 12\u2014Broker, par 166, 167, 168, 169"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "52",
+          "section": "par 172, 173"
+        }
+      ]
+    },
+    {
+      "name": "Central counterparty",
+      "description": "The LEI of the CCP\u2014the LEI is the \u2018current LEI\u2019 (with a registration status of \u2018Issued\u2019, \u2018Pending transfer\u2019 or \u2018Pending archival\u2019 in the GLEIF database) and must not be an LEI of a branch of the entity.",
+      "dataType": "string",
+      "format": "ISO 17442 Legal entity identifier (LEI)",
+      "optionalityRules": [
+        "Required where Cleared is reported as Y.",
+        "May be optionally reported where Cleared is reported as I.",
+        "Not reported where Cleared is reported as N.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "If reported, Central counterparty does not equal Clearing member."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "72",
+          "section": "Item 23\u2014Central counterparty"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "73",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "73",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Cleared",
+      "description": "Indicates whether the transaction has been cleared (\u2018Y\u2019), not cleared (\u2018N\u201d) or that the reporting entity intends it to be cleared by a CCP (\u2018I\u2019).",
+      "dataType": "string",
+      "format": "1-character alphabetical code",
+      "optionalityRules": [
+        "Required for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "The value is one of Y, N or I."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "72",
+          "section": "Item 22\u2014Cleared, and Item 23\u2014Central counterparty"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "72",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "72",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Clearing member",
+      "description": "The clearing member of the CCP facility through which the transaction was cleared.",
+      "dataType": "string",
+      "format": "ISO 17442 Legal entity identifier (LEI)",
+      "optionalityRules": [
+        "Conditionally required if Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+        "May be optionally reported where Cleared is reported as I, for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported where Cleared is reported as N.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "Reported as the LEI of the clearing member that may be of any registration status in the GLEIF database.",
+        "Must not be an LEI of a branch of the entity.",
+        "If reported, Clearing member does not equal Central counterparty.",
+        "Counterparties that directly clear (as a clearing member themselves) report themselves as both Counterparty 1 and Clearing member."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "73",
+          "section": "Item 24\u2014Clearing member"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "74",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "75",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Contract type",
+      "description": "This data element reports a code for the type of contract of the transaction.",
+      "dataType": "string",
+      "format": "4-character code (e.g., CFDS, FRAS)",
+      "optionalityRules": [
+        "Required for Action types: NEWT, MODI, CORR, REVI",
+        "Optional for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "The allowable values are CFDS (contract for difference), FRAS (forward rate agreement), FORW (forward), OPTN (option), SWAP (swap), SWPT (swaption) and OTHR (other).",
+        "OTHR is reported only if the UPI reference data of the reported UPI code includes both a value for 'Return or Payout Trigger' (a FORW or SWAP attribute) and 'Valuation Method or Trigger' (an OPTN attribute).",
+        "If there is only one of those values in the UPI reference data of the reported UPI code, then Contract type would be, as applicable, FORW, SWAP, CFDS, FRAS, OPTN or SWPT."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "38",
+          "section": "Item 4\u2014Contract type, par 108, 109, 110"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "39",
+          "section": "par 112"
+        }
+      ]
+    },
+    {
+      "name": "Counterparty 1",
+      "description": "Where the Reporting Entity is a trustee of a trust, the trustee is the Reporting Entity and the trust is Counterparty 1. For all other types of Reporting Entities, the entity is both the Reporting Entity and Counterparty 1. The allowable value for Counterparty 1 is the 'current LEI' of Counterparty 1, subject to the relaxed LEI requirements for certain Action types as set out in paragraph 117.",
+      "dataType": "string",
+      "format": "ISO 17442 Legal entity identifier (LEI)",
+      "optionalityRules": [
+        "Required for all transaction reports."
+      ],
+      "valueRules": [
+        "Must be a valid GLEIF LEI of the required registration status for all Action types.",
+        "LEI must pertain to a legal entity and not a branch.",
+        "Counterparty 1 must not equal Counterparty 2 where Counterparty 2 identifier type indicator is True.",
+        "For Action types NEWT, MODI, CORR, the LEI registration status must be 'Issued', 'Pending transfer', or 'Pending archival'.",
+        "For Action types REVI, TERM, EROR, PRTO, the LEI registration status can be any status."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "42",
+          "section": "Item 6\u2014Counterparty 1, paragraphs 124-127"
+        }
+      ]
+    },
+    {
+      "name": "Counterparty 2",
+      "description": "The allowable value for Counterparty 2 is an LEI or another identifier determined in accordance with Rule S1.3.1(2). In the case of a transaction traded on a facility and cleared by a CCP, and the identities of the counterparties are not disclosed to each other, 'ANON' is reported. Another identifier may be a Designated Business Identifier (such as an ABN, AVID or BIC) or, if unavailable, a unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters. An LEI of Counterparty 2 must not be an LEI of a branch of the entity.",
+      "dataType": "string",
+      "format": "ISO 17442 Legal entity identifier (LEI); Alphanumeric code up to 52 characters; ABN; AVID; BIC; 'ANON'",
+      "optionalityRules": [
+        "Required for all transaction reports."
+      ],
+      "valueRules": [
+        "If LEI is reported, it must be a valid GLEIF LEI of the required registration status and pertain to a legal entity and not a branch.",
+        "If a non-LEI identifier is reported, the format of the value must conform to the 2024 Rules specifications.",
+        "For Action types NEWT, MODI, CORR, the LEI registration status must be 'Issued', 'Lapsed', 'Pending transfer' or 'Pending archival'.",
+        "For Action types REVI, TERM, EROR, PRTO, the LEI registration status can be any status.",
+        "May be 'ANON' for transactions traded on a facility and cleared by a CCP where counterparties are not disclosed."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "43-44",
+          "section": "Item 7\u2014Counterparty 2, paragraphs 128-137"
+        }
+      ]
+    },
+    {
+      "name": "Counterparty 2 identifier type indicator",
+      "description": "Counterparty 2 identifier type indicator is reported as a boolean True/False value, where True indicates that Counterparty 2 is reported as an LEI.",
+      "dataType": "Boolean",
+      "format": "True or False",
+      "optionalityRules": [
+        "Required for all transaction reports (ALL Action types)"
+      ],
+      "valueRules": [
+        "True indicates that Counterparty 2 is reported as an LEI."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "46",
+          "section": "Item 8\u2014Counterparty 2 identifier type indicator, par 143, 145"
+        }
+      ]
+    },
+    {
+      "name": "Counterparty 2 name",
+      "description": "This data element reports the legal name of Counterparty 2.",
+      "dataType": "alphanumeric string",
+      "format": "Not more than 105 characters. Legal names longer than 105 characters should be truncated to the first 105 characters.",
+      "optionalityRules": [
+        "Conditionally required for all kinds of reports, if Counterparty 2 is not reported as an LEI, Designated Business Identifier or the value ANON."
+      ],
+      "valueRules": [],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "45",
+          "section": "Item 7a\u2014Counterparty 2 name, par 138, 139, 140, 141"
+        }
+      ]
+    },
+    {
+      "name": "Country of Counterparty 2",
+      "description": "This data element reports the two-character ISO 3166 country code of Counterparty 2.",
+      "dataType": "string",
+      "format": "Two-character ISO 3166 country code (two uppercase alphabetic characters)",
+      "optionalityRules": [
+        "Conditionally required if Counterparty 2 is not reported as an LEI (for Action types: NEWT, MODI, CORR, REVI)",
+        "Not reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "If Counterparty 2 is reported as ANON, reporting entities should report their own country of residence or business address.",
+        "If Counterparty 2 identifier type indicator is reported as True (i.e., Counterparty 2 is an LEI), no value is reported."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "47",
+          "section": "Item 9\u2014Country of Counterparty 2, par 147, 148, 149"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "48",
+          "section": "par 150"
+        }
+      ]
+    },
+    {
+      "name": "Direction 1",
+      "description": "Indicates, for certain kinds of OTC derivatives, whether the reporting entity is the buyer (BYER) or seller (SLLR) in a transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required for certain kinds of OTC derivatives.",
+        "A value must be reported for either Direction 1 or both of Direction 2\u2014Leg 1 and Direction 2\u2014Leg 2.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "If reported, the value is one of BYER or SLLR.",
+        "The applicable kinds of OTC derivatives are those for which it is widely understood that a buyer and seller are readily identified.",
+        "Associated with reference data elements of the UPI code and/or the values of Asset class and Contract type reported for the transaction."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "55",
+          "section": "Item 14\u2014Direction 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "56",
+          "section": "Item 14 OTC derivatives"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "57",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Direction 2\u2014Leg 1",
+      "description": "Indicates, for certain kinds of OTC derivatives, whether the reporting entity is the payer (MAKE) or receiver (TAKE) of Leg 1 in a transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required for the applicable kinds of OTC derivatives.",
+        "A value must be reported for either Direction 1 or both of Direction 2\u2014Leg 1 and Direction 2\u2014Leg 2.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "If reported, the value of Direction 2\u2014Leg 1 is one of MAKE or TAKE.",
+        "Applicable to OTC derivatives other than those for which a value is reported for Direction 1.",
+        "These kinds of OTC derivatives are indicated at 2.13.2 of the ROC CDE Technical Guidance as being: most swaps and swap-like contracts including interest rate swaps, credit total return swaps and equity swaps (except for credit default swaps, variance, volatility and correlation swaps); foreign exchange swaps, forwards, non-deliverable forwards; and under the 2024 Rules, foreign exchange contracts for difference."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "58",
+          "section": "Item 15\u2014Direction 2\u2014Leg 1, and Item 16\u2014Direction 2\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "59",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Direction 2\u2014Leg 2",
+      "description": "Indicates, for certain kinds of OTC derivatives, whether the reporting entity is the payer (MAKE) or receiver (TAKE) of Leg 2 in the transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required for the applicable kinds of OTC derivatives.",
+        "A value must be reported for either Direction 1 or both of Direction 2\u2014Leg 1 and Direction 2\u2014Leg 2.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "If reported, the value of Direction 2\u2014Leg 2 is the corresponding opposite value to that of Direction 2\u2014Leg 1.",
+        "Applicable to OTC derivatives other than those for which a value is reported for Direction 1.",
+        "These kinds of OTC derivatives are indicated at 2.13.2 of the ROC CDE Technical Guidance as being: most swaps and swap-like contracts including interest rate swaps, credit total return swaps and equity swaps (except for credit default swaps, variance, volatility and correlation swaps); foreign exchange swaps, forwards, non-deliverable forwards; and under the 2024 Rules, foreign exchange contracts for difference."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "58",
+          "section": "Item 15\u2014Direction 2\u2014Leg 1, and Item 16\u2014Direction 2\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "59",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Effective date",
+      "description": "The unadjusted date at which obligations of the transaction come into effect, taken from the trade confirmation.",
+      "dataType": "date",
+      "format": "ISO 8601 YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "An exception is that, in keeping with international practices, the Effective date of an interest rate forward rate agreement is reported as the date portion, or the date and time value, of the Execution timestamp.",
+        "If a transaction does not have an Effective date, it may still be reported as the date value of Execution timestamp.",
+        "May be reported as a value earlier than Execution timestamp where there is a future settlement or pay-off that is dependent on: (a) an interest amount accrual from an earlier date, or (b) reference price/rate setting event(s) that commenced at an earlier date and Effective date is reported as that earlier date."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "60",
+          "section": "Item 17\u2014Effective date"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "61",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "62",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Event timestamp",
+      "description": "The date, or date and time, of the occurrence of the event of the Action type that is reported.",
+      "dataType": "datetime",
+      "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ in UTC (time portion 00:00:00 if reported as date)",
+      "optionalityRules": [
+        "Required for all Action types."
+      ],
+      "valueRules": [
+        "For NEWT, Event timestamp is equal to Execution timestamp.",
+        "For MODI, TERM, Event timestamp is unique within the transaction report, and \u2018the occurrence of the event\u2019 may be taken as: (a) the date and time of the agreement of the counterparties of the event (i.e. the modification or termination execution time); or (b) the date that the event becomes effective (i.e. the modification or termination effective date).",
+        "Event timestamp is greater than or equal to the date value of Execution timestamp.",
+        "The date value of Event timestamp is less than or equal to Expiration date.",
+        "For Action types of CORR, EROR, REVI or PRTO, Event Timestamp is less than or equal to Reporting timestamp."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "67",
+          "section": "Item 20\u2014Event timestamp"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "68",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "69",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Event type",
+      "description": "Action type and Event type provide important descriptive information about the type of transaction that is being reported and, more importantly, condition the data elements content of a report, enable a TR to tailor technical validation requirements to different type of reports and inform a TR\u2019s data handling practices.",
+      "dataType": "string",
+      "format": "Four-character alphabetical code (e.g., TRAD, NOVA, COMP, ETRM, CLRG, EXER, ALOC, CREV, PTNG, CORP, INCP, UPDT). A null value implicitly means 'No Event type'.",
+      "optionalityRules": [
+        "Event type is conditionally required based on the associated Action type.",
+        "Event type is required for applicable transaction reports, including when re-reporting."
+      ],
+      "valueRules": [
+        "Allowable Event types are: TRAD (Trade), NOVA (Novation), COMP (Compression), ETRM (Partial or full termination), CLRG (Clearing), EXER (Option exercise), ALOC (Allocation), CREV (Credit event), PTNG (Transfer out), CORP (Equity corporate action), INCP (Inclusion into a position), UPDT (Update of legacy trade), and a null value which is implicitly 'No Event type'.",
+        "The document provides a detailed matrix of allowed Action type and Event type combinations in the table on Page 9, paragraph 11.",
+        "NEWT-TRAD: First-time trade report with a new ISO 23897 UTI, other than trades reported with CLRG, NOVA, ALOC, COMP, CORP, EXER or INCP Event types.",
+        "NEWT-NOVA: First-time trade report with a new ISO 23897 UTI, arising from a step-in novation, which is not a new cleared trade.",
+        "NEWT-COMP: First-time trade report with a new ISO 23897 UTI, arising from a compression event, including a compression event at a CCP resulting in new cleared trades.",
+        "NEWT-CLRG: First-time trade report with a new ISO 23897 UTI of a cleared trade, including trades with a CCP or a clearing member as a counterparty.",
+        "NEWT-EXER: First-time trade report with new ISO 23897 UTI, being a new OTC derivative arising from the exercise of an option.",
+        "NEWT-ALOC: First-time trade report with new ISO 23897 UTI, arising from an allocation event.",
+        "NEWT-PTNG: First-time report in the new destination TR with the existing UTI, following a transfer-out from a previous TR.",
+        "NEWT-CORP: First-time report with new ISO 23897 UTI, arising from a corporate action on the underlying equity.",
+        "NEWT-INCP: First-time trade report with new ISO 23897 UTI of a new position, arising from the inclusion of previously reported trades in that position for the first time.",
+        "MODI-TRAD: Outstanding OTC derivative with an existing UTI is modified due to renegotiation of its latest terms, or modified when previously not available or newly current data elements are reported, or a change in the identifier of Counterparty 2, Beneficiary 1, Other payment payer or Other payment receiver in specified use cases.",
+        "TERM-<no Event type>: Full termination of an OTC derivative.",
+        "CORR-<no Event type>: Reported information about an outstanding OTC derivative with an existing UTI is updated to correct prior reporting errors, but not to report previously not available or newly current data elements.",
+        "EROR-<no Event type>: Cancellation of report previously made in error, or reporting a change to the data elements that the TR uses to uniquely identify the OTC derivative within its records for specified use cases.",
+        "REVI-<no Event type>: Reinstatement of an outstanding OTC derivative that was cancelled or terminated in error or expired due to an erroneous expiration date.",
+        "PRTO-PTNG: Report to the current TR that an outstanding OTC derivative is to be removed from the TR\u2019s records due to it being transferred-out to a new TR.",
+        "VALU-<no Event type>: First or subsequent reporting of valuation information.",
+        "MARU-<no Event type>: First or subsequent reporting of collateral amounts information."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "8",
+          "section": "Action types and Event types, paragraphs 8-10"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "9",
+          "section": "Action type Event type table, paragraphs 11-12"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "10",
+          "section": "NEWT-TRAD to NEWT-INCP General usage and Example use cases"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "11",
+          "section": "MODI-TRAD to MODI-EXER General usage and Example use cases"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "12",
+          "section": "MODI-ALOC to TERM-COMP General usage and Example use cases"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "13",
+          "section": "TERM-ETRM to EROR-<no event type> General usage and Example use cases"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "14",
+          "section": "EROR-<no event type> to MARU-<no event type> General usage and Example use cases"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "145",
+          "section": "Item 102\u2014Event type, paragraph 553"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "146",
+          "section": "Use conditions, Minimum TR validations, paragraphs 554-555"
+        }
+      ]
+    },
+    {
+      "name": "Execution agent of Counterparty 1",
+      "description": "This data element reports the execution agent that entered into the transaction as agent for the Reporting Entity without becoming a counterparty themselves.",
+      "dataType": "string",
+      "format": "LEI (Legal Entity Identifier) with a registration status of \u2018Issued\u2019, \u2018Lapsed\u2019, \u2018Pending transfer\u2019 or \u2018Pending archival\u2019. Must not be an LEI of a branch of the entity. For reports with Action types REVI, TERM, EROR or PRTO, any LEI registration status is allowed.",
+      "optionalityRules": [
+        "Required, if applicable, for Action types: NEWT, MODI, CORR, REVI",
+        "Optional for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Execution agent of Counterparty 1 must not equal Reporting Entity or Counterparty 1 or Counterparty 2.",
+        "For transactions directly executed by Counterparty 1, Execution agent of Counterparty 1 is not reported."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "53",
+          "section": "Item 13\u2014Execution agent of Counterparty 1, par 176, 177, 178, 179, 180, 181, 1"
+        }
+      ]
+    },
+    {
+      "name": "Execution timestamp",
+      "description": "The date and time a transaction was entered into.",
+      "dataType": "datetime",
+      "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ in UTC",
+      "optionalityRules": [
+        "Required for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types EROR-<no Event type> and PRTO-PTNG."
+      ],
+      "valueRules": [
+        "If Cleared is reported as Y, Execution timestamp is equal to Clearing timestamp.",
+        "For MODI, TERM, CORR, REVI, the original Execution timestamp of the trade as reported in a NEWT-<any Event type> report.",
+        "This data element remains unchanged throughout the life of the UTI for the OTC derivative."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "64",
+          "section": "Item 19\u2014Execution timestamp"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "65",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "66",
+          "section": "Minimum TR validations"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "67",
+          "section": "Legacy trades, migration and Rule 2.4.1 re-reporting\u2014Key points"
+        }
+      ]
+    },
+    {
+      "name": "Expiration date",
+      "description": "The unadjusted date at which obligations of the transaction cease, taken from the trade confirmation.",
+      "dataType": "date",
+      "format": "ISO 8601 YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO.",
+        "For CFDs, Expiration date is reported if applicable.",
+        "If Contract type is not CFDS, a value is required to be reported.",
+        "If Contract type is CFDS, a value may be optionally reported."
+      ],
+      "valueRules": [
+        "For single-period options where the option may only be exercised once, this data element should be reported as the only date on which, or the latest date by which, the option may be exercised.",
+        "For multi-period options, such as an interest rate cap, this data element should be reported as the date of the end of the last calculation period.",
+        "If reported, Expiration date is greater than or equal to the later of the date element of Execution timestamp and Effective date.",
+        "Where an OTC derivative is terminated prior to its Expiration date, Expiration date should not be updated in the report of the termination\u2014Event timestamp will report the date and time value of the execution of the termination and there is no requirement to report an amended Expiration date upon which the termination takes effect."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "62",
+          "section": "Item 18\u2014Expiration date"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "63",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "64",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount\u2014Leg 1",
+      "description": "A key data element required to be reported for all transactions.",
+      "dataType": "decimal",
+      "format": "up to 25 numerals, including up to 5 numerals after the decimal point",
+      "optionalityRules": [
+        "Required for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "For transactions negotiated in monetary amounts, the amount taken from the trade confirmation.",
+        "For transactions negotiated in non-monetary amounts, the amount calculated by multiplying the non-monetary amount by the value reported for Strike price, Price or the market price for the underlier at the time of the transaction, as applicable.",
+        "May be a negative number for commodity transactions.",
+        "Other than for commodity derivatives, Notional amount\u2014Leg 1 is greater than or equal to zero.",
+        "If Notional amount\u2014Leg 1 is not initially known but will become known when the Strike Price or Price or an FX rate for a cross-currency transaction is determined at a later time after the execution of the transaction, Notional amount\u2014Leg 1 is... \u2018determinable\u2019 at the time of execution of the transaction; and \u2018determined\u2019 when the Strike Price or Price is determined.",
+        "May be first reported as \u2018all 9s\u2019 and then updated as the amount subsequently determined by a MODI-TRAD report.",
+        "If the Strike Price or Price or an FX rate will be determined more than one month after the execution of the transaction, reporting entities should report a calculated amount using the market price of the underlier or FX rate that will ultimately determine Notional amount\u2014Leg 1.",
+        "Default value of \u2018all 9s\u2019 is an allowable value."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "79",
+          "section": "Item 26\u2014Notional amount\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "80",
+          "section": "paragraph 281-287"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "81",
+          "section": "paragraph 288-291"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "82",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Notional currency\u2014Leg 1",
+      "description": "The ISO 4217 currency codes for the currencies in which Notional amount\u2014Leg 1 is denominated.",
+      "dataType": "string",
+      "format": "ISO 4217 Currency codes (3-character alphabetical code)",
+      "optionalityRules": [
+        "Conditionally required where Notional amount\u2014Leg 1 is reported, for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "Exclude the reporting of the non-currency ISO 4217 codes of XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+        "For an FX option, other than a digital option, Notional currency\u2014Leg 1 is equal to one of Call currency or Put currency.",
+        "For an FX transaction where the underlier is a currency index or a basket of currencies, the denomination of the underlier is as \u2018index units\u2019 or \u2018basket units\u2019 and not as \u2018currency units\u2019. In this case, we expect that the index or basket is reported as leg 2 and Notional currency\u2014Leg 2 is reported as the ISO 4217 code of XXX."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "89",
+          "section": "Item 34\u2014Notional currency\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Platform identifier",
+      "description": "Reports a 4-character code created and maintained under ISO 10383 Securities and Related Financial Instruments\u2014Codes for Exchanges and Market Identification (MIC).",
+      "dataType": "string",
+      "format": "4-character code (ISO 10383 MIC)",
+      "optionalityRules": [
+        "Required, other than where Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+        "Optionally reported where Cleared is reported as Y, for Action types NEWT, MODI, CORR, REVI.",
+        "Not reported for Action types TERM, EROR, PRTO."
+      ],
+      "valueRules": [
+        "If reported, the value is a valid ISO 10383 MIC code, which may be XOFF, XXXX or BILT.",
+        "If Cleared is reported as N or I, a value is required to be reported as a valid segment MIC or operating MIC.",
+        "The MIC list also includes the codes XOFF, XXXX and BILT which are not codes of any specific market but relate to whether the OTC derivative that is the subject of the reportable transaction is: (a) XOFF\u2014able to be traded on a financial market but the particular reportable transaction was not itself traded on a financial market; (b) XXXX\u2014not able to be traded on any financial market; or (c) BILT\u2014the reporting entity is not able to determine if the conditions for XOFF or XXXX apply to the reportable transaction."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "75",
+          "section": "Item 25\u2014Platform identifier"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "76",
+          "section": "Use conditions"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "77",
+          "section": "paragraph 260"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "78",
+          "section": "Minimum TR validations"
+        }
+      ]
+    },
+    {
+      "name": "Reporting Entity",
+      "description": "The Reporting Entity is as defined in Rule 1.2.5. Where the Reporting Entity is a trustee of a trust, the trustee is the Reporting Entity and the trust is Counterparty 1. For all other types of Reporting Entities, the entity is both the Reporting Entity and Counterparty 1. The allowable value for Reporting Entity is the 'current LEI' of the Reporting Entity, subject to the relaxed LEI requirements for certain Action types as set out in paragraph 117. A branch of an entity is not legally distinct as an entity from its 'head office', and the LEI that is reported must not be an LEI of a branch.",
+      "dataType": "string",
+      "format": "ISO 17442 Legal entity identifier (LEI)",
+      "optionalityRules": [
+        "Required for all transaction reports."
+      ],
+      "valueRules": [
+        "Must be a valid GLEIF LEI of the required registration status for all Action types.",
+        "LEI must pertain to a legal entity and not a branch.",
+        "For Action types NEWT, MODI, CORR, the LEI registration status must be 'Issued', 'Pending transfer', or 'Pending archival'.",
+        "For Action types REVI, TERM, EROR, PRTO, the LEI registration status can be any status."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "41",
+          "section": "Item 5\u2014Reporting Entity, paragraphs 118-123"
+        }
+      ]
+    },
+    {
+      "name": "Secondary transaction identifier",
+      "description": "This data element reports a reporting entity\u2019s proprietary, secondary transaction identifier of the transaction.",
+      "dataType": "String",
+      "format": "up to 72-character alphanumeric code",
+      "optionalityRules": [
+        "Optional for all transaction report Action types"
+      ],
+      "valueRules": [
+        "If reported, the format of the value conforms to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "32",
+          "section": "Item 1a\u2014Secondary transaction identifier, par 82, 83, 85(a)"
+        }
+      ]
+    },
+    {
+      "name": "Unique product identifier (UPI)",
+      "description": "This data element reports the ISO 4914 Unique product identifier of the transaction.",
+      "dataType": "String",
+      "format": "ISO 4914 Unique product identifier (UPI)",
+      "optionalityRules": [
+        "Required for NEWT, MODI, CORR, REVI transaction report Action types",
+        "Optional for TERM, EROR, PRTO transaction report Action types"
+      ],
+      "valueRules": [
+        "The UPI reported is a valid UPI Service code.",
+        "Reporting entities should obtain and report the UPI that has the same UPI asset class, instrument type, product and UPI attributes as the reportable transaction.",
+        "Where there is not an exact match, report the UPI that most closely matches the reportable transaction."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "32-34",
+          "section": "Item 2\u2014Unique product identifier (UPI), par 86, 89, 90(c), 93, 94"
+        }
+      ]
+    },
+    {
+      "name": "Unique transaction identifier (UTI)",
+      "description": "This data element reports the transaction identifier of the transaction. A UTI is used by a TR as one of the data elements to uniquely identify a transaction in its records and must be included in all reports.",
+      "dataType": "string",
+      "format": "ISO 23897 Unique transaction identifier (UTI) or up to 72-character alphanumeric code for pre-21 October 2024 transactions.",
+      "optionalityRules": [
+        "A UTI is required to be reported in all transaction reports (Action types: ALL)."
+      ],
+      "valueRules": [
+        "For a new transaction report, the UTI reported is a UTI generated or received by the reporting entity in accordance with Rule 2.2.9 (a Rule 2.2.9 UTI that is an ISO 23897 UTI).",
+        "For a modification or termination transaction report or a change report, the UTI reported is the transaction identifier that was reported for the outstanding OTC derivative, which may be: (i) a Rule 2.2.9 UTI for a transaction that was initially reported from 21 October 2024; or (ii) the transaction identifier as it was initially reported before 21 October 2024 and which may be an ISO 23897 UTI or an up to 72-character alphanumeric code.",
+        "Reporting entities must continue to use the transaction identifier as was initially reported and not change the transaction identifiers to an ISO 23897 UTI in any circumstances.",
+        "Every reportable transaction should have a unique UTI. Different reportable transactions should each have their own UTIs. No UTIs should be reused even if the previous use was on a transaction that is no longer open.",
+        "For FX swaps, if the reporting entity is not the UTI generating entity, report the single UTI received as the UTI of the far leg, and generate and report a UTI for the near leg. If the reporting entity is the UTI generating entity, provide the UTI of the far leg to the other counterparty, and generate and report a UTI for the near leg.",
+        "For multi-commodity swap, if the reporting entity is not the UTI generating entity, report the UTI received for the commodity underlier that is Leg 1 in the reporting entity\u2019s report. If the reporting entity is the UTI generating entity, provide the single UTI to the other counterparty, who would then report that UTI according to their jurisdiction\u2019s requirements.",
+        "When re-reporting an 'interim UTI' as a 'permanent UTI', the outstanding OTC derivative must be exited in the TR\u2019s records using Action type EROR, and then re-reported with Action type NEWT and Event type TRAD, using the 'permanent UTI' as the UTI and the 'interim UTI' as Prior UTI."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "29",
+          "section": "Item 1\u2014Unique transaction identifier (UTI), paragraphs 69-73"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "30",
+          "section": "Minimum TR validations, Mismatched number of UTIs, paragraphs 75-78"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "31",
+          "section": "Use case UTI reporting, Re-reporting an \u2018interim UTI\u2019 as a \u2018permanent UTI\u2019, paragraphs 79-81"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "19",
+          "section": "Formats in the 2024 Rules, paragraph 27"
+        }
+      ]
+    },
+    {
+      "name": "Clearing timestamp",
+      "description": "For a transaction cleared at a CCP, Clearing timestamp is the date and time, notified to the reporting entity by the CCP, that the transaction was cleared by the CCP.",
+      "dataType": "Date and Time",
+      "format": "ISO 8601 YYYY-MM-DDThh:mm:ssZ date and time in UTC.",
+      "optionalityRules": [
+        "Required where Cleared is reported as Y.",
+        "Not reported for Cleared reported as \u2018N\u2019 or \u2018I\u2019.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If Cleared is reported as Y, Clearing timestamp is equal to Execution timestamp."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "69",
+          "section": "Item 21\u2014Clearing timestamp"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "69",
+          "section": "234"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "69",
+          "section": "235"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "69",
+          "section": "236"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "70",
+          "section": "239a"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount\u2014Leg 2",
+      "description": "The amount taken from the trade confirmation and attributed by the reporting entity to Leg 2.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required if a value is reported for Direction 2\u2014Leg 2 and a value for Notional quantity\u2014Leg 2 is not reported.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "May be a negative number for a commodity transaction.",
+        "May not be a negative number for transactions in any other asset class.",
+        "If the value for Notional amount\u2014Leg 2 is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+        "Other than for commodity derivatives, Notional amount\u2014Leg 2 is greater than or equal to zero."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "83",
+          "section": "Item 27\u2014Notional amount\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "83",
+          "section": "296"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "83",
+          "section": "297"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "83",
+          "section": "298"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "84",
+          "section": "300"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "84",
+          "section": "304b"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "84",
+          "section": "304c"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "84",
+          "section": "304d"
+        }
+      ]
+    },
+    {
+      "name": "Total notional quantity\u2014Leg 1",
+      "description": "The aggregate notional quantity of the underlier of Leg 1 for the entire term of the transaction.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI, if applicable.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "Required for Asset class of COMM and EQUI and Action type of NEWT, MODI, CORR and REVI.",
+        "If Notional quantity\u2014Leg 1 is reported, Total notional quantity\u2014Leg 1 is at least approximately, if not exactly, equal to Notional quantity\u2014Leg 1 multiplied by the number of periods indicated by Payment frequency period\u2014Leg 1 and Payment frequency period multiplier\u2014Leg 1 (if reported).",
+        "If the value(s) for these data elements is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "Item 28\u2014Total notional quantity\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "305"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "308"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "311b"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "313"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317a"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317d"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317e"
+        }
+      ]
+    },
+    {
+      "name": "Total notional quantity\u2014Leg 2",
+      "description": "The aggregate notional quantity of the underlier of Leg 2 for the entire term of the transaction.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI, if applicable.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If Notional quantity\u2014Leg 2 is reported, Total notional quantity\u2014Leg 2 has the same meanings and relationships for Leg 2 as Total notional quantity\u2014Leg 1 for Leg 1 (referencing 307 and 311b).",
+        "If the value(s) for these data elements is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "Item 29\u2014Total notional quantity\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "307"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "308"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "313"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317d"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317e"
+        }
+      ]
+    },
+    {
+      "name": "Notional quantity\u2014Leg 1",
+      "description": "The notional quantity of the underlier on a per-period basis.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI, if applicable.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If reported, Notional quantity\u2014Leg 1 is less than or equal to Total notional quantity\u2014Leg 1.",
+        "If the value(s) for these data elements is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+        "Where the transaction has a notional quantity schedule that is not a constant notional quantity in each period, Notional quantity\u2014Leg 1 is updated when each new period commences, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "Item 30\u2014Notional quantity\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "305"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "308"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "313"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "315"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317b"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317d"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317e"
+        }
+      ]
+    },
+    {
+      "name": "Notional quantity\u2014Leg 2",
+      "description": "The notional quantity of the underlier on a per-period basis for Leg 2.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI, if applicable.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If reported, Notional quantity\u2014Leg 2 is less than or equal to Total notional quantity\u2014Leg 2.",
+        "If the value(s) for these data elements is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+        "Where the transaction has a notional quantity schedule that is not a constant notional quantity in each period, Notional quantity\u2014Leg 2 is updated when each new period commences, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "Item 31\u2014Notional quantity\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "307"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "85",
+          "section": "308"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "313"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "86",
+          "section": "315"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317c"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317d"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "87",
+          "section": "317e"
+        }
+      ]
+    },
+    {
+      "name": "Call amount",
+      "description": "The monetary amount that the option gives the right to buy.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for a foreign exchange option (other than a digital option).",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "For the conditionally required Action types, if Asset class is CURR and Contract type is OPTN and UPI Product is not a digital option, a value is required for at least one of Call amount and Put amount.",
+        "Where the value of either Notional amount\u2014Leg 1 or Notional amount\u2014Leg 2 is not known at the time of reporting and is reported as \u2018all 9s\u2019, the corresponding Call amount is also reported as \u2018all 9s\u2019.",
+        "Call amount is updated to the amount subsequently determined, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "Item 32\u2014Call amount"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "318"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "319"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "321"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322a"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322b"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322c"
+        }
+      ]
+    },
+    {
+      "name": "Put amount",
+      "description": "The monetary amount that the option gives the right to sell.",
+      "dataType": "Numeric",
+      "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+      "optionalityRules": [
+        "Conditionally required for a foreign exchange option (other than a digital option).",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "For the conditionally required Action types, if Asset class is CURR and Contract type is OPTN and UPI Product is not a digital option, a value is required for at least one of Call amount and Put amount.",
+        "Where the value of either Notional amount\u2014Leg 1 or Notional amount\u2014Leg 2 is not known at the time of reporting and is reported as \u2018all 9s\u2019, the corresponding Put amount is also reported as \u2018all 9s\u2019.",
+        "Put amount is updated to the amount subsequently determined, using a MODI-TRAD report."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "Item 33\u2014Put amount"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "318"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "319"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "321"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322a"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322b"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "88",
+          "section": "322c"
+        }
+      ]
+    },
+    {
+      "name": "Notional currency\u2014Leg 2",
+      "description": "The ISO 4217 currency code for the currency in which Notional amount\u2014Leg 2 is denominated.",
+      "dataType": "String",
+      "format": "ISO 4217 currency code.",
+      "optionalityRules": [
+        "Conditionally required where Notional amount\u2014Leg 2 is reported.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If reported, the value is an ISO 4217 code, but excluding XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+        "For an FX transaction where the underlier is a currency index or a basket of currencies, Notional currency\u2014Leg 2 is reported as the ISO 4217 code of XXX."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "89",
+          "section": "Item 35\u2014Notional currency\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "89",
+          "section": "323"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "89",
+          "section": "324"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "89",
+          "section": "326"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "327c"
+        }
+      ]
+    },
+    {
+      "name": "Quantity unit of measure\u2014Leg 1",
+      "description": "The unit in which both Total notional quantity\u2014Leg 1 and Notional quantity\u2014Leg 1 are expressed.",
+      "dataType": "String",
+      "format": "Applicable code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+      "optionalityRules": [
+        "Conditionally required where Total notional quantity\u2014Leg 1 is reported as a value other than \u2018all 9s\u2019.",
+        "May be optionally reported if Total notional quantity\u2014Leg 1 is reported as 'all 9s'.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If reported, the value is a code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+        "Reporting entities should report the code that most accurately describes the unit of measure for the particular commodity underlier quantity.",
+        "Specific codes are provided for environmental commodity units (MWHO, CEER, CLRT, ENVC), commodity index units (IPNT), equity index units (IPNT), and equity instrument units (SHAS)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "Item 36\u2014Quantity unit of measure\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "328"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "329"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "330"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "331"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "332"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "333"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "334c"
+        }
+      ]
+    },
+    {
+      "name": "Quantity unit of measure\u2014Leg 2",
+      "description": "The unit in which both Total notional quantity\u2014Leg 2 and Notional quantity\u2014Leg 2 are expressed.",
+      "dataType": "String",
+      "format": "Applicable code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+      "optionalityRules": [
+        "Conditionally required where Total notional quantity\u2014Leg 2 is reported as a value other than \u2018all 9s\u2019.",
+        "May be optionally reported if Total notional quantity\u2014Leg 2 is reported as 'all 9s'.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "If reported, the value is a code in the ISO 20022 code set ExternalUnitOfMeasure1Code.",
+        "Reporting entities should report the code that most accurately describes the unit of measure for the particular commodity underlier quantity.",
+        "Specific codes are provided for environmental commodity units (MWHO, CEER, CLRT, ENVC), commodity index units (IPNT), equity index units (IPNT), and equity instrument units (SHAS)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "Item 37\u2014Quantity unit of measure\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "328"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "90",
+          "section": "329"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "330"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "331"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "332"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "91",
+          "section": "333"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "334c"
+        }
+      ]
+    },
+    {
+      "name": "Call currency",
+      "description": "The ISO 4217 currency code for the currency in which Call amount is denominated.",
+      "dataType": "String",
+      "format": "ISO 4217 currency code.",
+      "optionalityRules": [
+        "Conditionally required where Call amount is reported.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "For the conditionally required Action types, a value is required for these items if the corresponding items Call amount and/or Put amount are reported.",
+        "If reported, the value is an ISO 4217 code, but excluding XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+        "For certain FX option transactions, Call currency is reported as the ISO 4217 code of XXX."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "Item 38\u2014Call currency"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "335"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "336"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "338"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "339a"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "339b"
+        }
+      ]
+    },
+    {
+      "name": "Put currency",
+      "description": "The ISO 4217 currency code for the currency in which Put amount is denominated.",
+      "dataType": "String",
+      "format": "ISO 4217 currency code.",
+      "optionalityRules": [
+        "Conditionally required where Put amount is reported.",
+        "Not reported for TERM, EROR, PRTO Action types."
+      ],
+      "valueRules": [
+        "For the conditionally required Action types, a value is required for these items if the corresponding items Call amount and/or Put amount are reported.",
+        "If reported, the value is an ISO 4217 code, but excluding XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+        "For certain FX option transactions, Put currency is reported as the ISO 4217 code of XXX."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "Item 39\u2014Put currency"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "335"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "92",
+          "section": "336"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "338"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "339a"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "93",
+          "section": "339b"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule effective date\u2014Leg 1",
+      "description": "These data elements describe the notional amount schedule of Leg 1 in terms of each schedule period\u2019s effective date applicable in the period.",
+      "dataType": "date",
+      "format": "YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative, in particular where: (a) the asset class of the UPI that is reported is the interest rate asset class; and (b) the value of the \u2018Notional Schedule\u2019 attribute of the UPI that is reported is not equal to \u2018Constant\u2019.",
+        "If values for Notional amount schedule amount\u2014Leg 1 are reported, a value for Notional amount schedule effective date\u2014Leg 1 is required for each value of Notional amount schedule amount\u2014Leg 1 that is reported."
+      ],
+      "valueRules": [
+        "Each time period has an effective date and end date, and each effective date and end date must be greater than the corresponding date in the immediately preceding period.",
+        "The first period of a schedule is reported with Item 15\u2014Effective date as the first period effective date.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Item 40"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 340"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 341"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 342"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 346"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 347"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(d)"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule end date\u2014Leg 1",
+      "description": "These data elements describe the notional amount schedule of Leg 1 in terms of each schedule period\u2019s end date applicable in the period.",
+      "dataType": "date",
+      "format": "YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative, in particular where: (a) the asset class of the UPI that is reported is the interest rate asset class; and (b) the value of the \u2018Notional Schedule\u2019 attribute of the UPI that is reported is not equal to \u2018Constant\u2019.",
+        "Values for Notional amount schedule end date\u2014Leg 1 may be optionally reported.",
+        "End date is not required to be reported if it is back-to-back with the effective date of the next period."
+      ],
+      "valueRules": [
+        "Each time period has an effective date and end date, and each effective date and end date must be greater than the corresponding date in the immediately preceding period.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Item 41"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 340"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 341"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 342"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 346"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(d)"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule amount\u2014Leg 1",
+      "description": "These data elements describe the notional amount schedule of Leg 1 in terms of each schedule period\u2019s notional amount applicable in the period. It is reported as each period\u2019s notional quantity amount multiplied by the period\u2019s price or strike price.",
+      "dataType": "decimal",
+      "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required if the asset class of the UPI that is reported is the interest rate asset class, and the value of the \u2018Notional Schedule\u2019 attribute of the UPI that is reported is not equal to \u2018Constant\u2019."
+      ],
+      "valueRules": [
+        "The first period of a schedule is reported with Item 24\u2014Notional amount\u2014Leg 1 as the amount prevailing in that period.",
+        "The default value of \u2018all 9s\u2019 is an allowable value for Notional amount schedule amount\u2014Leg 1.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Item 42"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 340"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 341"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 342"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "94",
+          "section": "Paragraph 343"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 347"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "95",
+          "section": "Paragraph 349(e)"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule effective date\u2014Leg 2",
+      "description": "These data elements describe the notional amount schedule of Leg 2 in terms of each schedule period\u2019s effective date applicable in the period.",
+      "dataType": "date",
+      "format": "YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative and the notional amount schedule information for Leg 2 is not the same as the notional amount schedule information for Leg 1.",
+        "If the notional amount schedule information of leg 2 is the same as the notional amount schedule information of leg 1, these data elements are not required to be reported.",
+        "If values for Notional amount schedule amount\u2014Leg 2 are reported, a value for Notional amount schedule effective date\u2014Leg 2 is reported for each value of Notional amount schedule amount\u2014Leg 2 that is reported."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Item 43"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 350"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 351"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 352"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 354"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 355"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(d)"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule end date\u2014Leg 2",
+      "description": "These data elements describe the notional amount schedule of Leg 2 in terms of each schedule period\u2019s end date applicable in the period.",
+      "dataType": "date",
+      "format": "YYYY-MM-DD",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative and the notional amount schedule information for Leg 2 is not the same as the notional amount schedule information for Leg 1.",
+        "If the notional amount schedule information of leg 2 is the same as the notional amount schedule information of leg 1, these data elements are not required to be reported.",
+        "Values for Notional amount schedule end date\u2014Leg 2 may be optionally reported."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Item 44"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 350"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 351"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 352"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 354"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 355"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(d)"
+        }
+      ]
+    },
+    {
+      "name": "Notional amount schedule amount\u2014Leg 2",
+      "description": "These data elements describe the notional amount schedule of Leg 2 in terms of each schedule period\u2019s notional amount applicable in the period.",
+      "dataType": "decimal",
+      "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types and not reported for other Action types.",
+        "Required for transactions in any asset class where Notional amount\u2014Leg 1 is not a constant value over the entire term of the OTC derivative and the notional amount schedule information for Leg 2 is not the same as the notional amount schedule information for Leg 1.",
+        "If the notional amount schedule information of leg 2 is the same as the notional amount schedule information of leg 1, these data elements are not required to be reported.",
+        "Values for Notional amount schedule amount\u2014Leg 2 may be optionally reported."
+      ],
+      "valueRules": [
+        "The default value of \u2018all 9s\u2019 is an allowable value for Notional amount schedule amount\u2014Leg 2.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Item 45"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 350"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 351"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "96",
+          "section": "Paragraph 352"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 354"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 355"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "97",
+          "section": "Paragraph 356(e)"
+        }
+      ]
+    },
+    {
+      "name": "Price notation",
+      "description": "Price notation is an indicator of the type of units in which Price is reported.",
+      "dataType": "string",
+      "format": "1-character alphabetical code or 1-character numeric code",
+      "optionalityRules": [
+        "Price notation is required to be reported if Price is reported.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Reported as \u20181\u2019 where Price is reported as a monetary amount; or \u20183\u2019 where Price is reported as a decimal.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Item 46"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Paragraph 358"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "99",
+          "section": "Paragraph 365"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(b)(i)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(e)"
+        }
+      ]
+    },
+    {
+      "name": "Price",
+      "description": "Price is reported for certain kinds of OTC derivatives as the value agreed by the counterparties and as set out in the trade confirmation, not including any additional amounts for fees, taxes or commissions.",
+      "dataType": "decimal",
+      "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+      "optionalityRules": [
+        "Price is conditionally required to be reported for certain kinds of OTC derivatives.",
+        "Required if Contract type is CFDS and Asset class is not CURR.",
+        "Required if Asset class is COMM or EQUI and Contract type is FORW.",
+        "Required if Asset class is COMM or EQUI and Contract type is SWAP and neither Spread\u2014Leg 1 nor Spread\u2014Leg 2 nor Strike price is reported (i.e. Price is required if the \u2018price\u2019 of the transaction is not reported in terms of a spread).",
+        "Required if none of Fixed rate\u2014Leg 1, Fixed rate\u2014Leg 2, Spread\u2014Leg 1, Spread\u2014Leg 2, Strike price, Option premium amount and Exchange rate are reported, and, for Asset class is CRDT, Other payment type is not reported as UFRO.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Price is reported as a monetary amount when it is reported as, for example, US$85 per barrel.",
+        "Price is reported as a decimal when it is reported as, for example, 0.01 per unit of the notional amount.",
+        "Where Price is not known at the time of reporting, \u2018all 9s\u2019 is reported.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "The default value of \u2018all 9s\u2019 for Price is an allowable value."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Item 47"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Paragraph 357"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Paragraph 359"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "99",
+          "section": "Paragraph 366"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 367"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 373"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(e)"
+        }
+      ]
+    },
+    {
+      "name": "Price currency",
+      "description": "Price currency is the currency in which Price is denominated.",
+      "dataType": "string",
+      "format": "ISO 4217 Currency codes",
+      "optionalityRules": [
+        "Price currency is only reported when Price is reported as a monetary amount.",
+        "Required if Price notation is 1 and Price currency is required to be reported.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Where Price is reported as a decimal, its currency is taken to be the same currency as Notional currency\u2014Leg 1.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Item 48"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Paragraph 358"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 368"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(b)(ii)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(e)"
+        }
+      ]
+    },
+    {
+      "name": "Price unit of measure",
+      "description": "Price unit of measure is the unit of measure in which Price is reported.",
+      "dataType": "string",
+      "format": "ISO 20022 code set ExternalUnitOfMeasure1Code",
+      "optionalityRules": [
+        "Price unit of measure is only reported when Price is reported as a monetary amount.",
+        "Required if Price notation is 1 and Price unit of measure is required to be reported.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Where Price is reported as a decimal, its units are taken to be the same units as Notional amount\u2014Leg 1.",
+        "Price unit of measure is reported as the same code as for Quantity unit of measure\u2014Leg 1, taking into account the guidance in paragraphs 330\u2013333.",
+        "For a CFD or other forward over a debt security or over an exchange-traded debt future or option, for Price reported as a monetary amount, the fit-for-purpose ExternalUnitOfMeasure1Code is ACCY \u2018AmountOfCurrency\u2019.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Item 49"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "98",
+          "section": "Paragraph 358"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 369"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 370"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 371"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "100",
+          "section": "Paragraph 372"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(b)(ii)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "101",
+          "section": "Paragraph 377(e)"
+        }
+      ]
+    },
+    {
+      "name": "Strike price notation",
+      "description": "Strike price notation describes the strike price in terms of its units.",
+      "dataType": "string",
+      "format": "1-character numeric code",
+      "optionalityRules": [
+        "Required if Strike price, Lower or only barrier price and Upper barrier price, respectively, is reported.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Reported as \u20181\u2019 where the strike price or barrier price is reported as a monetary amount; or \u20183\u2019 where the strike price or barrier price is reported as a decimal.",
+        "In alignment with the requirements in other major jurisdictions, notation should be reported as: \u20181\u2019 (i.e. a monetary amount) for equity and debt security options, commodity options, foreign exchange options and similar products; and \u20183\u2019 (i.e. a decimal) for interest rate options, interest rate and credit swaptions quoted in spread terms, and similar products.",
+        "Currently either notation of \u20181\u2019 or \u20183\u2019 may be reported for FX options, but reporting entities are encouraged to change to reporting with notation \u20181\u2019 as soon as practically possible.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Item 58"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Paragraph 397"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "108",
+          "section": "Paragraph 404"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "108",
+          "section": "Paragraph 405"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 406"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(f)"
+        }
+      ]
+    },
+    {
+      "name": "Strike price",
+      "description": "Strike price describes the strike price value, in terms of its values, the units and currency or currency pair in which they are reported.",
+      "dataType": "decimal",
+      "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+      "optionalityRules": [
+        "Required if Contract type is OPTN or SWPT.",
+        "May be optionally reported if Contract type is SWAP or OTHR (e.g. to allow for the market convention of reporting Strike price for volatility, variance and dividend swaps).",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "For options over equity or debt instruments or commodities, the price at which the option can be exercised to buy or sell the underlier for physical delivery or cash settlement.",
+        "For foreign exchange options, the exchange rate at which the option can be exercised, expressed as the rate of exchange from converting the unit currency into the quoted currency.",
+        "For interest rate caps, floors and swaptions, the interest rate at which the option can be exercised.",
+        "For commodity and equity swaptions, the price at which the option can be exercised by entering into a swap.",
+        "For credit default swaptions, generally the rate of the spread at which the option can be exercised by entering into a swap.",
+        "For volatility, variance and dividend swaps, the volatility strike, variance strike, dividend strike or predetermined fixed volatility, variance level or dividend level.",
+        "The \u2018trigger\u2019 for a digital option is reported as the Strike price.",
+        "Where the value for Strike price is not known at the time of reporting, \u2018all 9s\u2019 is reported but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "The default value of \u2018all 9s\u2019 for Strike price is an allowable value."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Item 59"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Paragraph 397"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Paragraph 398"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Paragraph 399"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "108",
+          "section": "Paragraph 400"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 411"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 413(a)(i)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 413(a)(ii)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(e)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(f)"
+        }
+      ]
+    },
+    {
+      "name": "Strike price currency/currency pair",
+      "description": "Strike price currency/currency pair describes the currency or currency pair in which the strike price is reported.",
+      "dataType": "string",
+      "format": "ISO 4217 currency codes or currency pair (e.g. USD/EUR)",
+      "optionalityRules": [
+        "Required as a single currency code if Asset class is not CURR and Strike price notation, Lower or only barrier price notation or Upper barrier price notation is 1.",
+        "Required as two currency codes if Asset class is CURR and Strike price notation, Lower or only barrier price notation or Upper barrier price notation is 1 or 3.",
+        "Not reported if Asset class is not CURR and Strike price notation, Lower or only barrier price notation or Upper barrier price notation is 3.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "Where the Strike price, Lower or only barrier price or Upper barrier price are denominated in terms of one currency, Strike price currency/currency pair is only reported as that one currency when Strike price, Lower or only barrier price or Upper barrier price is reported as a monetary amount.",
+        "Where these data elements are reported as a decimal, its currency is taken to be the same currency as Notional currency\u2014Leg 1.",
+        "For FX options, where these data elements are reported as monetary amounts, a currency code of the monetary amount is reported.",
+        "For FX options, Strike price currency/currency pair is reported in the order of the unit currency followed by the quoted currency.",
+        "The Strike price currency/currency pair of the Strike price is taken to be the currency pair applicable to Lower or only barrier price or Upper barrier price, whether or not Strike Price is reported.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Item 60"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "107",
+          "section": "Paragraph 397"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 407"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 408"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 409"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "109",
+          "section": "Paragraph 410"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(c)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(d)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "110",
+          "section": "Paragraph 413(f)"
+        }
+      ]
+    },
+    {
+      "name": "Option premium amount",
+      "description": "For options transactions (including swaptions transactions), this data element reports the amount of the option premium.",
+      "dataType": "decimal",
+      "format": "A number of a variable number of numerals, including a number of numerals after the decimal point",
+      "optionalityRules": [
+        "Conditionally required where Contract type is reported as OPTN or SWPT.",
+        "Required if Contract type is OPTN or SWPT.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "The amount paid, or due to be paid, by the option buyer and is reported in absolute value terms (e.g. an option premium amount paid by Counterparty 1 is not reported as a negative value).",
+        "For option transactions that are reported as components of a package, the option premium information is reported for the gross value of each component option, and not as a net premium.",
+        "For an option transaction for which no option premium is paid, Option premium amount is reported as zero.",
+        "For option premium amounts that are paid in instalments, Option premium amount is reported as the sum of all such instalments.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Item 61"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 414"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 415"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 416"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 417"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 418"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 419"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(a)(i)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(c)"
+        }
+      ]
+    },
+    {
+      "name": "Option premium currency",
+      "description": "For options transactions (including swaptions transactions), this data element reports the currency of the option premium.",
+      "dataType": "string",
+      "format": "ISO 4217 Currency codes",
+      "optionalityRules": [
+        "Conditionally required where Contract type is reported as OPTN or SWPT.",
+        "Required if Option amount is reported.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "For an option transaction for which no option premium is paid, Option premium currency is reported as either Notional currency\u2014Leg 1 or Notional currency\u2014Leg 2.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Item 62"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 414"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 415"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 418"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(a)(ii)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(c)"
+        }
+      ]
+    },
+    {
+      "name": "Option premium payment date",
+      "description": "For options transactions (including swaptions transactions), this data element reports the payment date of the option premium.",
+      "dataType": "date",
+      "format": "ISO 8601 YYYY-MM-DD",
+      "optionalityRules": [
+        "Conditionally required where Contract type is reported as OPTN or SWPT.",
+        "Required if Option amount is reported with a value greater than zero.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "valueRules": [
+        "For option premium amounts that are paid in instalments, Option premium payment date is reported as the date the first instalment is to be paid.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Item 63"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 414"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "111",
+          "section": "Paragraph 415"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 419"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(a)(iii)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "112",
+          "section": "Paragraph 420(c)"
+        }
+      ]
+    },
+    {
+      "name": "Client Code",
+      "description": "An entity identifier that is not an LEI, used for Counterparty 2, Beneficiary 1, Other payment payer and/or Other payment receiver.",
+      "dataType": "String",
+      "format": "LEI of the Reporting Entity (or Execution agent) + up to 52 alphanumeric characters",
+      "optionalityRules": [
+        "Required for new transaction report if entity eligible for LEI does not have LEI and LEI has not been applied for within 2 business days (Rule S1.3.1(2)(a)).",
+        "Required for new transaction report if entity is a natural person not eligible for an LEI (Rule S1.3.1(2)(b))."
+      ],
+      "valueRules": [
+        "A unique Client Code in the format and structure of the LEI of the Reporting Entity (or of the Execution agent) followed by up to 52 characters (Paragraph 129(b))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "41"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "25",
+          "section": "S1.3.1(2)(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "25",
+          "section": "S1.3.1(2)(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "43",
+          "section": "129(b)"
+        }
+      ]
+    },
+    {
+      "name": "Collateral portfolio code (initial margin)",
+      "description": "Unique code(s) to identify the collateral portfolio(s) of initial margin in which the transaction is collateralised.",
+      "dataType": "String",
+      "format": "Not more than 52 characters",
+      "optionalityRules": [
+        "Required in a transaction report (NEWT, MODI, CORR, REVI) if applicable (Paragraph 693).",
+        "Required in collateral reports (MARU, CORR) if applicable (Paragraph 695).",
+        "Required if Collateral portfolio indicator is True and Collateral portfolio code (variation margin) is NOAP (Paragraph 698(b)).",
+        "May be optionally reported if Collateral portfolio indicator is True and Collateral portfolio code (variation margin) is not NOAP (Paragraph 698(c))."
+      ],
+      "valueRules": [
+        "Value NOAP ('not applicable') is reported if not collateralised in a portfolio, or not collateralised at all (Paragraph 691).",
+        "Must conform to 2024 Rules specifications (Paragraph 698(d))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "41, Item 10"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "169",
+          "section": "Item 10, 690, 691, 693, 695, 698(b), 698(c), 698(d)"
+        }
+      ]
+    },
+    {
+      "name": "Collateral portfolio code (variation margin)",
+      "description": "Unique code(s) to identify the collateral portfolio(s) of variation margin in which the transaction is collateralised.",
+      "dataType": "String",
+      "format": "Not more than 52 characters",
+      "optionalityRules": [
+        "Required in a transaction report (NEWT, MODI, CORR, REVI) if applicable (Paragraph 693).",
+        "Required in collateral reports (MARU, CORR) if applicable (Paragraph 695).",
+        "Required if Collateral portfolio indicator is True (Paragraph 698(a))."
+      ],
+      "valueRules": [
+        "Value NOAP ('not applicable') is reported if not collateralised in a portfolio, or not collateralised at all (Paragraph 691).",
+        "Must conform to 2024 Rules specifications (Paragraph 698(d))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "41, Item 11"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "169",
+          "section": "Item 11, 690, 691, 693, 695, 698(a), 698(d)"
+        }
+      ]
+    },
+    {
+      "name": "Package identifier",
+      "description": "The identifier code of the package in each of the reports of a component transaction in a package.",
+      "dataType": "String",
+      "format": "Not more than 100 characters",
+      "optionalityRules": [
+        "Conditionally required or if applicable for NEWT, MODI, CORR, REVI (Paragraph 524).",
+        "May be optionally reported for conditionally required Action types (Paragraph 536(a)(i)).",
+        "Not reported for TERM, EROR, PRTO (Paragraph 524)."
+      ],
+      "valueRules": [
+        "Must conform to 2024 Rules specifications (Paragraph 536(b))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "41, Item 92"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "138",
+          "section": "Item 92, 524, 526"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "141",
+          "section": "536(a)(i), 536(b)"
+        }
+      ]
+    },
+    {
+      "name": "Custom basket code",
+      "description": "A unique code assigned by the structurer of the basket.",
+      "dataType": "String",
+      "format": "LEI of the structurer followed by not more than 52 alphanumeric characters",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI where the underlier is a basket (Paragraph 464).",
+        "Not reported for TERM, EROR, PRTO (Paragraph 464)."
+      ],
+      "valueRules": [
+        "If reporting entity is not the structurer and does not receive code in time, create own using own LEI (Paragraph 469(a)).",
+        "Report 'B' if the reporting entity has not entered into, in the 12 months ending on the preceding quarter day, more than 20 OTC derivatives that require reporting of a Custom basket code (Paragraph 469(b)).",
+        "'B' is an allowable value (Paragraph 474(a)(i)).",
+        "If 'B' is not reported, the first 20 characters must be a valid GLEIF LEI of required registration status and pertain to a legal entity, not a branch (Paragraph 474(a)(ii)).",
+        "Must conform to 2024 Rules specifications (Paragraph 474(b))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "42"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "123",
+          "section": "Item 80, 464"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "124",
+          "section": "468, 469(a), 469(b)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "125",
+          "section": "474(a)(i), 474(a)(ii), 474(b)"
+        }
+      ]
+    },
+    {
+      "name": "Event identifier",
+      "description": "A unique identifier to connect termination, modification and new transactions resulting from an event.",
+      "dataType": "String",
+      "format": "LEI of the entity assigning the Event identifier followed by a unique identifier of not more than 32 characters",
+      "optionalityRules": [
+        "Conditionally required where Event type is reported as COMP or CREV (Paragraph 551).",
+        "May be optionally reported for any other Event type (Paragraph 552(b)).",
+        "Not reported for EROR, PRTO (Paragraph 551)."
+      ],
+      "valueRules": [
+        "Must conform to 2024 Rules specifications (Paragraph 552(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "22",
+          "section": "42"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "144",
+          "section": "Item 100, 550, 551"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "145",
+          "section": "552(b), 552(c)"
+        }
+      ]
+    },
+    {
+      "name": "Designated Business Identifier",
+      "description": "An identifier for an entity that is not an LEI, used for Counterparty 2 or Beneficiary 1.",
+      "dataType": "String",
+      "format": "ABN, AVID or BIC",
+      "optionalityRules": [
+        "Required for a new transaction report if the entity (Counterparty 2 or Beneficiary 1) eligible for an LEI does not have an LEI, and an LEI has been applied for within 2 business days after the reporting requirement arose (Rule S1.3.1(2)(a))."
+      ],
+      "valueRules": [
+        "Must be an ABN, AVID or BIC (Paragraph 129(a)).",
+        "Must conform to 2024 Rules specifications (Paragraph 137(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "25",
+          "section": "S1.3.1(2)(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "43",
+          "section": "129(a)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "44",
+          "section": "137(c)"
+        }
+      ]
+    },
+    {
+      "name": "Fixed rate\u2014Leg 1",
+      "description": "The value of the per annum rate of the fixed rate of leg 1.",
+      "dataType": "Decimal",
+      "format": "Decimal",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI where the reported UPI is of a product with a fixed rate, and for other products, if applicable (Paragraph 380).",
+        "Required if Asset class is INTR, Contract type is SWAP and the UPI is for a fixed-fixed product (Paragraph 384(a)(i)).",
+        "Required if Asset class is INTR, Contract type is SWAP and the UPI is for an FRA (Paragraph 384(a)(ii)).",
+        "May be optionally reported in any other case if Asset class is not CURR (Paragraph 384(a)(iii)).",
+        "Not reported for TERM, EROR, PRTO (Paragraph 380)."
+      ],
+      "valueRules": [
+        "Always reported as a decimal of any numeric value (positive, negative or zero) (Paragraph 379).",
+        "Must conform to 2024 Rules specifications (Paragraph 384(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "102",
+          "section": "Item 50, 379, 380"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "103",
+          "section": "384(a)(i), 384(a)(ii), 384(a)(iii), 384(c)"
+        }
+      ]
+    },
+    {
+      "name": "Fixed rate\u2014Leg 2",
+      "description": "The value of the per annum rate of the fixed rate of leg 2.",
+      "dataType": "Decimal",
+      "format": "Decimal",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI where the reported UPI is of a product with a fixed rate, and for other products, if applicable (Paragraph 380).",
+        "Required if Asset class is INTR, Contract type is SWAP and the UPI is for a fixed-fixed product (Paragraph 384(b)(i)).",
+        "May be optionally reported in any other case if Asset class is not CURR (Paragraph 384(b)(ii)).",
+        "Not reported for TERM, EROR, PRTO (Paragraph 380)."
+      ],
+      "valueRules": [
+        "Always reported as a decimal of any numeric value (positive, negative or zero) (Paragraph 379).",
+        "Must conform to 2024 Rules specifications (Paragraph 384(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "102",
+          "section": "Item 51, 379, 380"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "103",
+          "section": "384(b)(i), 384(b)(ii), 384(c)"
+        }
+      ]
+    },
+    {
+      "name": "Spread notation\u2014Leg 1",
+      "description": "An indicator of the type of units in which Spread\u2014Leg 1 is reported.",
+      "dataType": "String",
+      "format": "'1' (monetary amount), '3' (decimal), or '4' (basis points)",
+      "optionalityRules": [
+        "Conditionally required for NEWT, MODI, CORR, REVI where the 'price' of the transaction is not indicated by other reported data elements, and is reported for other transactions, if applicable (Paragraph 387).",
+        "Required if a value for Spread\u2014Leg 1 or Spread\u2014Leg 2 is required to be reported (Paragraph 396(a)).",
+        "Not reported for TERM, EROR, PRTO (Paragraph 387)."
+      ],
+      "valueRules": [
+        "Must be '1' where the spread is reported as a monetary amount (Paragraph 392(a)).",
+        "Must be '3' where the spread is reported as a decimal (Paragraph 392(b)).",
+        "Must be '4' where the spread is reported in basis points (Paragraph 392(c)).",
+        "Must conform to 2024 Rules specifications (Paragraph 396(d))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "104",
+          "section": "Item 52, 387"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "106",
+          "section": "392, 396(a), 396(d)"
+        }
+      ]
+    },
+    {
+      "name": "Exchange rate",
+      "description": "For foreign exchange transactions that are not options, this data element reports: (a) the exchange rate taken from the trade confirmation, or (b) if there is no such exchange rate specified in the trade confirmation, calculated by dividing Notional amount\u2014Leg 1 by Notional amount\u2014Leg 2 (and, if necessary, inverted to the rate as is conventionally quoted in foreign exchange markets for the currency pair\u2014see paragraph 424).",
+      "dataType": "decimal",
+      "format": "up to 25 numerals, including up to 5 numerals after the decimal point",
+      "optionalityRules": [
+        "Exchange rate is required to be reported if Asset class is CURR and Contract type is not OPTN",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "If the calculated exchange rate is not of the same magnitude as is conventionally quoted in foreign exchange markets for the currency pair, the calculated exchange rate should be inverted for reporting as Exchange rate.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "Item 64\u2014Exchange rate"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "421"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "422"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "424"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "426"
+        }
+      ]
+    },
+    {
+      "name": "Exchange rate basis",
+      "description": "The exchange rate basis of Exchange rate, reported in the order of the unit currency followed by the quoted currency, where the quoted currency is the currency of the units in which Exchange rate is expressed (e.g. in USD/EUR 0.9426, USD is the unit currency and EUR is the quoted currency).",
+      "dataType": "string",
+      "format": "3-character alphabetical code",
+      "optionalityRules": [
+        "Exchange rate basis is required to be reported if Exchange rate is reported",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Exchange rate and Exchange rate basis should use values and the order of the currencies that is in the same way in which the currency pair is conventionally quoted in foreign exchange markets (e.g. AUD/USD, USD/EUR, EUR/JPY).",
+        "Other than for digital options, each currency code of Exchange rate basis is one of Notional currency\u2014Leg 1 or Notional currency\u2014Leg 2.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "Item 65\u2014Exchange rate basis"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "421"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "422"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "113",
+          "section": "423"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "426"
+        }
+      ]
+    },
+    {
+      "name": "Day count convention\u2014Leg 1",
+      "description": "This data element reports an indicator code of the day count convention used in the calculation of periodic interest payments of leg 1 of the transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if Fixed rate\u2014Leg 1 is reported.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Report the code(s) applicable to the transaction or, if no such code is applicable, report the value NARR.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "Item 66\u2014Day count convention\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "427"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "428"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "429"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "432"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "433"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "434"
+        }
+      ]
+    },
+    {
+      "name": "Day count convention\u2014Leg 2",
+      "description": "This data element reports an indicator code of the day count convention used in the calculation of periodic interest payments of leg 2 of the transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if one of Fixed rate\u2014Leg 2 or Indicator of the floating rate\u2014Leg 2 is reported.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Report the code(s) applicable to the transaction or, if no such code is applicable, report the value NARR.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "Item 67\u2014Day count convention\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "427"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "114",
+          "section": "428"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "429"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "432"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "115",
+          "section": "433"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "434"
+        }
+      ]
+    },
+    {
+      "name": "Payment frequency period\u2014Leg 1",
+      "description": "This data element reports payment frequency period information for leg 1 of the transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if Fixed rate\u2014Leg 1 is reported.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "Item 68\u2014Payment frequency period\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "435"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "436"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "437"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "439"
+        }
+      ]
+    },
+    {
+      "name": "Payment frequency period\u2014Leg 2",
+      "description": "This data element reports payment frequency period information for leg 2 of the transaction.",
+      "dataType": "string",
+      "format": "4-character alphabetical code",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if one of Fixed rate\u2014Leg 2 or Indicator of the floating rate\u2014Leg 2 is reported.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "Item 69\u2014Payment frequency period\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "435"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "436"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "437"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "439"
+        }
+      ]
+    },
+    {
+      "name": "Payment frequency period multiplier\u2014Leg 1",
+      "description": "This data element reports payment frequency period information for leg 1 of the transaction, as an integer of the number of time units in the period.",
+      "dataType": "integer",
+      "format": "integer",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if Payment frequency period\u2014Leg 1 is reported as a value other than ADHO, and not reported otherwise.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Reported as 1 if Payment frequency period\u2014Leg 1 is reported as EXPI.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "Item 70\u2014Payment frequency period multiplier\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "435"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "436"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "437"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "439"
+        }
+      ]
+    },
+    {
+      "name": "Payment frequency period multiplier\u2014Leg 2",
+      "description": "This data element reports payment frequency period information for leg 2 of the transaction, as an integer of the number of time units in the period.",
+      "dataType": "integer",
+      "format": "integer",
+      "optionalityRules": [
+        "Conditionally required where a leg of a transaction is an interest rate leg.",
+        "Required if Payment frequency period\u2014Leg 2 is reported as a value other than ADHO, and not reported otherwise.",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "Reported as 1 if Payment frequency period\u2014Leg 2 is reported as EXPI.",
+        "If reported, the formats of the values conform to the 2024 Rules specifications.",
+        "Values are not reported for the not-reported Action types."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "Item 71\u2014Payment frequency period multiplier\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "435"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "116",
+          "section": "436"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "437"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "117",
+          "section": "439"
+        }
+      ]
+    },
+    {
+      "name": "Settlement currency\u2014Leg 1",
+      "description": "This data element reports the ISO 4217 currency code of payments that are cash settled (and not physically settled) for leg 1 of the transaction.",
+      "dataType": "string",
+      "format": "3-character alphabetical code",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types (NEWT, MODI, CORR, REVI).",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "For a USD/MYR foreign exchange transaction cash-settled in USD, Settlement currency\u2014Leg 1 is reported as USD.",
+        "For a USD/MYR foreign exchange transaction cash-settled in GBP, Settlement currency\u2014Leg 1 is reported as GBP.",
+        "Values are not reported for the not-reported Action types.",
+        "If reported, the format of the value conforms to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "Item 72\u2014Settlement currency\u2014Leg 1"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "440"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "441"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "119",
+          "section": "442"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "119",
+          "section": "444"
+        }
+      ]
+    },
+    {
+      "name": "Settlement currency\u2014Leg 2",
+      "description": "This data element reports the ISO 4217 currency code of payments that are cash settled (and not physically settled) for leg 2 of the transaction.",
+      "dataType": "string",
+      "format": "3-character alphabetical code",
+      "optionalityRules": [
+        "Required, if applicable, for certain Action types (NEWT, MODI, CORR, REVI).",
+        "Not-reported for Action types: TERM, EROR, PRTO"
+      ],
+      "valueRules": [
+        "For a USD/MYR foreign exchange transaction cash-settled in USD, Settlement currency\u2014Leg 2 is reported as USD.",
+        "For a USD/MYR foreign exchange transaction cash-settled in GBP, Settlement currency\u2014Leg 2 is reported as GBP.",
+        "Values are not reported for the not-reported Action types.",
+        "If reported, the format of the value conforms to the 2024 Rules specifications."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "Item 73\u2014Settlement currency\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "440"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "118",
+          "section": "441"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "119",
+          "section": "442"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "119",
+          "section": "444"
+        }
+      ]
+    },
+    {
+      "name": "Small-scale Buy-side Entity indicator",
+      "description": "Reports to indicate that the Reporting Entity is making the report as a Small-scale Buy-side Entity.",
+      "dataType": "String",
+      "format": "String literal 'SSBS'",
+      "optionalityRules": [
+        "Optionally reported in a Valuation report (page 152, paragraph 585).",
+        "Small-scale Buy-side Entity indicator may be optionally reported in a Collateral report (page 163, paragraph 656)."
+      ],
+      "valueRules": [
+        "If reported, the value is SSBS (page 152, paragraph 584, 588(b)).",
+        "If reported, the value is SSBS (page 164, paragraph 659(b))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "152",
+          "section": "Item 4\u2014Small-scale Buy-side Entity indicator"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "163",
+          "section": "Item 4\u2014Small-scale Buy-side Entity indicator"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "164",
+          "section": "659"
+        }
+      ]
+    },
+    {
+      "name": "Other payment amount",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps.",
+      "dataType": "Numeric",
+      "format": "Any numeric value",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "If Other payment type is UFRO or PEXH, at least one value for Other payment amount is required for Action type of NEWT or MODI or CORR or REVI (page 122, paragraph 462(c)(i)).",
+        "If Other payment type is UWIN, a value for Other payment amount is required for Action type of TERM (page 122, paragraph 462(d)(i)).",
+        "For any Action type for which an Other payment amount is reported, for each Other payment amount, Other payment amount is required (page 122, paragraph 462(e)(i))."
+      ],
+      "valueRules": [
+        "Always reported as a greater than or equal to zero value (page 121, paragraph 458).",
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 74\u2014Other payment amount"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "458"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Other payment type",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps.",
+      "dataType": "String",
+      "format": "UFRO, UWIN, PEXH (inferred from paragraphs 450, 453, 456)",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "For any Action type for which an Other payment amount is reported, Other payment type is required (page 122, paragraph 462(e)(i)).",
+        "If Asset class is CRDT and all of Fixed rate\u2014Leg 1, Fixed rate\u2014Leg 2, Spread\u2014Leg 1 and Spread\u2014Leg 2 are not reported, the value of UFRO is required for Action type NEWT (page 122, paragraph 462(a)(i)).",
+        "If Asset class is not CRDT, values may be optionally reported for Other payment type for each Other payment amount for Action type NEWT (page 122, paragraph 462(a)(ii)).",
+        "For any other Action type, values may be optionally reported for Other payment type for each Other payment amount (page 122, paragraph 462(b))."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 75\u2014Other payment type"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "450"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "453"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "456"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Other payment currency",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps. It is reported as an ISO 4217 currency code.",
+      "dataType": "String",
+      "format": "ISO 4217 currency code",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "For any Action type for which an Other payment amount is reported, Other payment currency is required (page 122, paragraph 462(e)(i))."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 76\u2014Other payment currency"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "459"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Other payment date",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps. It is reported as an ISO 8601 date.",
+      "dataType": "Date",
+      "format": "ISO 8601 date",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "For any Action type for which an Other payment amount is reported, Other payment date is required (page 122, paragraph 462(e)(i))."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 77\u2014Other payment date"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "121",
+          "section": "459"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Other payment payer",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps. The entity identifier is reported as an LEI of any registration status or a Designated Business Identifier or Client Code.",
+      "dataType": "String",
+      "format": "LEI (any registration status), Designated Business Identifier, Client Code",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "For any Action type for which an Other payment amount is reported, Other payment payer is required (page 122, paragraph 462(e)(i))."
+      ],
+      "valueRules": [
+        "The entity identifier is reported as an LEI of any registration status, or a Designated Business Identifier or Client Code for any other person (page 122, paragraph 461).",
+        "If Other payment payer or receiver are the same entities as Counterparty 1 or Counterparty 2, then the entity identifier conditions for Counterparty 1 or Counterparty 2 ordinarily apply (page 122, paragraph 460(a)).",
+        "If Other payment payer or receiver is a third party, the 2024 Rules do not condition the entity identifier of such a third party (page 122, paragraph 460(b)).",
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 78\u2014Other payment payer"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "460"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "461"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Other payment receiver",
+      "description": "Reports information about upfront and termination payments, if applicable to a transaction, and optionally for notional amount exchanges for cross-currency interest rate swaps. The entity identifier is reported as an LEI of any registration status or a Designated Business Identifier or Client Code.",
+      "dataType": "String",
+      "format": "LEI (any registration status), Designated Business Identifier, Client Code",
+      "optionalityRules": [
+        "Required for upfront payments if applicable (page 120, Condition table).",
+        "Required for termination payments if applicable (page 120, Condition table).",
+        "Optional for notional amount exchanges for cross-currency interest rate swaps (page 120, Condition table).",
+        "For any Action type for which an Other payment amount is reported, Other payment receiver is required (page 122, paragraph 462(e)(i))."
+      ],
+      "valueRules": [
+        "The entity identifier is reported as an LEI of any registration status, or a Designated Business Identifier or Client Code for any other person (page 122, paragraph 461).",
+        "If Other payment payer or receiver are the same entities as Counterparty 1 or Counterparty 2, then the entity identifier conditions for Counterparty 1 or Counterparty 2 ordinarily apply (page 122, paragraph 460(a)).",
+        "If Other payment payer or receiver is a third party, the 2024 Rules do not condition the entity identifier of such a third party (page 122, paragraph 460(b)).",
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 122, paragraph 462(f)).",
+        "Values are not reported for the not-reported Action types (page 122, paragraph 462(g))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "120",
+          "section": "Item 79\u2014Other payment receiver"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "460"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "461"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "122",
+          "section": "462"
+        }
+      ]
+    },
+    {
+      "name": "Underlier ID (Other)",
+      "description": "Reports information about an underlier which is not identified as a specific underlier in the UPI reference data for the UPI code that is reported\u2014that is, the underlier is identified as \u2018OTHER\u2019 in the UPI reference data, or as a \u2018Proprietary Index\u2019 which has only one constituent (collectively a \u2018non-UPI underlier\u2019).",
+      "dataType": "String",
+      "format": "Alphanumeric string",
+      "optionalityRules": [
+        "Conditionally required where the underlier is a non-UPI underlier (page 126, Condition table, paragraph 477).",
+        "Optionally reported where the underlier is UPI underlier (page 126, Condition table, paragraph 478).",
+        "May be optionally reported for the conditionally required Action types (page 130, paragraph 488(a)(i))."
+      ],
+      "valueRules": [
+        "Must be reported where the underlier is a non-UPI underlier (page 126, paragraph 479).",
+        "Values conform to specific forms depending on Underlier ID type as described in paragraph 486 (page 127, paragraph 486).",
+        "If reported, the format of the values conform to the 2024 Rules specifications (page 130, paragraph 488(b)).",
+        "Values are not reported for the not-reported Action types (page 130, paragraph 488(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "126",
+          "section": "Item 83\u2014Underlier ID (Other)"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "126",
+          "section": "475"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "127",
+          "section": "486"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "130",
+          "section": "488"
+        }
+      ]
+    },
+    {
+      "name": "Underlier ID (Other) source",
+      "description": "Reports information about an underlier which is not identified as a specific underlier in the UPI reference data for the UPI code that is reported\u2014that is, the underlier is identified as \u2018OTHER\u2019 in the UPI reference data, or as a \u2018Proprietary Index\u2019 which has only one constituent (collectively a \u2018non-UPI underlier\u2019). For each Basket constituent identifier, the source of the identifier is reported.",
+      "dataType": "String",
+      "format": "String",
+      "optionalityRules": [
+        "Conditionally required where the underlier is a non-UPI underlier (page 126, Condition table, paragraph 477).",
+        "Optionally reported where the underlier is UPI underlier (page 126, Condition table, paragraph 478).",
+        "Required if Underlier ID (Other) is reported (page 130, paragraph 488(a)(ii))."
+      ],
+      "valueRules": [
+        "Values are from the UPI Service source, such as 'ISIN', 'COMM', 'FRO name', 'CRP name', 'CDE equity name and type', 'CDE debt name and type', or 'AII' (page 124, paragraph 473; page 127, paragraph 487).",
+        "If reported, the format of the values conform to the 2024 Rules specifications (page 130, paragraph 488(b)).",
+        "Values are not reported for the not-reported Action types (page 130, paragraph 488(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "126",
+          "section": "Item 84\u2014Underlier ID (Other) source"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "124",
+          "section": "473"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "127",
+          "section": "487"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "130",
+          "section": "488"
+        }
+      ]
+    },
+    {
+      "name": "Maturity date of the underlying",
+      "description": "Reports the maturity date of the swap that is the underlier in a swaption transaction.",
+      "dataType": "Date",
+      "format": "ISO 8601 date",
+      "optionalityRules": [
+        "Conditionally required for the underlier of a swap in a swaption transaction (page 131, Condition table, paragraph 490).",
+        "Required if Contract type is SWPT (page 131, paragraph 492(a)(i))."
+      ],
+      "valueRules": [
+        "If reported, Maturity date of the underlier is greater than Expiration date (page 131, paragraph 492(a)(ii)).",
+        "The format of the value conforms to the 2024 Rules specifications (page 131, paragraph 492(b)).",
+        "A value is not reported for the not-reported Action types (page 131, paragraph 492(c))."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "130",
+          "section": "Item 85\u2014Maturity date of the underlying"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "131",
+          "section": "490"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "131",
+          "section": "492"
+        }
+      ]
+    },
+    {
+      "name": "Indicator of the floating rate\u2014Leg 2",
+      "description": "Reports the indicator of the interest rate reference rate for transactions, other than interest rate swaps, where Leg 2 is a floating rate interest rate leg.",
+      "dataType": "String",
+      "format": "ISO 20022 ExternalBenchmarkCurveName1Code (four-character code)",
+      "optionalityRules": [
+        "Conditionally required for transactions, other than interest rate swaps, where Leg 2 is a floating rate interest rate leg (page 132, Condition table, paragraph 495).",
+        "If Asset class is not INTR or CURR, a value may be optionally reported (page 133, paragraph 502(a)(i))."
+      ],
+      "valueRules": [
+        "If reported, the value is a code in the ISO 20022 code set ExternalBenchmarkCurveName1Code (page 133, paragraph 502(b)).",
+        "A value is not reported for the not-reported Action types (page 133, paragraph 502(c)).",
+        "Should not be reported if the actual floating rate reference rate does not properly fall within a \u2018family\u2019 within the ExternalBenchmarkCurveName1Code code set (page 132, paragraph 499)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "132",
+          "section": "Item 86\u2014Indicator of the floating rate\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "132",
+          "section": "493"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "133",
+          "section": "502"
+        }
+      ]
+    },
+    {
+      "name": "Floating rate reference period\u2014Leg 2",
+      "description": "Reports floating rate reference period information about applicable Leg 2 floating rates.",
+      "dataType": "String",
+      "format": "Four-character code for the time unit of the frequency (e.g., MNTH)",
+      "optionalityRules": [
+        "Conditionally required where Indicator of the floating rate\u2014Leg 2 is reported (page 133, Condition table, paragraph 505).",
+        "Required if Indicator of the floating rate\u2014Leg 2 is reported (page 134, paragraph 509(a)(i))."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 134, paragraph 509(b)).",
+        "Values are not reported for the not-reported Action types (page 134, paragraph 509(c)).",
+        "Not reported if Indicator of the floating rate\u2014Leg 2 is not reported in circumstances of paragraph 499 (page 134, paragraph 506)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "133",
+          "section": "Item 87\u2014Floating rate reference period\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "133",
+          "section": "503"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "134",
+          "section": "509"
+        }
+      ]
+    },
+    {
+      "name": "Floating rate reference period multiplier\u2014Leg 2",
+      "description": "Reports floating rate reference period information about applicable Leg 2 floating rates.",
+      "dataType": "Integer",
+      "format": "An integer of the number of time units in the period (e.g., 3)",
+      "optionalityRules": [
+        "Conditionally required where Indicator of the floating rate\u2014Leg 2 is reported (page 133, Condition table, paragraph 505).",
+        "Required if Indicator of the floating rate\u2014Leg 2 is reported (page 134, paragraph 509(a)(i))."
+      ],
+      "valueRules": [
+        "If reported, the formats of the values conform to the 2024 Rules specifications (page 134, paragraph 509(b)).",
+        "Values are not reported for the not-reported Action types (page 134, paragraph 509(c)).",
+        "Not reported if Indicator of the floating rate\u2014Leg 2 is not reported in circumstances of paragraph 499 (page 134, paragraph 506)."
+      ],
+      "citations": [
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "133",
+          "section": "Item 88\u2014Floating rate reference period multiplier\u2014Leg 2"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "133",
+          "section": "503"
+        },
+        {
+          "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+          "page": "134",
+          "section": "509"
+        }
+      ]
+    }
+  ]
+}

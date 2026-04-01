@@ -1,0 +1,23 @@
+{
+  "name": "Counterparty 1",
+  "description": "Where the Reporting Entity is a trustee of a trust, the trustee is the Reporting Entity and the trust is Counterparty 1. For all other types of Reporting Entities, the entity is both the Reporting Entity and Counterparty 1. The allowable value for Counterparty 1 is the 'current LEI' of Counterparty 1, subject to the relaxed LEI requirements for certain Action types as set out in paragraph 117.",
+  "dataType": "string",
+  "format": "ISO 17442 Legal entity identifier (LEI)",
+  "optionalityRules": [
+    "Required for all transaction reports."
+  ],
+  "valueRules": [
+    "Must be a valid GLEIF LEI of the required registration status for all Action types.",
+    "LEI must pertain to a legal entity and not a branch.",
+    "Counterparty 1 must not equal Counterparty 2 where Counterparty 2 identifier type indicator is True.",
+    "For Action types NEWT, MODI, CORR, the LEI registration status must be 'Issued', 'Pending transfer', or 'Pending archival'.",
+    "For Action types REVI, TERM, EROR, PRTO, the LEI registration status can be any status."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "42",
+      "section": "Item 6\u2014Counterparty 1, paragraphs 124-127"
+    }
+  ]
+}

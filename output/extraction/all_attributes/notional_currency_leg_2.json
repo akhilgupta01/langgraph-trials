@@ -1,0 +1,41 @@
+{
+  "name": "Notional currency\u2014Leg 2",
+  "description": "The ISO 4217 currency code for the currency in which Notional amount\u2014Leg 2 is denominated.",
+  "dataType": "String",
+  "format": "ISO 4217 currency code.",
+  "optionalityRules": [
+    "Conditionally required where Notional amount\u2014Leg 2 is reported.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "If reported, the value is an ISO 4217 code, but excluding XAG, XAU, XBA, XBB, XBC, XBD, XDR, XEU, XFU, XPD, XPT and XTS.",
+    "For an FX transaction where the underlier is a currency index or a basket of currencies, Notional currency\u2014Leg 2 is reported as the ISO 4217 code of XXX."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "89",
+      "section": "Item 35\u2014Notional currency\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "89",
+      "section": "323"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "89",
+      "section": "324"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "89",
+      "section": "326"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "90",
+      "section": "327c"
+    }
+  ]
+}

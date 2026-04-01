@@ -1,0 +1,32 @@
+{
+  "name": "Floating rate reference period\u2014Leg 2",
+  "description": "Reports floating rate reference period information about applicable Leg 2 floating rates.",
+  "dataType": "String",
+  "format": "Four-character code for the time unit of the frequency (e.g., MNTH)",
+  "optionalityRules": [
+    "Conditionally required where Indicator of the floating rate\u2014Leg 2 is reported (page 133, Condition table, paragraph 505).",
+    "Required if Indicator of the floating rate\u2014Leg 2 is reported (page 134, paragraph 509(a)(i))."
+  ],
+  "valueRules": [
+    "If reported, the formats of the values conform to the 2024 Rules specifications (page 134, paragraph 509(b)).",
+    "Values are not reported for the not-reported Action types (page 134, paragraph 509(c)).",
+    "Not reported if Indicator of the floating rate\u2014Leg 2 is not reported in circumstances of paragraph 499 (page 134, paragraph 506)."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "133",
+      "section": "Item 87\u2014Floating rate reference period\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "133",
+      "section": "503"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "134",
+      "section": "509"
+    }
+  ]
+}

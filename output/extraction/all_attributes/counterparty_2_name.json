@@ -1,0 +1,17 @@
+{
+  "name": "Counterparty 2 name",
+  "description": "This data element reports the legal name of Counterparty 2.",
+  "dataType": "alphanumeric string",
+  "format": "Not more than 105 characters. Legal names longer than 105 characters should be truncated to the first 105 characters.",
+  "optionalityRules": [
+    "Conditionally required for all kinds of reports, if Counterparty 2 is not reported as an LEI, Designated Business Identifier or the value ANON."
+  ],
+  "valueRules": [],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "45",
+      "section": "Item 7a\u2014Counterparty 2 name, par 138, 139, 140, 141"
+    }
+  ]
+}

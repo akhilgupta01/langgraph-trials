@@ -1,0 +1,27 @@
+{
+  "name": "Broker",
+  "description": "This data element reports the intermediary that arranged the transaction on behalf of the Reporting Entity (and potentially also on behalf of Counterparty 2) without becoming a counterparty to the transaction.",
+  "dataType": "string",
+  "format": "LEI (Legal Entity Identifier) with a registration status of \u2018Issued\u2019, \u2018Lapsed\u2019, \u2018Pending transfer\u2019 or \u2018Pending archival\u2019. Must not be an LEI of a branch of the entity. For reports with Action type REVI, any LEI registration status is allowed.",
+  "optionalityRules": [
+    "Required, if applicable, for Action types: NEWT, MODI, CORR, REVI",
+    "Not reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "Broker's LEI must not equal the LEI for Counterparty 1 or Counterparty 2.",
+    "If a broker enters into a transaction in a principal or 'matched principal' capacity, it is reported as Counterparty 2, not Broker.",
+    "Reporting entity should not report themselves as Broker."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "51",
+      "section": "Item 12\u2014Broker, par 166, 167, 168, 169"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "52",
+      "section": "par 172, 173"
+    }
+  ]
+}

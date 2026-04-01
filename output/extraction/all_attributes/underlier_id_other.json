@@ -1,0 +1,39 @@
+{
+  "name": "Underlier ID (Other)",
+  "description": "Reports information about an underlier which is not identified as a specific underlier in the UPI reference data for the UPI code that is reported\u2014that is, the underlier is identified as \u2018OTHER\u2019 in the UPI reference data, or as a \u2018Proprietary Index\u2019 which has only one constituent (collectively a \u2018non-UPI underlier\u2019).",
+  "dataType": "String",
+  "format": "Alphanumeric string",
+  "optionalityRules": [
+    "Conditionally required where the underlier is a non-UPI underlier (page 126, Condition table, paragraph 477).",
+    "Optionally reported where the underlier is UPI underlier (page 126, Condition table, paragraph 478).",
+    "May be optionally reported for the conditionally required Action types (page 130, paragraph 488(a)(i))."
+  ],
+  "valueRules": [
+    "Must be reported where the underlier is a non-UPI underlier (page 126, paragraph 479).",
+    "Values conform to specific forms depending on Underlier ID type as described in paragraph 486 (page 127, paragraph 486).",
+    "If reported, the format of the values conform to the 2024 Rules specifications (page 130, paragraph 488(b)).",
+    "Values are not reported for the not-reported Action types (page 130, paragraph 488(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "126",
+      "section": "Item 83\u2014Underlier ID (Other)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "126",
+      "section": "475"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "127",
+      "section": "486"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "130",
+      "section": "488"
+    }
+  ]
+}

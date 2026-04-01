@@ -1,0 +1,39 @@
+{
+  "name": "Custom basket code",
+  "description": "A unique code assigned by the structurer of the basket.",
+  "dataType": "String",
+  "format": "LEI of the structurer followed by not more than 52 alphanumeric characters",
+  "optionalityRules": [
+    "Conditionally required for NEWT, MODI, CORR, REVI where the underlier is a basket (Paragraph 464).",
+    "Not reported for TERM, EROR, PRTO (Paragraph 464)."
+  ],
+  "valueRules": [
+    "If reporting entity is not the structurer and does not receive code in time, create own using own LEI (Paragraph 469(a)).",
+    "Report 'B' if the reporting entity has not entered into, in the 12 months ending on the preceding quarter day, more than 20 OTC derivatives that require reporting of a Custom basket code (Paragraph 469(b)).",
+    "'B' is an allowable value (Paragraph 474(a)(i)).",
+    "If 'B' is not reported, the first 20 characters must be a valid GLEIF LEI of required registration status and pertain to a legal entity, not a branch (Paragraph 474(a)(ii)).",
+    "Must conform to 2024 Rules specifications (Paragraph 474(b))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "22",
+      "section": "42"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "123",
+      "section": "Item 80, 464"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "124",
+      "section": "468, 469(a), 469(b)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "125",
+      "section": "474(a)(i), 474(a)(ii), 474(b)"
+    }
+  ]
+}

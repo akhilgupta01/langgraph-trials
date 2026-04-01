@@ -10,71 +10,19 @@ Requires a valid GOOGLE_API_KEY in .env.
 import json
 import re
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
 
 from pydantic import BaseModel, Field
+from reg_model import (
+    RegulatoryAttribute,
+    ReportType,
+    ReportTypes,
+    RegulatoryAttributes,
+)
 
 from DataExtractor import DocumentMetadata, invoke_data_extractor
-
-
-class Citation(BaseModel):
-    document_name: str = Field(
-        description="Document name in which the attribute is defined"
-    )
-    page: str = Field(description="Page number or page reference from the document")
-    section: str = Field(description="Section or clause reference from the document")
-
-
-class ReportType(BaseModel):
-    name: str = Field(description="Name of the report to be submitted to the regulator")
-    description: str = Field(description="Brief description of the report")
-    reportFormat: str = Field(description="Format of the report such as XML, CSV, etc.")
-    reportFrequency: str = Field(
-        description="Declared or inferred frequency such as daily, monthly, quarterly"
-    )
-    reportingAttributes: list[str] = Field(
-        description="List of key reporting attributes that are required to be included in the report"
-    )
-    jurisdiction: str = Field(
-        description="Regulatory jurisdiction such as ASIC or EMIR"
-    )
-    assetClasses: list[str] = Field(
-        description="Applicable asset classes, such as Equity, FX, Interest Rate, etc."
-    )
-    citations: list[Citation] = Field(
-        description="Supporting citations with document name, page, and section"
-    )
-
-
-class RegulatoryAttribute(BaseModel):
-    name: str = Field(
-        description="Attribute name exactly as used in the regulatory text"
-    )
-    description: str = Field(description="Business meaning of the regulatory field")
-    dataType: str = Field(description="Logical data type such as string, date, decimal")
-    format: str = Field(description="Declared or inferred format such as ddMMyyyy")
-    optionalityRules: list[str] = Field(
-        description="Rules describing whether the attribute is required, optional or conditionally required or optional in certain contexts."
-    )
-    valueRules: list[str] = Field(
-        description="Rules describing valid values for the attribute in certain contexts, such as enumerated values or value ranges"
-    )
-    citations: list[Citation] = Field(
-        description="Supporting citations with document name, page, and section"
-    )
-
-
-class RegulatoryAttributes(BaseModel):
-    attributes: list[RegulatoryAttribute] = Field(
-        description="Regulatory reporting attributes extracted from the documents"
-    )
-
-
-class ReportTypes(BaseModel):
-    attributes: list[ReportType] = Field(
-        description="Regulatory report types extracted from the documents"
-    )
 
 
 def _print_report_type(index: int, report_type: ReportType) -> None:
@@ -118,6 +66,29 @@ def _safe_name(text: str) -> str:
     return re.sub(r"[^\w]+", "_", text).strip("_").lower()
 
 
+@dataclass(frozen=True)
+class JsonStore:
+    """Derived output paths for a report type."""
+
+    path: Path
+    name: str
+
+    @property
+    def slug(self) -> str:
+        return _safe_name(self.name)
+
+    @property
+    def report_dir(self) -> Path:
+        return self.path / self.slug
+
+    @property
+    def file(self) -> Path:
+        return self.path / f"{self.slug}.json"
+
+    def attribute_file(self, child_name: str) -> Path:
+        return self.report_dir / f"{_safe_name(child_name)}.json"
+
+
 def _save_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2), encoding="utf-8")
@@ -145,7 +116,7 @@ def _load_attribute_from_json(
 
 
 def _save_report_payload(
-    report_file: Path,
+    file: Path,
     report_type: ReportType,
     attributes: list[RegulatoryAttribute],
 ) -> None:
@@ -153,7 +124,8 @@ def _save_report_payload(
         **report_type.model_dump(),
         "extractedAttributes": [attribute.model_dump() for attribute in attributes],
     }
-    _save_json(report_file, report_payload)
+    _save_json(file, report_payload)
+    print(f"  Saved report type JSON → {file}")
 
 
 def _batched(items: list[str], size: int) -> Iterator[list[str]]:
@@ -179,26 +151,8 @@ def _build_attribute_extract_prompt(
 
 
 def main() -> None:
-    documents = [
-        DocumentMetadata(
-            name="asic-2024-rules-schedule-1-technical-guidance-v1-1-07feb25.pdf",
-            path="/Users/akhilgupta/Downloads/asic-2024-rules-schedule-1-technical-guidance-v1-1-07feb25.pdf",
-            mime_type="application/pdf",
-        )
-    ]
-
-    # -----------------------------------------------------------------------
-    # Step 1: Extract report types
-    # -----------------------------------------------------------------------
-    prompts_for_report_types = {
-        "extract": (
-            "You are extracting regulatory report types from one or "
-            "more regulatory documents. Return every clearly defined report "
-            "type together with citations. Use the exact report type as "
-            "used in the regulation text. For each report type, include one or more "
-            "citations with document_name, page, and section."
-        )
-    }
+    documents = prepare_documents_list()
+    prompts_for_report_types = prepare_prompt_for_report_types()
 
     print("Step 1 — Extracting regulatory report types...")
     report_types_result = invoke_data_extractor(
@@ -209,36 +163,26 @@ def main() -> None:
     )
 
     print("\n--- Extracted Regulatory Report Types ---")
-    for index, report_type in enumerate(report_types_result.attributes, start=1):
-        _print_report_type(index, report_type)
+    print_extraction_result(report_types_result)
 
-    # -----------------------------------------------------------------------
-    # Step 2: For each report type, extract its reporting attributes in
-    #         batches of ATTRIBUTE_BATCH_SIZE
-    # -----------------------------------------------------------------------
+
+def extract_attributes_for_report_type(
+    documents: list[DocumentMetadata], report_types: ReportTypes
+) -> None:
     print(
         "\n\nStep 2 — Extracting attributes per report type (in batches of "
         f"{ATTRIBUTE_BATCH_SIZE})..."
     )
 
-    for report_type in report_types_result.attributes:
-        print(f"\n{'='*60}")
-        print(f"Report type: {report_type.name}")
+    for report_type in report_types.attributes:
         attribute_names = report_type.reportingAttributes
-        print(
-            f"  {len(attribute_names)} attribute(s) to extract, "
-            f"batching in groups of {ATTRIBUTE_BATCH_SIZE}"
-        )
-        print(f"{'='*60}")
+        _log_report_type_info(report_type, attribute_names)
 
         all_attributes: list[RegulatoryAttribute] = []
-        report_slug = _safe_name(report_type.name)
-        report_dir = OUTPUT_ROOT / report_slug
-        report_file = OUTPUT_ROOT / f"{report_slug}.json"
+        report_paths = JsonStore(path=OUTPUT_ROOT, name=report_type.name)
 
         # Save report metadata immediately after report-type extraction.
-        _save_report_payload(report_file, report_type, all_attributes)
-        print(f"  Saved report type JSON → {report_file}")
+        _save_report_payload(report_paths.file, report_type, all_attributes)
 
         for batch_num, batch in enumerate(
             _batched(attribute_names, ATTRIBUTE_BATCH_SIZE), start=1
@@ -247,7 +191,7 @@ def main() -> None:
             to_extract = []
             already_cached = []
             for attr_name in batch:
-                if _attribute_json_exists(report_dir, attr_name):
+                if _attribute_json_exists(report_paths.report_dir, attr_name):
                     already_cached.append(attr_name)
                 else:
                     to_extract.append(attr_name)
@@ -258,7 +202,7 @@ def main() -> None:
                     f"{len(to_extract)} to extract"
                 )
                 for attr_name in already_cached:
-                    attr = _load_attribute_from_json(report_dir, attr_name)
+                    attr = _load_attribute_from_json(report_paths.report_dir, attr_name)
                     if attr:
                         all_attributes.append(attr)
                         print(f"    ✓ Loaded cached: {attr_name}")
@@ -278,7 +222,7 @@ def main() -> None:
                 all_attributes.extend(batch_result.attributes)
 
                 for attribute in batch_result.attributes:
-                    attr_file = report_dir / f"{_safe_name(attribute.name)}.json"
+                    attr_file = report_paths.attribute_file(attribute.name)
                     _save_json(attr_file, attribute.model_dump())
                 print(f"    Extracted {len(batch_result.attributes)} new attribute(s)")
             else:
@@ -286,7 +230,7 @@ def main() -> None:
                     f"    All {len(already_cached)} attributes in batch already cached"
                 )
 
-            _save_report_payload(report_file, report_type, all_attributes)
+            _save_report_payload(report_paths.file, report_type, all_attributes)
             print(
                 f"  Refreshed report JSON with {len(all_attributes)} total attributes"
             )
@@ -298,7 +242,51 @@ def main() -> None:
         for index, attribute in enumerate(all_attributes, start=1):
             _print_attribute(index, attribute)
 
-        print(f"  Saved {len(all_attributes)} attribute file(s) → {report_dir}/")
+        print(
+            f"  Saved {len(all_attributes)} attribute file(s) "
+            f"→ {report_paths.report_dir}/"
+        )
+
+
+def _log_report_type_info(report_type, attribute_names):
+    print(f"\n{'='*60}")
+    print(f"Report type: {report_type.name}")
+    print(
+        f"  {len(attribute_names)} attribute(s) to extract, "
+        f"batching in groups of {ATTRIBUTE_BATCH_SIZE}"
+    )
+    print(f"{'='*60}")
+
+
+def print_extraction_result(report_types_result):
+    for index, report_type in enumerate(report_types_result.attributes, start=1):
+        _print_report_type(index, report_type)
+
+
+def prepare_prompt_for_report_types():
+    prompts_for_report_types = {
+        "extract": (
+            "You are extracting regulatory report types from one or "
+            "more regulatory documents. Return every clearly defined report "
+            "type together with citations. Use the exact report type as "
+            "used in the regulation text. For each report type, include one or more "
+            "citations with document_name, page, and section."
+        )
+    }
+
+    return prompts_for_report_types
+
+
+def prepare_documents_list() -> list[DocumentMetadata]:
+    documents = [
+        DocumentMetadata(
+            name="asic-2024-rules-schedule-1-technical-guidance-v1-1-07feb25.pdf",
+            path="/Users/akhilgupta/Downloads/asic-2024-rules-schedule-1-technical-guidance-v1-1-07feb25.pdf",
+            mime_type="application/pdf",
+        )
+    ]
+
+    return documents
 
 
 if __name__ == "__main__":

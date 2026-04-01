@@ -1,0 +1,24 @@
+{
+  "name": "Asset class",
+  "description": "This data element reports a code for the Asset class of the transaction.",
+  "dataType": "String",
+  "format": "4-character alphabetical code",
+  "optionalityRules": [
+    "Required for all transaction reports"
+  ],
+  "valueRules": [
+    "The allowable values for Asset class are COMM (commodity), CRDT (credit), CURR (foreign exchange), EQUI (equity), INTR (interest rates) and OTHR (other).",
+    "OTC derivatives with precious metals underliers are reported in the commodity (COMM) asset class.",
+    "OTC derivatives where Leg 2 is an interest rate leg are in the Asset class applicable to its Leg 1.",
+    "OTHR is only reported for transactions where none of the other Asset classes are solely applicable.",
+    "If OTHR is not supported as a reportable Asset class by a TR, the transaction should be reported in the Asset class that is alphabetically first among the asset classes of the transaction.",
+    "The Asset class reported is one of COMM, CRDT, CURR, EQUI, INTR or, if supported by a TR, OTHR."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "36-37",
+      "section": "Item 3\u2014Asset class, par 100, 101, 105, 106, 107(b)"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "Direction 1",
+  "description": "Indicates, for certain kinds of OTC derivatives, whether the reporting entity is the buyer (BYER) or seller (SLLR) in a transaction.",
+  "dataType": "string",
+  "format": "4-character alphabetical code",
+  "optionalityRules": [
+    "Conditionally required for certain kinds of OTC derivatives.",
+    "A value must be reported for either Direction 1 or both of Direction 2\u2014Leg 1 and Direction 2\u2014Leg 2.",
+    "Not reported for Action types TERM, EROR, PRTO."
+  ],
+  "valueRules": [
+    "If reported, the value is one of BYER or SLLR.",
+    "The applicable kinds of OTC derivatives are those for which it is widely understood that a buyer and seller are readily identified.",
+    "Associated with reference data elements of the UPI code and/or the values of Asset class and Contract type reported for the transaction."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "55",
+      "section": "Item 14\u2014Direction 1"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "56",
+      "section": "Item 14 OTC derivatives"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "57",
+      "section": "Minimum TR validations"
+    }
+  ]
+}

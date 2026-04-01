@@ -1,0 +1,51 @@
+{
+  "name": "Price notation",
+  "description": "Price notation is an indicator of the type of units in which Price is reported.",
+  "dataType": "string",
+  "format": "1-character alphabetical code or 1-character numeric code",
+  "optionalityRules": [
+    "Price notation is required to be reported if Price is reported.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "Reported as \u20181\u2019 where Price is reported as a monetary amount; or \u20183\u2019 where Price is reported as a decimal.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Item 46"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Paragraph 358"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "99",
+      "section": "Paragraph 365"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(b)(i)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(c)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(d)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(e)"
+    }
+  ]
+}

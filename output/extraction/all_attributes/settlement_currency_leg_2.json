@@ -1,0 +1,43 @@
+{
+  "name": "Settlement currency\u2014Leg 2",
+  "description": "This data element reports the ISO 4217 currency code of payments that are cash settled (and not physically settled) for leg 2 of the transaction.",
+  "dataType": "string",
+  "format": "3-character alphabetical code",
+  "optionalityRules": [
+    "Required, if applicable, for certain Action types (NEWT, MODI, CORR, REVI).",
+    "Not-reported for Action types: TERM, EROR, PRTO"
+  ],
+  "valueRules": [
+    "For a USD/MYR foreign exchange transaction cash-settled in USD, Settlement currency\u2014Leg 2 is reported as USD.",
+    "For a USD/MYR foreign exchange transaction cash-settled in GBP, Settlement currency\u2014Leg 2 is reported as GBP.",
+    "Values are not reported for the not-reported Action types.",
+    "If reported, the format of the value conforms to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "118",
+      "section": "Item 73\u2014Settlement currency\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "118",
+      "section": "440"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "118",
+      "section": "441"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "119",
+      "section": "442"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "119",
+      "section": "444"
+    }
+  ]
+}

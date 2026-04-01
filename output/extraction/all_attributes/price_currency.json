@@ -1,0 +1,47 @@
+{
+  "name": "Price currency",
+  "description": "Price currency is the currency in which Price is denominated.",
+  "dataType": "string",
+  "format": "ISO 4217 Currency codes",
+  "optionalityRules": [
+    "Price currency is only reported when Price is reported as a monetary amount.",
+    "Required if Price notation is 1 and Price currency is required to be reported.",
+    "Values are not reported for the not-reported Action types."
+  ],
+  "valueRules": [
+    "Where Price is reported as a decimal, its currency is taken to be the same currency as Notional currency\u2014Leg 1.",
+    "If reported, the formats of the values conform to the 2024 Rules specifications."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Item 48"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "98",
+      "section": "Paragraph 358"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "100",
+      "section": "Paragraph 368"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(b)(ii)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(c)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "101",
+      "section": "Paragraph 377(e)"
+    }
+  ]
+}

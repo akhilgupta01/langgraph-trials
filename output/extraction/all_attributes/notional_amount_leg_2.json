@@ -1,0 +1,58 @@
+{
+  "name": "Notional amount\u2014Leg 2",
+  "description": "The amount taken from the trade confirmation and attributed by the reporting entity to Leg 2.",
+  "dataType": "Numeric",
+  "format": "Conforms to 2024 Rules specifications; 'all 9s' is an allowable value.",
+  "optionalityRules": [
+    "Conditionally required if a value is reported for Direction 2\u2014Leg 2 and a value for Notional quantity\u2014Leg 2 is not reported.",
+    "Not reported for TERM, EROR, PRTO Action types."
+  ],
+  "valueRules": [
+    "May be a negative number for a commodity transaction.",
+    "May not be a negative number for transactions in any other asset class.",
+    "If the value for Notional amount\u2014Leg 2 is not known at the time of reporting, \u2018all 9s\u2019 is reported, but is updated to the amount subsequently determined, using a MODI-TRAD report.",
+    "Other than for commodity derivatives, Notional amount\u2014Leg 2 is greater than or equal to zero."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "83",
+      "section": "Item 27\u2014Notional amount\u2014Leg 2"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "83",
+      "section": "296"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "83",
+      "section": "297"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "83",
+      "section": "298"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "84",
+      "section": "300"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "84",
+      "section": "304b"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "84",
+      "section": "304c"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "84",
+      "section": "304d"
+    }
+  ]
+}

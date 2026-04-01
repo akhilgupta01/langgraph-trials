@@ -1,0 +1,30 @@
+{
+  "name": "Designated Business Identifier",
+  "description": "An identifier for an entity that is not an LEI, used for Counterparty 2 or Beneficiary 1.",
+  "dataType": "String",
+  "format": "ABN, AVID or BIC",
+  "optionalityRules": [
+    "Required for a new transaction report if the entity (Counterparty 2 or Beneficiary 1) eligible for an LEI does not have an LEI, and an LEI has been applied for within 2 business days after the reporting requirement arose (Rule S1.3.1(2)(a))."
+  ],
+  "valueRules": [
+    "Must be an ABN, AVID or BIC (Paragraph 129(a)).",
+    "Must conform to 2024 Rules specifications (Paragraph 137(c))."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "25",
+      "section": "S1.3.1(2)(a)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "43",
+      "section": "129(a)"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "44",
+      "section": "137(c)"
+    }
+  ]
+}

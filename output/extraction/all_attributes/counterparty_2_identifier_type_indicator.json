@@ -1,0 +1,19 @@
+{
+  "name": "Counterparty 2 identifier type indicator",
+  "description": "Counterparty 2 identifier type indicator is reported as a boolean True/False value, where True indicates that Counterparty 2 is reported as an LEI.",
+  "dataType": "Boolean",
+  "format": "True or False",
+  "optionalityRules": [
+    "Required for all transaction reports (ALL Action types)"
+  ],
+  "valueRules": [
+    "True indicates that Counterparty 2 is reported as an LEI."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "46",
+      "section": "Item 8\u2014Counterparty 2 identifier type indicator, par 143, 145"
+    }
+  ]
+}

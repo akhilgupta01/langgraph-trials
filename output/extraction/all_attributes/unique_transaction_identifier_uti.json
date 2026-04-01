@@ -1,0 +1,40 @@
+{
+  "name": "Unique transaction identifier (UTI)",
+  "description": "This data element reports the transaction identifier of the transaction. A UTI is used by a TR as one of the data elements to uniquely identify a transaction in its records and must be included in all reports.",
+  "dataType": "string",
+  "format": "ISO 23897 Unique transaction identifier (UTI) or up to 72-character alphanumeric code for pre-21 October 2024 transactions.",
+  "optionalityRules": [
+    "A UTI is required to be reported in all transaction reports (Action types: ALL)."
+  ],
+  "valueRules": [
+    "For a new transaction report, the UTI reported is a UTI generated or received by the reporting entity in accordance with Rule 2.2.9 (a Rule 2.2.9 UTI that is an ISO 23897 UTI).",
+    "For a modification or termination transaction report or a change report, the UTI reported is the transaction identifier that was reported for the outstanding OTC derivative, which may be: (i) a Rule 2.2.9 UTI for a transaction that was initially reported from 21 October 2024; or (ii) the transaction identifier as it was initially reported before 21 October 2024 and which may be an ISO 23897 UTI or an up to 72-character alphanumeric code.",
+    "Reporting entities must continue to use the transaction identifier as was initially reported and not change the transaction identifiers to an ISO 23897 UTI in any circumstances.",
+    "Every reportable transaction should have a unique UTI. Different reportable transactions should each have their own UTIs. No UTIs should be reused even if the previous use was on a transaction that is no longer open.",
+    "For FX swaps, if the reporting entity is not the UTI generating entity, report the single UTI received as the UTI of the far leg, and generate and report a UTI for the near leg. If the reporting entity is the UTI generating entity, provide the UTI of the far leg to the other counterparty, and generate and report a UTI for the near leg.",
+    "For multi-commodity swap, if the reporting entity is not the UTI generating entity, report the UTI received for the commodity underlier that is Leg 1 in the reporting entity\u2019s report. If the reporting entity is the UTI generating entity, provide the single UTI to the other counterparty, who would then report that UTI according to their jurisdiction\u2019s requirements.",
+    "When re-reporting an 'interim UTI' as a 'permanent UTI', the outstanding OTC derivative must be exited in the TR\u2019s records using Action type EROR, and then re-reported with Action type NEWT and Event type TRAD, using the 'permanent UTI' as the UTI and the 'interim UTI' as Prior UTI."
+  ],
+  "citations": [
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "29",
+      "section": "Item 1\u2014Unique transaction identifier (UTI), paragraphs 69-73"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "30",
+      "section": "Minimum TR validations, Mismatched number of UTIs, paragraphs 75-78"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "31",
+      "section": "Use case UTI reporting, Re-reporting an \u2018interim UTI\u2019 as a \u2018permanent UTI\u2019, paragraphs 79-81"
+    },
+    {
+      "document_name": "ASIC Derivative Transaction Rules (Reporting) 2024\u2014Schedule 1 technical guidance",
+      "page": "19",
+      "section": "Formats in the 2024 Rules, paragraph 27"
+    }
+  ]
+}
